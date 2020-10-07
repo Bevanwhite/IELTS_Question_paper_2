@@ -1,0 +1,254 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Listening</h5>
+        </div>
+    </div>
+    <div class="card mt-3 mb-3">
+        <div class="card-header">
+            <div class="audio_file">
+                <audio controls>
+                    <source src="/static/audio/plan4.2.mp3" type="audio/mpeg">
+                </audio>
+            </div><br>
+            <div class="card-body">
+                <h6 class="card-title">
+                    <p><strong>Questions 1-5</strong></p>
+                    <p>Complete the information below. Write <strong>NO MORE THAN TWO WORDS OR A NUMBER</strong> for
+                        each answer.
+                </h6>
+                </p>
+                <table border="1" cellspacing="0" cellpadding="3" width="80%" align="center">
+                    <tr>
+                        <td colspan="2" valign="top">
+                            <p align="center"><strong>Tour information</strong></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            <p>Destination</p>
+                        </td>
+                        <td valign="top">
+                            <p><u>Sydney</u></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            <p>Tour type</p>
+                        </td>
+                        <td valign="top">
+                            <p>(1) <input type="text" class="ex-input" style="width:120px" id="q1"> <span
+                                    id="s1"></span></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            <p>Tourist attractions</p>
+                        </td>
+                        <td valign="top">
+                            <p>The Harbour Bridge</p>
+                            <p>The Opera House </p>
+                            <p>The Queen Victoria (2) <input type="text" class="ex-input" style="width:120px" id="q2">
+                                <span id="s2"></span></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            <p>Timetable</p>
+                        </td>
+                        <td valign="top">
+                            <p>From 7 am to (3) <input type="text" class="ex-input" style="width:120px" id="q3"> <span
+                                    id="s3"></span> pm</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            <p>Closest stop</p>
+                        </td>
+                        <td valign="top">
+                            <p>(4) <input type="text" class="ex-input" style="width:120px" id="q4"> <span
+                                    id="s4"></span> metres
+                                out from here, <br />
+                                at the front of the (5) <input type="text" class="ex-input" style="width:120px" id="q5">
+                                <span id="s5"></span></p>
+                        </td>
+                    </tr>
+                </table>
+                <p>&nbsp;</p>
+                <p><strong>Questions 6-10</strong></p>
+                <p>Complete the booklet of ticket types below. Write <strong>ONE WORD OR A NUMBER</strong> for each
+                    answer.</p>
+                <table border="1" cellspacing="0" cellpadding="3" width="90%" align="center">
+                    <tr>
+                        <td colspan="3" valign="middle">
+                            <p align="center">Ticket types</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="middle">
+                            <p>minimal</p>
+                        </td>
+                        <td valign="middle">
+                            <p>(6) <input type="text" class="ex-input" style="width:100px" id="q6"> <span
+                                    id="s6"></span> $</p>
+                        </td>
+                        <td valign="middle">
+                            <p>Valid during (7) <input type="text" class="ex-input" style="width:120px" id="q7"> <span
+                                    id="s7"></span> hours</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="middle">
+                            <p>(8) <input type="text" class="ex-input" style="width:120px" id="q8"> <span
+                                    id="s8"></span></p>
+                        </td>
+                        <td valign="middle">
+                            <p>30$</p>
+                        </td>
+                        <td valign="middle">
+                            <p>Lasts all day</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="middle">
+                            <p>premium</p>
+                        </td>
+                        <td valign="middle">
+                            <p>(9) <input type="text" class="ex-input" style="width:100px" id="q9"> <span
+                                    id="s9"></span> $</p>
+                        </td>
+                        <td valign="middle">
+                            <p>Lasts all day<br />
+                                free drinks and snacks<br />
+                                (10) <input type="text" class="ex-input" style="width:120px" id="q10"> <span
+                                    id="s10"></span> </p>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <button id="b2" type="button" class="btn btn-outline-info" onclick="toggle() ">
+                    <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show
+                    answers</button>
+                <div id="answers" style="display:none;" class="hint">
+                    <p><strong>ANSWERS</strong></p>
+                    <p>Each question correctly answered scores 1 mark. <strong>Correct</strong> spelling is needed in
+                        all answers.
+                    </p>
+                    <ol>
+                        <li>bus tour</li>
+                        <li>Building</li>
+                        <li>9 / nine</li>
+                        <li>20 / twenty</li>
+                        <li>hotel</li>
+                        <li>15 / fifteen</li>
+                        <li>2 / two</li>
+                        <li>standard</li>
+                        <li>55 / fifty-five</li>
+                        <li>audioguide / audio-guide</li>
+                    </ol>
+                    <ol>
+
+                    </ol>
+                </div> <br /> <br />
+                <div id="result" align="center"> </div>
+                <div align="center">
+                    <button class="btn btn-primary btn-sm " type="button" onclick="check()">Check</button>
+                    <a href="/listening/go_home" class="btn btn-primary btn-sm ">Home</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function check() {
+
+        var q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, score, result;
+        result = true; score = 0;
+        q1 = document.getElementById("q1").value;
+        if (q1.trim().toLowerCase() != "bus tour") { result = false; document.getElementById("s1").innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+        else { document.getElementById("s1").innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />'; score++; }
+
+        q2 = document.getElementById("q2").value;
+        if (q2.trim().toLowerCase() != "building") { result = false; document.getElementById("s2").innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+        else { document.getElementById("s2").innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />'; score++; }
+
+
+        q3 = document.getElementById("q3").value;
+        if ((q3.trim().toLowerCase() != "9") && (q3.trim().toLowerCase() != "nine")) { result = false; document.getElementById("s3").innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+        else { document.getElementById("s3").innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />'; score++; }
+
+        q4 = document.getElementById("q4").value;
+        if ((q4.trim().toLowerCase() != "20") && (q4.trim().toLowerCase() != "twenty")) { result = false; document.getElementById("s4").innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+        else { document.getElementById("s4").innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />'; score++; }
+
+        q5 = document.getElementById("q5").value;
+        if (q5.trim().toLowerCase() != "hotel") { result = false; document.getElementById("s5").innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+        else { document.getElementById("s5").innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />'; score++; }
+
+
+        q6 = document.getElementById("q6").value;
+        if ((q6.trim().toLowerCase() != "15") && (q6.trim().toLowerCase() != "fifteen")) { result = false; document.getElementById("s6").innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+        else { document.getElementById("s6").innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />'; score++; }
+
+        q7 = document.getElementById("q7").value;
+        if ((q7.trim().toLowerCase() != "2") && (q7.trim().toLowerCase() != "two")) { result = false; document.getElementById("s7").innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+        else { document.getElementById("s7").innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />'; score++; }
+
+
+        q8 = document.getElementById("q8").value;
+        if (q8.trim().toLowerCase() != "standard") { result = false; document.getElementById("s8").innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+        else { document.getElementById("s8").innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />'; score++; }
+
+
+        q9 = document.getElementById("q9").value;
+        if ((q9.trim().toLowerCase() != "55") && (q9.trim().toLowerCase() != "fifty-five")) { result = false; document.getElementById("s9").innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+        else { document.getElementById("s9").innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />'; score++; }
+
+
+        q10 = document.getElementById("q10").value;
+        if ((q10.trim().toLowerCase() != "audioguide") && (q10.trim().toLowerCase() != "audio-guide")) { result = false; document.getElementById("s10").innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+        else {
+            document.getElementById("s10").innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />';
+            score++;
+        }
+
+
+        removeCookie("first");
+        removeCookie("second");
+        removeCookie("third");
+        removeCookie("fourth");
+        setCookie("first", score, 3);
+
+
+        document.getElementById("result").innerHTML =
+            "<div class='result'>Your result for this quiz " + score + "/10 </div>";
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+
+    function removeCookie(szName) {
+        document.cookie = szName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    }
+
+
+    function toggle() {
+        var e = document.getElementById("answers");
+        if (e.style.display == 'block') {
+            document.getElementById("b2").innerHTML = ' <img height="25px" src="/static/images/show.png" style="vertical-align: middle"  /> Show answers';
+            e.style.display = 'none';
+        }
+        else {
+            document.getElementById("b2").innerHTML = '<img height="25px" src="/static/images/hide.png" style="vertical-align: middle"  /> Hide answers';
+            e.style.display = 'block';
+        }
+    }
+</script>
+{% endblock content %}

@@ -1,0 +1,246 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+  <div class="card mb-3">
+    <div class="card-header">
+      <h5>Listening</h5>
+    </div>
+  </div>
+  <div class="card mt-3 mb-3">
+    <div class="card-header">
+      <div class="audio_file">
+        <audio controls>
+          <source src="/static/audio/IELTS13_Test1_04.mp3" type="audio/mpeg">
+        </audio>
+      </div><br>
+      <div class="card-body">
+        <h6 class="card-title">
+          <p><strong>QUESTIONS 1-10</strong></p>
+          <p>Complete the form below.</p>
+        </h6>
+        <p>Write <strong>NO MORE THAN TWO WORDS AND/OR A NUMBER</strong> for each answer.</p>
+        <div align="left">
+          <table border="1" width="82%" cellspacing="0" cellpadding="3" align="center">
+            <tr>
+              <td colspan="2" valign="top" style="padding-left:7px;">
+                <div align="center"><strong>PHONE INTERVIEW</strong></div>
+              </td>
+            </tr>
+            <tr>
+              <td width="51%" valign="top" style="padding-left:7px;">
+                <p>Name</p>
+              </td>
+              <td width="49%" valign="top" style="padding-left:7px;">
+                <p>John Murphy</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left:7px;" valign="top">
+                <p><em>Example</em>:
+                  Position applying for</p>
+              </td>
+              <td style="padding-left:7px;" valign="top">
+                <p><u>Lifeguard</u></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left:7px;" valign="top">
+                <p>Street address:</p>
+              </td>
+              <td style="padding-left:7px;" valign="top">
+                <p>45 <strong>(1)</strong>
+                  <input type="text" class="ex-input" style="width:120px" id="ex1" required>
+                  <span id="s1"></span>Court</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left:7px;" valign="top">
+                <p>Contact phone number:</p>
+              </td>
+              <td style="padding-left:7px;" valign="top">
+                <p><strong>(2)</strong>
+                  <input type="text" class="ex-input" style="width:120px" id="ex2" required>
+                  <span id="s2"></span></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left:7px;" valign="top">
+                <p>Current part-time job:</p>
+              </td>
+              <td style="padding-left:7px;" valign="top">
+                <p> <strong> (3)</strong>
+                  <input type="text" class="ex-input" style="width:120px" id="ex3" required> <span id="s3"></span>
+                  <br />
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left:7px;" valign="top">
+                <p>Previous job at Ridgemont High School</p>
+              </td>
+              <td style="padding-left:7px;" valign="top">
+                <p><strong> (4)</strong>
+                  <input type="text" class="ex-input" style="width:120px" id="ex4" required="required" />
+                  <span id="s4"></span></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left:7px;" valign="top">
+                <p>Additional relevant work experience:</p>
+              </td>
+              <td style="padding-left:7px;" valign="top">
+                <p><strong>(5)</strong>
+                  <input type="text" class="ex-input" style="width:120px" id="ex5" required="required" /> <span
+                    id="s5"></span>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left:7px;" valign="top">
+                <p>Relevant skills/qualifications:</p>
+              </td>
+              <td style="padding-left:7px;" valign="top">
+                <p>CPR certification &amp; <strong>(6)</strong>
+                  <input type="text" class="ex-input" style="width:140px" id="ex6" required="required" />
+                  <span id="s6"></span></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left:7px;" valign="top">
+                <p>CPR certification expiration date:</p>
+              </td>
+              <td style="padding-left:7px;" valign="top">
+                <p><strong> (7) </strong>
+                  <input type="text" class="ex-input" style="width:120px" id="ex7" required="required" />
+                  <span id="s7"></span></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left:7px;" valign="top">
+                <p>Preferred weekly shift:</p>
+              </td>
+              <td style="padding-left:7px;" valign="top">
+                <p><strong> (8) </strong>
+                  <input type="text" class="ex-input" style="width:140px" id="ex8" required="required" />
+                  <span id="s8"></span></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left:7px;" valign="top">
+                <p>Time available to start work:</p>
+              </td>
+              <td style="padding-left:7px;" valign="top">
+                <p><strong> (9) </strong>
+                  <input type="text" class="ex-input" style="width:120px" id="ex9" required="required" />
+                  <span id="s9"></span></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left:7px;" valign="top">
+                <p>Advertisement source:</p>
+              </td>
+              <td style="padding-left:7px;" valign="top">
+                <p><strong>(10)</strong>
+                  <input type="text" class="ex-input" style="width:120px" id="ex10" required="required" /> <span
+                    id="s10"></span></p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <p>&nbsp;</p>
+        <br /><br />
+
+
+
+        <button id="b2" type="button" class="btn btn-outline-info" onclick="toggle()">
+          <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show answers</button>
+
+        <div id="answers" style="display:none;" class="hint">
+          <p><strong>ANSWERS</strong></p>
+          <p>Each question correctly answered scores 1 mark. <strong>Correct</strong> spelling is needed
+            in all answers. </p>
+          <ol>
+            <li>Elsinore</li>
+            <li>077896245</li>
+            <li>Waiter</li>
+            <li>Baseball coach</li>
+            <li>Rescue diver</li>
+            <li>Diving experience</li>
+            <li>October</li>
+            <li>Saturday mornings</li>
+            <li>6 (o'clock)</li>
+            <li>Radio</li>
+
+          </ol>
+        </div> <br /> <br />
+
+        <div id="result" align="center"> </div>
+        <div align="center">
+          &emsp;
+
+          <button class="btn btn-primary btn-sm " type="button" onclick="check()">Check</button>
+          <a href="/listening/progress1/5" class="btn btn-primary btn-sm ">Update progress</a>
+
+        </div>
+        </body>
+        <script>
+          function check() {
+
+            var ex1, score, result;
+            score = 0;
+
+            var ex = ["elsinore", "077896245", "waiter", "baseball coach", "rescue diver", "diving experience", "october", "saturday mornings", "6", "radio"];
+
+            for (var i = 1; i < 11; i++) {
+              text = "ex" + i;
+              text2 = "s" + i;
+              ex1 = document.getElementById(text).value;
+              if (ex1.trim().toLowerCase() != ex[i - 1]) { document.getElementById(text2).innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+              else {
+                document.getElementById(text2).innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />';
+                score++;
+              }
+            }
+
+            ex1 = document.getElementById("ex9").value;
+            if (ex1.trim().toLowerCase() == "6 o'clock") {
+              document.getElementById("s9").innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />';
+              score++;
+            }
+
+
+            removeCookie("first");
+            removeCookie("second");
+            removeCookie("third");
+            removeCookie("fourth");
+            setCookie("first", score, 3);
+
+
+            document.getElementById("result").innerHTML =
+              "<div class='result'>Your result for Section 1 is " + score + "/10 </div>";
+          }
+
+          function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+          }
+
+          function removeCookie(szName) {
+            document.cookie = szName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+          }
+
+
+          function toggle() {
+            var e = document.getElementById("answers");
+            if (e.style.display == 'block') {
+              document.getElementById("b2").innerHTML = ' <img height="25px" src="/static/images/show.png" style="vertical-align: middle"  /> Show answers';
+              e.style.display = 'none';
+            }
+            else {
+              document.getElementById("b2").innerHTML = '<img height="25px" src="/static/images/hide.png" style="vertical-align: middle"  /> Hide answers';
+              e.style.display = 'block';
+            }
+          }
+        </script>
+        {% endblock content %}

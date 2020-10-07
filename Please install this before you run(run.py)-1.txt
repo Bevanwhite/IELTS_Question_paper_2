@@ -1,0 +1,26 @@
+pip install flask
+pip install flask_sqlalchemy
+pip install --no-use-pep517 bcrypt
+pip install flask_bcrypt
+pip install flask_login
+pip install flask_mail
+pip install flask_wtf
+pip install email_validator
+pip install Pillow
+pip install nltk
+pip install numpy
+pip install gensim
+pip install tensorflow
+pip install sklearn
+pip install pymagnitude
+pip install lz4
+pip install xxhash
+pipwin install annoy
+pipwin install fasteners
+pip install torch==1.5.1+cpu torchvision==0.6.1+cpu -f https://download.pytorch.org/whl/torch_stable.html
+pip install gtts
+pip install sounddevice
+pipwin install pyaudio
+pip install speechrecognition
+pip install wavio
+pip install pyspellchecker

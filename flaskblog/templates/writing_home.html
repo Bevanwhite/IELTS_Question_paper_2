@@ -1,0 +1,160 @@
+{% extends 'layout.html'%} {% block content %}
+<body>
+    <div class="container mt-3">
+        <div class="container mt-3">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>writing
+                        <a href="/writing/evaluate" class="btn btn-primary btn-sm float-right "
+                            onclick="return confirm('Are you sure to re evaluate study plan?')">Evaluate study plan</a>
+                    </h5>
+                </div>
+            </div>
+            <div class=" mb-3">
+                <div class="card-group">
+                    <div class="card border-info mb-3">
+                        <div class="card-header">Study Plan </div>
+                        <div class="card-body text-info">
+                            <h5 class="card-title">{{ writing.study_plan}}</h5>
+                            <p class="card-text">This is your improvement plan</p>
+                        </div>
+                    </div>
+                    <div class="card border-info mb-3">
+                        <div class="card-header">Feedback</div>
+                        <div class="card-body text-info">
+                            <h5 class="card-title">{{ writing.feedback}}</h5>
+                            <p class="card-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" mb-3">
+                <div class="card-group border-0">
+                    <div class="list-group card border-0" id="plan">
+                    </div>
+                    <div class="list-group" style="display:none" id="p1">
+                        <div class="card-header">Study plan 1</div>
+                        <a href="/writing/plan_g11" class="list-group-item list-group-item-action">writing stage 1
+                            step 1</a>
+                        <a href="/writing/plan1_2" class="list-group-item list-group-item-action">writing stage 1
+                            step 2</a>
+                        <a href="/writing/plan1_3" class="list-group-item list-group-item-action">writing stage 1
+                            step 3</a>
+                        <a href="/writing/plan1_4" class="list-group-item list-group-item-action">writing stage 1
+                            step 4</a>
+                        <a href="/writing/plan1_5" class="list-group-item list-group-item-action">writing stage 1
+                            step 5</a>
+                        
+                        <a href="/writing/plan1_5" class="list-group-item list-group-item-action">writing stage 1
+                            step 5</a>
+                    </div>
+                    <div class="list-group" style="display:none" id="p2">
+                        <div class="card-header">Study plan 2</div>
+                        <a href="/writing/plan2_1" class="list-group-item list-group-item-action">writing stage 2
+                            step 1</a>
+                        <a href="/writing/plan2_2" class="list-group-item list-group-item-action">writing stage 2
+                            step 2</a>
+                        <a href="/writing/plan2_3" class="list-group-item list-group-item-action">writing stage 2
+                            step 3</a>
+                        <a href="/writing/plan2_4" class="list-group-item list-group-item-action">writing stage 2
+                            step 4</a>
+                        <a href="/writing/plan2_5" class="list-group-item list-group-item-action">writing stage 2
+                            step 5</a>
+                    </div>
+                    <div class="list-group" style="display:none" id="p3">
+                        <div class="card-header">Study plan 3</div>
+                        <a href="/writing/plan3_1" class="list-group-item list-group-item-action">writing stage 3
+                            step 1</a>
+                        <a href="/writing/plan3_2" class="list-group-item list-group-item-action">writing stage 3
+                            step 2</a>
+                        <a href="/writing/plan3_3" class="list-group-item list-group-item-action">writing stage 3
+                            step 3</a>
+                        <a href="/writing/plan3_4" class="list-group-item list-group-item-action">writing stage 3
+                            step 4</a>
+                        <a href="/writing/plan3_5" class="list-group-item list-group-item-action">writing stage 3
+                            step 5</a>
+                        <a href="/writing/plan3_1" class="list-group-item list-group-item-action">writing stage 3
+                            step 6</a>
+                        <a href="/writing/plan3_2" class="list-group-item list-group-item-action">writing stage 3
+                            step 7</a>
+                        <a href="/writing/plan3_3" class="list-group-item list-group-item-action">writing stage 3
+                            step 8</a>
+                        <a href="/writing/plan3_4" class="list-group-item list-group-item-action">writing stage 3
+                            step 9</a>
+                        <a href="/writing/plan3_5" class="list-group-item list-group-item-action">writing stage 3
+                            step 10</a>
+                    </div>
+                    <div class="list-group" style="display:none" id="p4">
+                        <div class="card-header">Study plan 4</div>
+                        <a href="/writing/plan_g11" class="list-group-item list-group-item-action">writing stage 4
+                            step Q6</a>
+                        <a href="/writing/plan4_2" class="list-group-item list-group-item-action">writing stage 4
+                            step 2</a>
+                        <a href="/writing/plan4_3" class="list-group-item list-group-item-action">writing stage 4
+                            step 3</a>
+                        <a href="/writing/plan4_4" class="list-group-item list-group-item-action">writing stage 4
+                            step 4</a>
+                        <a href="/writing/plan4_5" class="list-group-item list-group-item-action">writing stage
+                            4</a>
+                    </div>
+                    <div class="list-group" style="display:none" id="p6">
+                        <div class="card-header">Study plan 5</div>
+                        <a href="/writing/lesson1" class="list-group-item list-group-item-action">writing stage 5
+                            step 1</a>
+                    </div>
+                    <div class="list-group" style="display:none" id="p7">
+                        <div class="card-header">Study plan 6</div>
+                        <a href="/writing/lesson1" class="list-group-item list-group-item-action">writing stage 5
+                            step 1</a>
+                    </div>
+                    <div class="list-group" style="display:none" id="p8">
+                        <div class="card-header">Study plan 7</div>
+                        <a href="/writing/lesson1" class="list-group-item list-group-item-action">writing stage 5
+                            step 1</a>
+                    </div>
+                    <div class="list-group" style="display:none" id="p9">
+                        <div class="card-header">Study plan 8</div>
+                        <a href="/writing/lesson1" class="list-group-item list-group-item-action">writing stage 5
+                            step 1</a>
+                    </div>
+                    <div class="list-group" style="display:none" id="p5">
+                        <div class="card-header">Study plan 9</div>
+                        <a href="/writing/lesson1" class="list-group-item list-group-item-action">writing stage 5
+                            step 1</a>
+                    </div>
+                </div>
+
+            </div>
+</body>
+<script>
+    var studyPlan = '{{writing.study_plan_no}}';
+    if (studyPlan == 1) {
+        document.getElementById('plan').innerHTML = document.getElementById('p1').innerHTML;
+    }
+    else if (studyPlan == 2) {
+        document.getElementById('plan').innerHTML = document.getElementById('p2').innerHTML;
+    }
+    else if (studyPlan == 3) {
+        document.getElementById('plan').innerHTML = document.getElementById('p3').innerHTML;
+    }
+    else if (studyPlan == 4) {
+        document.getElementById('plan').innerHTML = document.getElementById('p4').innerHTML;
+    }
+    else if (studyPlan == 5) {
+        document.getElementById('plan').innerHTML = document.getElementById('p5').innerHTML;
+    }
+    else if (studyPlan == 6) {
+        document.getElementById('plan').innerHTML = document.getElementById('p6').innerHTML;
+    }
+    else if (studyPlan == 7) {
+        document.getElementById('plan').innerHTML = document.getElementById('p7').innerHTML;
+    }
+    else if (studyPlan == 8) {
+        document.getElementById('plan').innerHTML = document.getElementById('p8').innerHTML;
+    }
+    else if (studyPlan == 9) {
+        document.getElementById('plan').innerHTML = document.getElementById('p9').innerHTML;
+    }
+</script>
+
+{% endblock content %}

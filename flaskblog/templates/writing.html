@@ -1,0 +1,55 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="row justify-content-center mt-3 mb-3">
+  <div class="col-md-10">
+    {% if current_user.is_authenticated %}
+    <div class="col-md-13 text-md-right mb-3">
+      <a
+        type="button"
+        class="btn btn-outline-primary btn-sm"
+        href="/writing/new"
+      >
+        + Question Paper
+      </a>
+    </div>
+    {% endif %}
+    <div class="card mb-3">
+      <div class="card-header">
+        <h5>IELTS Writing Question Papers</h5>
+      </div>
+    </div>
+    {% for writingpaper in writingpapers.items %}
+    <div class="list-group">
+      <a
+        href="{{ url_for('writing.show_writing', writing_id= writingpaper.id )}}"
+        class="list-group-item list-group-item-action"
+      >
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ writingpaper.title }}</h5>
+          <small
+            >{{ writingpaper.wcreator.username }} - {{
+            writingpaper.date_posted.strftime('%Y-%m-%d') }}</small
+          >
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+    <div class="text-center mt-3">
+      {% for page_num in writingpapers.iter_pages( left_edge=1, right_edge=1,  left_current=1, right_current=2) %}
+      {% if page_num %} 
+      {% if writingpapers.page == page_num %}
+      <a
+        class="btn btn-info mb-4"
+        href="{{ url_for('writing.write', page=page_num) }}"
+        >{{ page_num }}</a
+      >
+      {% else %}
+      <a
+        class="btn btn-outline-info mb-4"
+        href="{{ url_for('writing.write', page=page_num) }}"
+        >{{ page_num }}</a
+      >
+      {% endif%} {% else %} .... {% endif%} {% endfor %}
+    </div>
+  </div>
+  {% endblock content %}
+</div>

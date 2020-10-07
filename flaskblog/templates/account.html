@@ -1,0 +1,228 @@
+{% extends 'layout.html'%} {% block content %}
+<div class="content-section">
+  <div class="accordion" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button
+            class="btn btn-link btn-block text-left"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapseOne"
+            aria-expanded="true"
+            aria-controls="collapseOne"
+          >
+            Reset Your Account In Here
+          </button>
+        </h2>
+      </div>
+      <div
+        id="collapseOne"
+        class="collapse"
+        aria-labelledby="headingOne"
+        data-parent="#accordionExample"
+      >
+        <div class="card-body">
+          <div class="card-group">
+            <div class="card">
+              <div class="card-header">Account Update Form</div>
+              <div class="card-body">
+                <form method="post" action="" enctype="multipart/form-data">
+                  {{ form.hidden_tag() }}
+                  <div class="form-group row">
+                    {{ form.firstname.label(class_="col-md-4 col-form-label
+                    text-md-right")}} {% if form.firstname.errors %}
+                    {{form.firstname(class="form-control col-md-5 is-invalid")}}
+                    <div class="invaild-feedback col-md-3 text-danger">
+                      {% for error in form.firstname.errors %}
+                      <small>{{ error }}</small>
+                      {% endfor %}
+                    </div>
+                    {% else %} {{ form.firstname(class_="form-control
+                    col-md-5")}}{% endif %}
+                  </div>
+                  <div class="form-group row">
+                    {{form.lastname.label(class_="col-md-4 col-form-label
+                    text-md-right")}} {% if form.lastname.errors %}
+                    {{form.lastname(class="form-control col-md-5 is-invalid")}}
+                    <div class="invaild-feedback col-md-3 text-danger">
+                      {% for error in form.lastname.errors %}
+                      <small>{{ error }}</small>
+                      {% endfor %}
+                    </div>
+                    {% else %} {{ form.lastname(class_="form-control
+                    col-md-5")}} {%endif %}
+                  </div>
+                  <div class="form-group row">
+                    {{ form.username.label(class_="col-md-4 col-form-label
+                    text-md-right")}} {% if form.username.errors %}
+                    {{form.username(class="form-control col-md-5 is-invalid")}}
+                    <div class="invaild-feedback col-md-3 text-danger">
+                      {% for error in form.username.errors %}
+                      <small>{{ error }}</small>
+                      {% endfor %}
+                    </div>
+                    {% else %} {{ form.username(class_="form-control
+                    col-md-5")}} {% endif %}
+                  </div>
+                  <div class="form-group row">
+                    {{ form.email.label(class_="col-md-4 col-form-label
+                    text-md-right")}} {% if form.email.errors %}
+                    {{form.email(class="form-control col-md-5 is-invalid")}}
+                    <div class="invaild-feedback col-md-3 text-danger">
+                      {% for error in form.email.errors %}
+                      <small>{{ error }}</small>
+                      {% endfor %}
+                    </div>
+                    {% else %} {{ form.email(class_="form-control col-md-5")}}
+                    {% endif %}
+                  </div>
+                  <div class="form-group row">
+                    {{ form.picture.label(class_="col-md-4 col-form-label
+                    text-md-right")}} {{ form.picture(class="form-control-item")
+                    }} {% if form.picture.errors %} {% for error in
+                    form.picture.errors %}
+                    <small class="text-danger">{{ error }}</small> <br />
+                    {% endfor %} {% endif %}
+                  </div>
+                  <div class="form-group row">
+                    <div class="offset-md-4">
+                      {{ form.submit(class="btn btn-primary")}}
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header">User Details</div>
+                <div class="media justify-content-center">
+                  <img
+                    class="rounded-circle mt-2"
+                    src="{{ image_file }}"
+                    alt="Card image cap"
+                  />
+                </div>
+                <div class="card-body">
+                  <p class="card-text">
+                    First Name : <br />{{ current_user.firstname }}
+                  </p>
+                  <p class="card-text">
+                    Last Name : <br />{{ current_user.lastname }}
+                  </p>
+                  <p class="card-text">
+                    Username : <br />{{ current_user.username }}
+                  </p>
+                  <p class="card-text">
+                    E-mail Address : <br />{{ current_user.email }}
+                  </p>
+                  <p class="card-text">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-header" id="headingTwo">
+        <h2 class="mb-0">
+          <button
+            class="btn btn-link btn-block text-left collapsed"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapseTwo"
+            aria-expanded="false"
+            aria-controls="collapseTwo"
+          >
+            Check Your Previous Exam Marks in all IELTS Exams In This Website
+          </button>
+        </h2>
+      </div>
+      <div
+        id="collapseTwo"
+        class="collapse show"
+        aria-labelledby="headingTwo"
+        data-parent="#accordionExample"
+      >
+        <div class="card-body">
+          <table class="table">
+            <h1>Writing Papers</h1>
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Exam ID</th>
+                <th scope="col">Exam title</th>
+                <th scope="col">Exam Type</th>
+                <th scope="col">Date and Time</th>
+                <th scope="col">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for writinganswer in writinganswers %} {% if
+              writinganswer.user_id == current_user.id %}
+              <tr>
+                <th scope="row">{{ writinganswer.id}}</th>
+                <td>{{ writinganswer.candidate.title}}</td>
+                <td>{{ writinganswer.type}}</td>
+                <td>
+                  {{ writinganswer.date_posted.strftime("%Y-%m-%d --
+                  %H:%M:%S")}}
+                </td>
+
+                <td>
+                  <a
+                    type="button"
+                    class="btn btn-outline-primary btn-sm"
+                    href="{{ url_for('writing.result', writing_result_id= writinganswer.id )}}"
+                  >
+                    Result
+                  </a>
+                </td>
+              </tr>
+              {% endif %} {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <h1>Speaking Papers</h1>
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Exam ID</th>
+                <th scope="col">Exam Paper ID</th>
+                <th scope="col">Exam title</th>
+                <th scope="col">Date and Time</th>
+                <th scope="col">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for speakinganswersave in speakinganswersaves %} {% if
+              speakinganswersave.user_id == current_user.id %}
+              <tr>
+                <th scope="row">{{ speakinganswersave.id}}</th>
+                <td>{{ speakinganswersave.speaker.id}}</td>
+                <td>{{ speakinganswersave.speaker.title}}</td>
+                <td>
+                  {{ speakinganswersave.date_posted.strftime("%Y-%m-%d --
+                  %H:%M:%S")}}
+                </td>
+
+                <td>
+                  <a
+                    type="button"
+                    class="btn btn-outline-primary btn-sm"
+                    href="{{ url_for('speaking.result', speaking_id= speakinganswersave.id )}}"
+                  >
+                    Result
+                  </a>
+                </td>
+              </tr>
+              {% endif %} {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock content%}
+</div>

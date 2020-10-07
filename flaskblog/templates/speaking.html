@@ -1,0 +1,38 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="row justify-content-center mt-3">
+  <div class="col-md-10">
+    {% if current_user.is_authenticated %}
+    <div class="col-md-13 text-md-right mb-3">
+      <a
+        type="button"
+        class="btn btn-outline-primary btn-sm"
+        href="/speaking/new"
+      >
+        + Question Paper
+      </a>
+    </div>
+    {% endif %}
+    <div class="card mb-3">
+      <div class="card-header">
+        <h5>New Speaking Question Paper</h5>
+      </div>
+    </div>
+    {% for speaking in speakings %}
+    <div class="list-group">
+      <a
+        href="{{ url_for('speaking.show_speaking', speaking_id= speaking.id )}}"
+        class="list-group-item list-group-item-action"
+      >
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ speaking.title }}</h5>
+          <small>
+            {{ speaking.vspeak.username }} - 
+            {{speaking.date_posted.strftime('%Y-%m-%d') }}</small
+          >
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

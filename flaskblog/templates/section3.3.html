@@ -1,0 +1,222 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Listening</h5>
+        </div>
+    </div>
+    <div class="card mt-3 mb-3">
+        <div class="card-header">
+            <div class="audio_file">
+                <audio controls>
+                    <source src="/static/audio/plan2.3.mp3" type="audio/mpeg">
+                </audio>
+            </div><br>
+            <div class="card-body">
+                <h6 class="card-title">
+                    <p><strong>Questions 1-5</strong> </p>
+                    <p>
+                        Choose the correct letter, <strong>A</strong>, <strong>B</strong> or <strong>C</strong>.</p>
+
+                </h6>
+                <p><strong>21.</strong> Melanie says she has not started the assignment because <span id="s1">
+                </p>
+                <ol type="A">
+                    <li>
+                        <input type="radio" name="q1" id="a1" />
+                        she was doing work for another course.</li>
+                    <li>
+                        <input type="radio" name="q1" />
+                        it was a really big assignment.</li>
+                    <li>
+                        <input type="radio" name="q1" />
+                        she hasn’t spent time in the library.</li>
+                </ol>
+                </p>
+                <p>&nbsp;</p>
+                <p><strong>22.</strong> The lecturer says that reasonable excuses for extensions are <span id="s2"></p>
+                <ol type="A">
+                    <li>
+                        <input type="radio" name="q2" />
+                        planning problems.</li>
+                    <li>
+                        <input type="radio" name="q2" />
+                        problems with assignment deadlines.</li>
+                    <li>
+                        <input type="radio" name="q2" id="a2" />
+                        personal illness or accident.</li>
+                </ol>
+                <p>&nbsp;</p>
+                <p><strong>Questions 23-27</strong></p>
+                <p>What recommendations does Dr Johnson make about the journal articles?</p>
+                <p>
+                    Choose your answers from the box and write the letters <strong>A</strong>–<strong>G</strong>
+                    next to questions <strong>23</strong>–<strong>27</strong></p>
+                <div style="border:1px solid black; width:40%; padding:0 7px 0 7px;"><strong>A </strong>must
+                    read</p>
+                    <p><strong>B </strong>useful</p>
+                    <p><strong>C </strong>limited value</p>
+                    <p><strong>D </strong>read first section</p>
+                    <p><strong>E </strong>read research methods</p>
+                    <p><strong>F </strong>read conclusion</p>
+                    <p><strong>G </strong>don’t read</p>
+                </div>
+
+                <p>Jackson: <strong>23.</strong>
+                    <input type="text" class="ex-input" style="width:30px" id="ex3" required="required" /> <span
+                        id="s3"></span>
+                    <br />
+                    Roberts: <strong>24.</strong>
+                    <input type="text" class="ex-input" style="width:30px" id="ex4" required="required" /> <span
+                        id="s4"></span>
+                    <br />
+                    Morris: <strong> 25.</strong>
+                    <input type="text" class="ex-input" style="width:30px" id="ex5" required="required" /> <span
+                        id="s5"></span>
+                    </strong><br />
+                    Cooper: <strong>26.</strong>
+                    <input type="text" class="ex-input" style="width:30px" id="ex6" required="required" /> <span
+                        id="s6"></span>
+                    <br />
+                    Forster: <strong>27.</strong>
+                    <input type="text" class="ex-input" style="width:30px" id="ex7" required="required" /> <span
+                        id="s7"></span>
+                </p>
+                <p>&nbsp;</p>
+                <p><strong>Questions 28-30</strong></p>
+                <p>
+                    Label the chart below.</p>
+                <p>
+                    Choose your answers from the box below and write the letters
+                    <strong>A</strong>-<strong>H</strong> next to questions
+                    <strong>28</strong>-<strong>30.</strong></p>
+
+                <p align="center" style="font-weight:bold;">Population studies.<br />
+                    Reasons for changing accommodation.</p>
+                <div align="center"><img src="/static/images/plan2.3.png" width="60%" /> </div>
+
+                <div style="border:1px solid black; width:40%; padding:0 7px 0 7px; display:inline-block;">
+                    <strong>Possible reasons</strong><br />
+                    <strong>A </strong>uncooperative landlord<br />
+                    <strong>B </strong>environment<br />
+                    <strong>C </strong>space<br />
+                    <strong>D </strong>noisy neighbours<br />
+                    <strong>E </strong>near city<br />
+                    <strong>F </strong>work location<br />
+                    <strong>G </strong>transport<br />
+                    <strong>H </strong>rent</p>
+                </div>
+
+                <div style="display:inline-block; margin-left:40px;">
+                    <p><strong>28.</strong>
+                        <input type="text" class="ex-input" style="width:200px" id="ex8" required />
+                        <span id="s8"></span> </p>
+                    <p><strong>29.</strong>
+                        <input type="text" class="ex-input" style="width:200px" id="ex9" required> <span id="s9"></span>
+                    </p>
+                    <p><strong>30.</strong>
+                        <input type="text" class="ex-input" style="width:200px" id="ex10" required> <span
+                            id="s10"></span> </p>
+                </div>
+                <p>
+                </p>
+
+
+                <br />
+                </p>
+                </p>
+            </div><br><br>
+            <button id="b2" type="button" class="btn btn-outline-info" onclick="toggle()">
+                <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show
+                answers</button>
+
+            <div id="answers" style="display:none;" class="hint">
+                <p><strong>ANSWERS</strong></p>
+                <p>Each question correctly answered scores 1 mark. <strong>Correct</strong> spelling is
+                    needed in all answers.
+                </p>
+                <ol start="1">
+                    <li>A</li>
+                    <li>C</li>
+                    <li>E</li>
+                    <li>B</li>
+                    <li>G</li>
+                    <li>F</li>
+                    <li>C</li>
+                    <li>D</li>
+                    <li>A</li>
+                    <li>B</li>
+                </ol>
+
+            </div>
+        </div> <br /> <br />
+        <div id="result" align="center"> </div>
+        <div align="center">
+            &emsp;
+
+            <button class="btn btn-primary btn-sm " type="button" onclick="check()">Check</button> &emsp;
+            <a href="/listening/go_home" class="btn btn-primary btn-sm ">Home</a>
+
+        </div>
+        </body>
+        <script>
+            function check() {
+
+                var ex1, score, result;
+                score = 0;
+
+                var ex = ["e", "b", "g", "f", "c", "d", "a", "b"];
+
+                for (var i = 1; i < 3; i++) {
+                    text = "a" + i; text2 = "s" + i;
+                    if (document.getElementById(text).checked == true) {
+                        document.getElementById(text2).innerHTML = '<img height=20px src="/static/images/correct.png"  />';
+                        score++;
+                    }
+                    else { result = false; document.getElementById(text2).innerHTML = '<img height=20px src="/static/images/wrong.png"  />'; }
+                }
+
+
+
+                for (var i = 3; i < 11; i++) {
+                    text = "ex" + i;
+                    text2 = "s" + i;
+                    ex1 = document.getElementById(text).value;
+                    if (ex1.trim().toLowerCase() != ex[i - 3]) { document.getElementById(text2).innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+                    else {
+                        document.getElementById(text2).innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />';
+                        score++;
+                    }
+                }
+
+
+
+
+
+
+                setCookie("third", score, 3);
+
+                document.getElementById("result").innerHTML =
+                    "<div class='result'>Your result for Section 3 is " + score + "/10 </div>";
+            }
+
+
+            function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toUTCString();
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+            }
+            function toggle() {
+                var e = document.getElementById("answers");
+                if (e.style.display == 'block') {
+                    document.getElementById("b2").innerHTML = ' <img height="25px" src="/static/images/show.png" style="vertical-align: middle"  /> Show answers';
+                    e.style.display = 'none';
+                }
+                else {
+                    document.getElementById("b2").innerHTML = '<img height="25px" src="/static/images/hide.png" style="vertical-align: middle"  /> Hide answers';
+                    e.style.display = 'block';
+                }
+            }
+        </script>
+        {% endblock content %}

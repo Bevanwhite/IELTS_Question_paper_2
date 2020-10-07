@@ -1,0 +1,31 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="row justify-content-center mt-3">
+  <div class="col-md-10">
+    <div class="card">
+      <div class="card-header">Reset Password</div>
+      <div class="card-body">
+        <form method="POST" action="">
+          {{ form.hidden_tag() }}
+          <div class="form-group row">
+            {{ form.email.label(class_="col-md-4 col-form-label
+            text-md-right")}} {% if form.email.errors %}
+            {{form.email(class="form-control col-md-5 is-invalid")}}
+            <div class="invaild-feedback col-md-3 text-danger">
+              {% for error in form.email.errors %}
+              <small>{{ error }}</small>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.email(class_="form-control col-md-5")}} {% endif
+            %}
+          </div>
+          <div class="form-group row mb-0">
+            <div class="offset-md-4">
+              {{ form.submit(class="btn btn-primary")}}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

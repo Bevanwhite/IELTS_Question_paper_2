@@ -1,0 +1,273 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Listening</h5>
+        </div>
+    </div>
+    <div class="card mt-3 mb-3">
+        <div class="card-header">
+            <h6>IELTS Listening Lesson: training attention</h6>
+        </div>
+        <div class="card-body">
+            <h6 class="card-title">
+                <p>To succeed in IELTS Listening, you should be very attentive. In this lesson we&rsquo;ll train to
+                    <em>read IELTS
+                        Listening questions carefully</em> and <em>avoid simple mistakes caused by lack of
+                        attention</em>. Although
+                    this may sound too simple for you, in fact it&rsquo;s very important to learn to read the
+                    questions carefully.
+                </p>
+            </h6>
+            <p>Quite often test-takers lose marks because they have read the question inattentively. For
+                example:</p>
+            </h6><br />
+            <br />
+            <p><strong>Example 1.</strong> Write NO MORE THAN TWO WORDS for the answer.</p>
+            <p>How much does Adult All-Day Pass cost? ....................</p><br />
+            <audio controls controlsList="nodownload">
+                <source src="/static/audio/lesson2.1.mp3" type="audio/mp3">
+                Your browser doesn't support audio teg!
+            </audio><br /><br />
+            <button id="b22" class="btn btn-outline-info" type="button" onclick="toggle(2)">
+                <img height="25px" src="/static/images/hide.png" style="vertical-align: middle" />Hide
+                transcript</button>
+            <div id="answers2" style="display:block;" class="transcript">
+                <p>Thank you for choosing City Tours! The reason so many people choose our tours when visiting this
+                    city is
+                    because you can design your tour to suit your own interests. Your all-day pass entitles you to
+                    board up bus
+                    at any stop, and stay as long as you like at each place. The all-day bus pass cost 18$ for
+                    adults. Children
+                    between the ages of 5 and 12 pay half the adult fare.</p>
+            </div>
+            <p>Correct answer: <strong>eighteen dollars</strong>.</p>
+            <p>It&rsquo;s clearly said in the recording that &ldquo;The all-day bus pass cost 18$ for adults&rdquo;.
+                <span style="color:red;">But if you wrote <strong>18 $</strong>, your answer would be marked as
+                    incorrect!</span>
+                This is because the question asks you to write &ldquo;<strong>no more than two words for the
+                    answer</strong>&rdquo;, so numbers and symbols are automatically considered as incorrect.</p>
+            <br />
+            <p><u><strong>To avoid such mistakes, make sure you</strong></u>:</p>
+            <ol>
+                <li>Write words if you&rsquo;re asked to write words, and write numbers if you&rsquo;re asked to
+                    write numbers.
+                </li>
+                <li>Don&rsquo;t exceed the word limit.</li>
+                <li>Answer the question with relevant information</li>
+            </ol>
+            <p>&nbsp;</p>
+            <p>Let&rsquo;s see more examples and exercises.</p>
+            <p><strong>Example 2</strong>. Write NO MORE THAN ONE WORD for each answer.</p>
+            <p>The man&rsquo;s occupation is ................ .</p><br />
+
+            <audio controls controlsList="nodownload">
+                <source src="/static/audio/lesson2.2.mp3" type="audio/mp3">
+                Your browser doesn't support audio teg!
+            </audio><br /><br />
+            <button id="b21" class="btn btn-outline-info" type="button" onclick="toggle(1)">
+                <img height="25px" src="/static/images/hide.png" style="vertical-align: middle" />Hide
+                transcript</button>
+            <div id="answers1" style="display:block;" class="transcript">
+                <p><span style="font-weight:bold;">Woman</span>: And what is your occupation?</p>
+                <p><span style="font-weight:bold;">Man</span>: I&rsquo;m an editorial office manager.</p>
+            </div>
+            <p>In this example you can write only one word for your answer. Even though the man says that he&rsquo;s
+                an<em>
+                    editorial office manager</em>, you should shorten his occupation to fit into the word limit. The
+                key word
+                here is <em>manager</em>.</p>
+            <p>So the correct answer is <strong>manager</strong>.</p>
+            <p>Those test-takers who read the question inattentively, would exceed the word limit, writing
+                <em>editorial office
+                    manager</em>. But such answer achieves 0 points.</p>
+            <p>&nbsp;</p>
+            <h2>IELTS Listening Practice: reading questions attentively</h2><br />
+            <p><strong>Exercise 1</strong>: write NO MORE THAN TWO WORDS for each answer.</p>
+
+
+            <audio controls controlsList="nodownload">
+                <source src="/static/audio/lesson2.3.mp3" type="audio/mp3">
+                Your browser doesn't support audio teg!
+            </audio><br /><br />
+            <p>How long has the woman been living in the town? <input type="text" class="ex-input" style="width:120px"
+                    id="ex1">
+                <span id="s1"></span></p>
+            <p>What is going on in the park? <input type="text" class="ex-input" style="width:120px" id="ex2"> <span
+                    id="s2"></span></p>
+
+            <br />
+            <button class="btn btn-primary btn-sm " type="button" onclick="check1()">Check</button> &emsp;&emsp;
+            <button id="b23" class="btn btn-outline-info" type="button" onclick="toggle(3)">
+                <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show
+                transcript</button>
+            <div id="answers3" style="display:none;" class="transcript">
+                <p><span style="font-weight:bold;">Man</span>: Oh, it is such a good town! How long have you been
+                    living here?
+                </p>
+                <p><span style="font-weight:bold;">Woman</span>: I like this place too. I&rsquo;ve been living here
+                    for 10 years
+                    so far. It&rsquo;s not very big, but it&rsquo;s so calm.</p>
+                <p><span style="font-weight:bold;">Man</span>: Yes. And this town is very green too. There are parks
+                    and squares
+                    almost everywhere. And what is going on in that park over the road?</p>
+                <p><span style="font-weight:bold;">Woman</span>: It is a spring city fair. A lot of folk-crafts are
+                    presented
+                    there.</p>
+            </div><br /><br />
+            <p>The woman says that she’s been living in that town for 10 years. But as the question asks you to
+                write <em>no
+                    more than two words</em>, the correct answer is <strong>ten years</strong>. She also says that
+                the Spring
+                City Fair is going in the park. But you have to shorten that Spring City Fair to <strong>city
+                    fair</strong> or
+                simply <strong>fair</strong> to fit into the word limit.</p>
+            <br />
+            <hr />
+            <br />
+
+            <p><strong>Exercise 2</strong>: tick ALL the correct answers.</p>
+            <audio controls controlsList="nodownload">
+                <source src="/static/audio/lesson2.4.mp3" type="audio/mp3">
+                Your browser doesn't support audio teg!
+            </audio><br /><br />
+
+            <p>Which animals did Lucy adopt?</p>
+            <p><input type="checkbox" id="ch1" value="1" /> dog <span id="ss1"></span>
+                <br /><input type="checkbox" id="ch2" value="1" /> cat <span id="ss2"></span>
+                <br /><input type="checkbox" id="ch3" /> parrot <span id="ss3"></span>
+                <br /><input type="checkbox" id="ch4" /> goldfish <span id="ss4"></span></p>
+            <br />
+
+            <button class="btn btn-primary btn-sm " type="button" onclick="check2()">Check</button> &emsp;&emsp;
+            <button id="b24" class="btn btn-outline-info" type="button" onclick="toggle(4)">
+                <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show
+                transcript</button>
+            <div id="answers4" style="display:none;" class="transcript">
+                <p><span style="font-weight:bold;">Woman</span>: Hi, Steve!</p>
+                <p><span style="font-weight:bold;">Man</span>: Hello, Lucy! Is it true that you adopted another
+                    animal?</p>
+                <p><span style="font-weight:bold;">Woman</span>: Yes. I was in the animal shelter last week and saw
+                    such a
+                    pretty dog. Of course, I took it home!</p>
+                <p><span style="font-weight:bold;">Man</span>: Wow, you’re a hero! But is it your first pet?</p>
+                <p><span style="font-weight:bold;">Woman</span>: No. I adopted a cat two years ago. And I also have
+                    a parrot and
+                    a goldfish, but they’re not adopted. My parents bought them when I was a child.</p>
+            </div><br /><br />
+            <p>In this exercise all four animals are mentioned. But if you read the question attentively, you will
+                note that it
+                asks you "<em>Which animals did Lucy <u>adopt</u>?</em>". And Lucy says that she adopted her cat and
+                dog, and
+                then she adds: "<em>I also have a parrot and a goldfish, but <u>they're not adopted</u></em>".</p>
+
+            <p>So the correct answers are <strong>dog</strong> and <strong>cat</strong>. Note that the question asks
+                you to tick
+                ALL the correct answers, so if you ticked only one correct answer, you would achieve half of the
+                points for this
+                exercise.
+            </p>
+            <br />
+            <hr /><br />
+            <p><strong>Exercise 3</strong>: answer the questions below with NO MORE THAN TWO WORDS OR A NUMBER.</p>
+            <audio controls controlsList="nodownload">
+                <source src="/static/audio/lesson2.5.mp3" type="audio/mp3">
+                Your browser doesn't support audio teg!
+            </audio><br /><br />
+
+            <p>How old is Mr. Northwood? <input type="text" class="ex-input" style="width: 140px" id="ex3"> years
+                old. <span id="s3"></span></p>
+            <p>How old is Paul? <input type="text" class="ex-input" style="width: 140px" id="ex4"> years old. <span
+                    id="s4"></span></p>
+
+            <br /><button class="btn btn-primary btn-sm " type="button" onclick="check3()">Check</button>
+            &emsp;&emsp;
+            <button id="b25" class="btn btn-outline-info" type="button" onclick="toggle(5)">
+                <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show
+                transcript</button>
+            <div id="answers5" style="display:none;" class="transcript">
+                <p><span style="font-weight:bold;">Woman</span>: Do you know that today is Mr. Northwood's birthday?
+                </p>
+                <p><span style="font-weight:bold;">Man</span>: Oh, really? How old is he?</p>
+                <p><span style="font-weight:bold;">Woman</span>: He is 103 years old!</p>
+                <p><span style="font-weight:bold;">Man</span>: Wow, congratulations to him!</p>
+                <p><span style="font-weight:bold;">Woman</span>: Yeah, even his grandson, Paul, is already in his
+                    thirties.</p>
+                <p><span style="font-weight:bold;">Man</span>: I know, Paul is 34 years old.</p>
+                </p>
+            </div><br /><br />
+            <p>In this exercise, you can write no more than 2 words or a number for each answer. Mr. Northwood is
+                103 years old,
+                so the correct answer is <strong>103</strong>. You cannot write <em>one hundred and three</em>, as
+                this answer
+                would exceed the word limit. And Paul is 34 years old. You can write the answer in two ways:
+                <strong>34</strong>
+                or <strong>thirty-four</strong>.</p>
+            <p>When it’s possible to write a number for the answer, always write a number! This way you’ll save your
+                time and
+                avoid grammar mistakes.</p><br />
+            <br />
+        </div>
+        <div align="center">
+            <a href="/listening/go_home" class="btn btn-primary btn-sm ">Home</a>
+
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+    function check1() {
+        var ex1, ex2;
+        ex1 = document.getElementById("ex1").value;
+        if (ex1.trim().toLowerCase() != "ten years") { document.getElementById("s1").innerHTML = '<img height=20px src="/static/images/wrong.png" />'; }
+        else document.getElementById("s1").innerHTML = '<img height=20px src="/static/images/correct.png" />';
+
+        ex2 = document.getElementById("ex2").value;
+        if ((ex2.trim().toLowerCase() != "city fair") && (ex2.trim().toLowerCase() != "fair")) { document.getElementById("s2").innerHTML = '<img height=20px src="/static/images/wrong.png" />'; }
+        else document.getElementById("s2").innerHTML = '<img height=20px src="/static/images/correct.png" />';
+
+    }
+
+
+    function check2() {
+        for (var i = 1; i < 5; i++) document.getElementById('ss' + i).innerHTML = '';
+
+        for (var i = 1; i < 5; i++) {
+            text = 'ch' + i;
+            if (document.getElementById(text).checked == true) {
+                if (document.getElementById(text).value == 1)
+                    document.getElementById('ss' + i).innerHTML = '<img height=20px src="/static/images/correct.png" />';
+                else document.getElementById('ss' + i).innerHTML = '<img height=20px src="/static/images/wrong.png" />';
+            }
+
+
+        }
+
+    }
+
+
+    function check3() {
+        var ex3, ex4;
+        ex3 = document.getElementById("ex3").value;
+        if (ex3.trim().toLowerCase() != "103") { document.getElementById("s3").innerHTML = '<img height=20px src="/static/images/wrong.png" />'; }
+        else document.getElementById("s3").innerHTML = '<img height=20px src="/static/images/correct.png" />';
+
+        ex4 = document.getElementById("ex4").value;
+        if ((ex4.trim().toLowerCase() != "34") && (ex4.trim().toLowerCase() != "thirty-four")) { document.getElementById("s4").innerHTML = '<img height=20px src="/static/images/wrong.png" />'; }
+        else document.getElementById("s4").innerHTML = '<img height=20px src="/static/images/correct.png" />';
+    }
+
+    function toggle(i) {
+        var e = document.getElementById("answers" + i);
+        if (e.style.display == 'block') {
+            document.getElementById("b2" + i).innerHTML = ' <img height="25px" src="/static/images/show.png" style="vertical-align: middle"  /> Show transcript';
+            e.style.display = 'none';
+        }
+        else {
+            document.getElementById("b2" + i).innerHTML = '<img height="25px" src="/static/images/hide.png" style="vertical-align: middle"  /> Hide transcript';
+            e.style.display = 'block';
+        }
+    }
+</script>
+{% endblock content %}

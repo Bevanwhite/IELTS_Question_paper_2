@@ -1,0 +1,97 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="row justify-content-center mt-3">
+  <div class="col-md-10">
+    <div class="card">
+      <div class="card-header">{{ legend }}</div>
+      <div class="card-body">
+        <form method="post" action="" enctype="multipart/form-data">
+          {{ form.hidden_tag() }}
+          <div class="form-group row">
+            {{ form.title.label(class_="col-md-3 col-form-label text-md-right")}} 
+            {% if form.title.errors %}
+              {{form.title(class="form-control col-md-5 is-invalid")}}
+                <div class="invaild-feedback col-md-4 text-danger">
+                  {% for error in form.title.errors %}
+                  <small>{{ error }}</small>
+                  {% endfor %}
+                </div>
+            {% else %}
+              {{ form.title(class_="form-control col-md-5")}} 
+            {% endif %}
+          </div>
+          <div class="form-group row">
+            {{ form.question_01.label(class_="col-md-3 col-form-label text-md-right")}} 
+            {% if form.question_01.errors %}
+              {{form.question_01(class="form-control col-md-5 is-invalid")}}
+                <div class="invaild-feedback col-md-5 text-danger">
+                  {% for error in form.question_01.errors %}
+                  <small>{{ error }}</small>
+                  {% endfor %}
+                </div>
+            {% else %}
+              {{ form.question_01(class_="form-control col-md-5")}} 
+            {% endif %}
+          </div>
+          <div class="form-group row">
+            {{ form.question_02.label(class_="col-md-3 col-form-label text-md-right")}} 
+            {% if form.question_01.errors %}
+              {{form.question_02(class="form-control col-md-5 is-invalid")}}
+                <div class="invaild-feedback col-md-5 text-danger">
+                  {% for error in form.question_02.errors %}
+                  <small>{{ error }}</small>
+                  {% endfor %}
+                </div>
+            {% else %} 
+              {{ form.question_02(class_="form-control col-md-5")}} 
+            {% endif %}
+          </div>
+          <div class="form-group row">
+            {{ form.question_03.label(class_="col-md-3 col-form-label text-md-right")}} 
+            {% if form.question_03.errors %}
+              {{form.question_03(class="form-control col-md-5 is-invalid")}}
+              <div class="invaild-feedback col-md-5 text-danger">
+                {% for error in form.question_03.errors %}
+                <small>{{ error }}</small>
+                {% endfor %}
+              </div>
+            {% else %} 
+              {{ form.question_03(class_="form-control col-md-5")}} 
+            {% endif %}
+          </div>
+          <div class="form-group row">
+            {{ form.question_04.label(class_="col-md-3 col-form-label text-md-right")}} 
+            {% if form.question_04.errors %}
+              {{form.question_04(class="form-control col-md-5 is-invalid")}}
+                <div class="invaild-feedback col-md-5 text-danger">
+                  {% for error in form.question_04.errors %}
+                  <small>{{ error }}</small>
+                  {% endfor %}
+                </div>
+            {% else %} 
+              {{ form.question_04(class_="form-control col-md-5")}} 
+            {% endif %}
+          </div>
+          <div class="form-group row">
+            {{ form.question_05.label(class_="col-md-3 col-form-label text-md-right")}} 
+            {% if form.question_05.errors %}
+              {{form.question_05(class="form-control col-md-5 is-invalid")}}
+                <div class="invaild-feedback col-md-5 text-danger">
+                  {% for error in form.question_05.errors %}
+                  <small>{{ error }}</small>
+                  {% endfor %}
+                </div>
+            {% else %} 
+              {{ form.question_05(class_="form-control col-md-5")}} 
+            {% endif %}
+          </div>
+          <div class="form-group row mb-0">
+            <div class="offset-md-3">
+              {{ form.submit(class="btn btn-primary")}}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

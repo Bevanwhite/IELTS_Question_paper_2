@@ -1,0 +1,54 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="row justify-content-center mt-3">
+  <div class="col-md-10">
+    <div class="card">
+      <div class="card-header">{{ legend }}</div>
+      <div class="card-body">
+        <form method="post" action="" enctype="multipart/form-data">
+          {{ form.hidden_tag() }}
+          <div class="form-group row">
+            {{ form.title.label(class_="col-md-3 col-form-label
+            text-md-right")}} {% if form.title.errors %}
+            {{form.title(class="form-control col-md-5 is-invalid")}}
+            <div class="invaild-feedback col-md-3 text-danger">
+              {% for error in form.title.errors %}
+              <small>{{ error }}</small>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.title(class_="form-control col-md-5")}} {% endif
+            %}
+          </div>
+          <div class="form-group row">
+            {{ form.task01.label(class_="col-md-3 col-form-label
+            text-md-right")}} {% if form.task01.errors %}
+            {{form.task01(class="form-control col-md-5 is-invalid")}}
+            <div class="invaild-feedback col-md-3 text-danger">
+              {% for error in form.task01.errors %}
+              <small>{{ error }}</small>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.task01(class_="form-control col-md-5")}} {% endif
+            %}
+          </div>
+          <div class="form-group row">
+            {{ form.task01_img.label(class_="col-md-3 col-form-label
+            text-md-right")}} {{ form.task01_img(class="form-control-item") }}
+            {% if form.task01_img.errors %}
+            <div class="invaild-feedback col-md-3 text-danger">
+              {% for error in form.task01_img.errors %}
+              <small>{{ error }}</small>
+              {% endfor %}
+            </div>
+            {% else %} {% endif %}
+          </div>
+          <div class="form-group row">
+            <div class="offset-md-3">
+              {{ form.submit(class="btn btn-primary")}}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

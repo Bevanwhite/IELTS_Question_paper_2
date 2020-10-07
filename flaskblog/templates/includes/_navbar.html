@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="/">SPIACIE</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('writing.write') }}">Writing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('reading.read')}}">Reading</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('listening.listen')}}">Listening</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('speaking.speak') }}">Speaking</a>
+        </li>
+      </ul>
+      <!-- Right Side Of Navbar -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Authentication Links -->
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="/post/new">New Post</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/account">Account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/register">Register</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

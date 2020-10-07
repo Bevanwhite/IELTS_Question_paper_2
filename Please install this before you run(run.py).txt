@@ -1,0 +1,9 @@
+pip install --upgrade pip
+pip install gtts
+pip install sounddevice
+pip uninstall numpy
+pip install numpy
+pip install pipwin
+pipwin install pyaudio
+pip install speechrecognition
+pip install wavio
