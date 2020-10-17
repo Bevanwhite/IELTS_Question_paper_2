@@ -7,8 +7,8 @@ from nltk.corpus import stopwords
 from PIL import Image
 from flask import url_for, jsonify
 from flaskblog import app
-from gensim.models import KeyedVectors
 from tensorflow.keras import backend as K
+from gensim.test.utils import common_texts
 from gensim.models import Word2Vec, KeyedVectors
 from tensorflow.keras.models import Sequential, load_model, model_from_config
 from tensorflow.keras.layers import Dropout, Dense, Input, Embedding, LSTM, Dense, Dropout, Lambda, Flatten
@@ -23,7 +23,7 @@ num_workers = 4
 context = 10
 downsampling = 1e-3
 model = Magnitude(
-    'C://Users//Bevan//Desktop//New folder (3)//myflaskapp//GoogleNews-vectors-negative300.magnitude')
+    'C://Users//Bevan//Desktop//New folder (3)//flask//GoogleNews-vectors-negative300.magnitude')
 
 
 def paper_picture(form_picture):
@@ -116,11 +116,22 @@ def makeFeatureVec(words, model, num_features):
     return featureVec
 
 
+def grammar():
+    model = KeyedVectors.load_word2vec_format(
+        'word2vecmodel.bin', binary=True, limit=10 ** 5)
+    model.init_sims(replace=True)
+    model.save('word2vecmodel')
+    return 'word2vecmodel'
+
+
 def get_grammar_result(test_answer):
 
     test_answer = essay_to_wordlist(test_answer, remove_stopwords=True)
-
-    model = KeyedVectors.load_word2vec_format('word2vecmodel.bin', binary=True)
+    # model = Word2Vec.load('word2vecmodel.bin', binary=True)
+    model = KeyedVectors.load_word2vec_format(
+        'word2vecmodel.bin', binary=True, limit=10 ** 5)
+    model.init_sims(replace=True)
+    model.save('word2vecmodel')
 
     test_answer = getAvgFeatureVecs(test_answer, model, num_features)
 

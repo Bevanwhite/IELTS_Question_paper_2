@@ -10,6 +10,7 @@ import speech_recognition as sr
 import os
 import sqlite3
 from datetime import datetime, timedelta
+import mysql.connector
 
 
 speaking = Blueprint('speaking', __name__)
@@ -61,44 +62,54 @@ def show_speaking(speaking_id):
                 id=1, pid=speaking_id, date_posted=datetime.now(), speakanswer=current_user)
             db.session.add(speak)
             db.session.commit()
-            conn = sqlite3.connect(
-                'C:\\Users\\Bevan\\Desktop\\New folder (3)\\myflaskapp\\flaskblog\\site.db')
+            conn = mysql.connector.connect(
+                host="localhost", user="username", password="password", database="jeffery")
             c = conn.cursor()
             if form.record1.data:
                 file_name1 = record(5)
                 print(file_name1)
                 if (file_name1 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer01 = :answer01, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer01': file_name1, 'id': 1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer01 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name1, 1, speaking_id,
+                           current_user.id, datetime.now())
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record2.data:
                 file_name2 = record(5)
                 if (file_name2 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer02 = :answer02, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer02': file_name2, 'id': 1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer02 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name2, datetime.now(), 1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record3.data:
                 file_name3 = record(5)
                 if (file_name3 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer03 = :answer03, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer03': file_name3, 'id': 1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer03 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name3, datetime.now(), 1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record4.data:
                 file_name4 = record(5)
                 if (file_name4 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer04 = :answer04, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer04': file_name4, 'id': 1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer04 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name4, datetime.now(), 1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record5.data:
                 file_name5 = record(5)
                 if (file_name5 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer05 = :answer05, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer05': file_name5, 'id': 1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer05 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name5, datetime.now(), 1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             conn.close()
         elif(speaks[-1].user_id != current_user.id):
@@ -108,134 +119,164 @@ def show_speaking(speaking_id):
             print(speak)
             db.session.add(speak)
             db.session.commit()
-            conn = sqlite3.connect(
-                'C:\\Users\\Bevan\\Desktop\\New folder (3)\\myflaskapp\\flaskblog\\site.db')
+            conn = mysql.connector.connect(
+                host="localhost", user="username", password="password", database="jeffery")
             c = conn.cursor()
             if form.record1.data:
                 file_name1 = record(5)
                 print(file_name1)
                 if (file_name1 != 'none'):
                     print(speaks[-1].id+1)
-                    c.execute("""UPDATE Speakinganswer SET answer01 = :answer01, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer01': file_name1, 'id': speaks[-1].id+1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer01 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name1, datetime.now(), speaks[-1].id+1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record2.data:
                 file_name2 = record(5)
                 if (file_name2 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer02 = :answer02, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer02': file_name2, 'id': speaks[-1].id+1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer02 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name2, datetime.now(), speaks[-1].id+1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record3.data:
                 file_name3 = record(5)
                 if (file_name3 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer03 = :answer03, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer03': file_name3, 'id': speaks[-1].id+1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer03 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name3, datetime.now(), speaks[-1].id+1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record4.data:
                 file_name4 = record(5)
                 if (file_name4 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer04 = :answer04, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer04': file_name4, 'id': speaks[-1].id+1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer04 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name4, datetime.now(), speaks[-1].id+1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record5.data:
                 file_name5 = record(5)
                 if (file_name5 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer0 = :answer05, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer05': file_name5, 'id': speaks[-1].id+1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer05 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name5, datetime.now(), speaks[-1].id+1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             conn.close()
         elif (datetime.now() - speaks[-1].date_posted > timedelta(seconds=900)) and (speaks[-1].user_id == current_user.id):
+            print("3")
             print(speaks[-1].id)
             speak = Speakinganswer(
                 id=speaks[-1].id+1, pid=speaking_id, date_posted=datetime.now(), speakanswer=current_user)
             db.session.add(speak)
             db.session.commit()
-            conn = sqlite3.connect(
-                'C:\\Users\\Bevan\\Desktop\\New folder (3)\\myflaskapp\\flaskblog\\site.db')
+            conn = mysql.connector.connect(
+                host="localhost", user="username", password="password", database="jeffery")
             c = conn.cursor()
             if form.record1.data:
                 file_name1 = record(5)
                 print(file_name1)
                 if (file_name1 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer01 = :answer01, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer01': file_name1, 'id': speaks[-1].id+1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer01 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name1, datetime.now(), speaks[-1].id+1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record2.data:
                 file_name2 = record(5)
                 if (file_name2 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer02 = :answer02, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer02': file_name2, 'id': speaks[-1].id+1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer02 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name2, datetime.now(), speaks[-1].id+1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record3.data:
                 file_name3 = record(5)
                 if (file_name3 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer03 = :answer03, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer03': file_name3, 'id': speaks[-1].id+1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer03 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name3, datetime.now(), speaks[-1].id+1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record4.data:
                 file_name4 = record(5)
                 if (file_name4 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer04 = :answer04, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer04': file_name4, 'id': speaks[-1].id+1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer04 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name4, datetime.now(), speaks[-1].id+1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record5.data:
                 file_name5 = record(5)
                 if (file_name5 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer05 = :answer05, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer05': file_name5, 'id': speaks[-1].id+1, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer05 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name5, datetime.now(), speaks[-1].id+1,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             conn.close()
-
         elif (datetime.now() - speaks[-1].date_posted <= timedelta(seconds=900)) and (speaks[-1].user_id == current_user.id):
             print("4")
-            conn = sqlite3.connect(
-                'C:\\Users\\Bevan\\Desktop\\New folder (3)\\myflaskapp\\flaskblog\\site.db')
+            conn = mysql.connector.connect(
+                host="localhost", user="username", password="password", database="jeffery")
             c = conn.cursor()
             if form.record1.data:
                 file_name1 = record(5)
                 print(file_name1)
                 if (file_name1 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer01 = :answer01, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer01': file_name1, 'id': speaks[-1].id, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer01 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name1, datetime.now(), speaks[-1].id,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record2.data:
                 file_name2 = record(5)
                 if (file_name2 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer02 = :answer02, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer02': file_name2, 'id': speaks[-1].id, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer02 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name2, datetime.now(), speaks[-1].id,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record3.data:
                 file_name3 = record(5)
                 if (file_name3 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer03 = :answer03, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer03': file_name3, 'id': speaks[-1].id, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer03 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name3, datetime.now(), speaks[-1].id,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record4.data:
                 file_name4 = record(5)
                 if (file_name4 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer04 = :answer04, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer04': file_name4, 'id': speaks[-1].id, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer04 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name4, datetime.now(), speaks[-1].id,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             elif form.record5.data:
                 file_name5 = record(50)
                 if (file_name5 != 'none'):
-                    c.execute("""UPDATE Speakinganswer SET answer05 = :answer05, date_posted = :date_posted
-                                WHERE id = :id AND pid = :pid AND user_id = :user_id """,
-                              {'answer05': file_name5, 'id': speaks[-1].id, 'pid': speaking_id, 'user_id': current_user.id, 'date_posted': datetime.now()})
+                    sql = """UPDATE speakinganswer SET answer05 = %s, date_posted = %s 
+                    WHERE id = %s AND pid = %s AND user_id = %s"""
+                    val = (file_name5, datetime.now(), speaks[-1].id,
+                           speaking_id, current_user.id)
+                    c.execute(sql, val)
                     conn.commit()
             conn.close()
         speaks = Speakinganswer.query.all()

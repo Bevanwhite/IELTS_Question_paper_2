@@ -20,7 +20,7 @@ import wavio
 def Someaudio(form_audio):
     mytext = form_audio
     language = 'en'
-    os.chdir('/Users/Bevan/Desktop/New folder (3)/myflaskapp/flaskblog/static/audio')
+    os.chdir('/Users/Bevan/Desktop/New folder (3)/flask/flaskblog/static/audio')
     print(os.listdir())
     myobj = gTTS(text=mytext, lang=language, slow=False)
     myobj.save('welcome.mp3')
@@ -40,12 +40,12 @@ def record(seconds):
     random_file_name = secrets.token_hex(8)
     myrecoding = sd.rec(int(seconds*fs), samplerate=fs, channels=2)
     sd.wait()
-    os.chdir('/Users/Bevan/Desktop/New folder (3)/myflaskapp/flaskblog/static/')
+    os.chdir('/Users/Bevan/Desktop/New folder (3)/flask/flaskblog/static/')
     wavio.write('data/' + random_file_name +
                 '.wav', myrecoding, fs, sampwidth=2)
     count = count+1
     r = sr.Recognizer()
-    os.chdir('/Users/Bevan/Desktop/New folder (3)/myflaskapp/flaskblog/static/')
+    os.chdir('/Users/Bevan/Desktop/New folder (3)/flask/flaskblog/static/')
     file = sr.AudioFile('data/' + random_file_name + '.wav')
 
     with file as source:
@@ -57,7 +57,7 @@ def record(seconds):
     except sr.UnknownValueError:
         marks = 'none'
         os.chdir(
-            '/Users/Bevan/Desktop/New folder (3)/myflaskapp/flaskblog/static/data/')
+            '/Users/Bevan/Desktop/New folder (3)/flask/flaskblog/static/data/')
         os.remove(random_file_name + '.wav')
     return marks
 

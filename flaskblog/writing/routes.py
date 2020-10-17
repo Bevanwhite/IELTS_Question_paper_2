@@ -45,7 +45,7 @@ def show_writing(writing_id):
         grammar_01 = get_grammar_result(form1.task01_answer.data)
         cohesion_01 = get_cohesion_result(form1.task01_answer.data)
         writing = Writingpaperanswer(pid=writing_id, task=form1.task01_answer.data,
-                                     type="type1", grammar=grammar_01, cohesion=cohesion_01, wcandidate=current_user)
+                                     type="type1", grammar=float(grammar_01), cohesion=float(cohesion_01), wcandidate=current_user)
         db.session.add(writing)
         db.session.commit()
         flash(
