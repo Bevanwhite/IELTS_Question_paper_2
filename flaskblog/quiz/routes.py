@@ -50,5 +50,5 @@ def new_quiz():
         db.session.add(quiz)
         db.session.commit()
         flash('Your paper has created successfully !!!', 'success')
-        return redirect(url_for('main.home'))
+        return redirect(url_for('quiz.quiz_write'))
     return render_template('quiz/create_quiz.html', legend=legend, form=form)
