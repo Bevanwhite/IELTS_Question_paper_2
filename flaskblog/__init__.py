@@ -24,6 +24,7 @@ from flaskblog.posts.routes import posts
 from flaskblog.main.routes import main
 from flaskblog.writing.routes import writing
 from flaskblog.speaking.routes import speaking
+from flaskblog.quiz.routes import quiz
 
 app.register_blueprint(users)
 app.register_blueprint(posts)
@@ -32,3 +33,4 @@ app.register_blueprint(writing)
 app.register_blueprint(speaking)
 app.register_blueprint(reading)
 app.register_blueprint(listening)
+app.register_blueprint(quiz)
