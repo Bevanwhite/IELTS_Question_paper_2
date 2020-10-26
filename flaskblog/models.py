@@ -111,7 +111,7 @@ class Writingimprovementplan(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Writingpaper('{self.id}','{self.study_plan}')"
+        return f"Writingimprovementplan('{self.id}','{self.study_plan}')"
 
 
 class Speaking(db.Model):
@@ -161,7 +161,7 @@ class Speakinganswer(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Speak('{self.id}','{self.user_id}','{self.date_posted}')"
+        return f"Speakinganswer('{self.id}','{self.user_id}','{self.date_posted}')"
 
 
 class Speakinganswersaved(db.Model):
@@ -187,7 +187,7 @@ class Speakinganswersaved(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Speak('{self.id}','{self.user_id}','{self.date_posted}')"
+        return f"Speakinganswersaved('{self.id}','{self.user_id}','{self.date_posted}')"
 
 
 class Quiz(db.Model):
@@ -204,7 +204,7 @@ class Quiz(db.Model):
     quiz_short = db.relationship('Quiz_short', backref='short', lazy=True)
 
     def __repr__(self):
-        return f"User('{self.id}','{self.name}','{self.typeofquestion}')"
+        return f"Quiz('{self.id}','{self.name}','{self.typeofquestion}')"
 
 
 class Quiz_radio(db.Model):
@@ -221,7 +221,7 @@ class Quiz_radio(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"User('{self.id}','{self.quiz_id}','{self.user_id}')"
+        return f"Quiz_radio('{self.id}','{self.quiz_id}','{self.user_id}')"
 
 
 class Quiz_check(db.Model):
@@ -237,8 +237,10 @@ class Quiz_check(db.Model):
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+    quiz_check = db.relationship('Quiz_answers', backref='answers', lazy=True)
+
     def __repr__(self):
-        return f"User('{self.id}','{self.title}','{self.quiz_id}')"
+        return f"Quiz_check('{self.id}','{self.title}','{self.quiz_id}')"
 
 
 class Quiz_short(db.Model):
@@ -252,4 +254,22 @@ class Quiz_short(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"User('{self.id}','{self.title}','{self.quiz_id}')"
+        return f"Quiz_short('{self.id}','{self.title}','{self.quiz_id}')"
+
+
+class Quiz_answers(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(50), nullable=False)
+    quiz_id = db.Column(db.Integer, db.ForeignKey(
+        'quiz_check.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Quiz_answers('{self.id}','{self.text}','{self.quiz_id}')"
+
+
+class Quiz_answers_type(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    texts = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self):
+        return f"Quiz_answers_type('{self.id}','{self.texts}')"

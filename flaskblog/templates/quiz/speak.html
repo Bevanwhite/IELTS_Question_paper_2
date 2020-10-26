@@ -16,7 +16,7 @@
     {% include 'includes/_quiznavbar.html' %} {% for quiz in quizs %}
     <div class="list-group">
       <a
-        href="{{ url_for('quiz.quiz_writing', writing_id=quiz.id)}}"
+        href="{{ url_for('quiz.show_quiz', quiz_id=quiz.id)}}"
         class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">

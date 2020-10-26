@@ -3,20 +3,24 @@
   <div class="col-md-10">
     {% if current_user.is_authenticated %}
     <div class="col-md-13 text-md-right mb-3">
-      <a type="button" class="btn btn-outline-primary btn-sm" href="/quiz/new">
-        + Question Paper
+      <a
+        type="button"
+        class="btn btn-outline-primary btn-sm"
+        href="{{ url_for('quiz.quiz_question', quiz_id=quiz.id)}}"
+      >
+        + Questions
       </a>
     </div>
     {% endif %}
     <div class="card mb-3">
       <div class="card-header">
-        <h5>New Quiz Question Papers</h5>
+        <h5>New Quiz Questions</h5>
       </div>
     </div>
-    {% include 'includes/_quiznavbar.html' %} {% for quiz in quizs %}
+    {% for quiz in quizs %}
     <div class="list-group">
       <a
-        href="{{ url_for('quiz.quiz_writing', writing_id=quiz.id)}}"
+        href="{{ url_for('quiz.show_quiz', quiz_id=quiz.id)}}"
         class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">
@@ -31,5 +35,4 @@
     {% endfor %}
   </div>
 </div>
-
 {% endblock content %}

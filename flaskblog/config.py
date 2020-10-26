@@ -1,7 +1,7 @@
 class Config:
 
     SECRET_KEY = 'bcec6cfc03974b3fdb9e87253e03d977'
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://username:password@localhost/jeffery'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://username:password@localhost/jeffer'
     SQLALCHEMY_TRACK_MODIFICATIONS = 'True'
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
