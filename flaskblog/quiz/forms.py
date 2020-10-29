@@ -39,7 +39,8 @@ class MultiCheckboxField(SelectMultipleField):
 
 
 class QuestionChecklistForm(FlaskForm):
-    title = TextAreaField('Question', validators=[
+    title = StringField('Title', validators=[DataRequired(), Length(max=50)])
+    question = TextAreaField('Question', validators=[
         DataRequired(), Length(max=250)])
     answer01 = StringField('Answer 01', validators=[DataRequired()])
     answer02 = StringField('Answer 02', validators=[DataRequired()])
@@ -52,12 +53,20 @@ class QuestionChecklistForm(FlaskForm):
 
 
 class QuestionRadioForm(FlaskForm):
-    title = StringField('Question', validators=[
+    title = StringField('Title', validators=[DataRequired(), Length(max=50)])
+    question = TextAreaField('Question', validators=[
         DataRequired(), Length(max=250)])
     answer01 = StringField('Answer 01', validators=[DataRequired()])
     answer02 = StringField('Answer 02', validators=[DataRequired()])
     answer03 = StringField('Answer 03', validators=[DataRequired()])
     answer04 = StringField('Answer 04', validators=[DataRequired()])
-    correct_answer = SelectField(u'Type of Question', choices=[
-        ('answer01', 'Answer 01'), ('answer02', 'Answer 02'), ('answer03', 'Answer 03'), ('answer04', 'Answer 04')])
+    correct_answer = SelectField(u'Correct Answer', choices=[], coerce=int)
+    submit = SubmitField('Submit the Question')
+
+
+class QuestionShortForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired(), Length(max=50)])
+    question = TextAreaField('Question', validators=[
+        DataRequired(), Length(max=250)])
+    correct_answer = StringField('Correct Answer', validators=[DataRequired()])
     submit = SubmitField('Submit the Question')

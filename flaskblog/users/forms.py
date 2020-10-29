@@ -8,9 +8,9 @@ from flaskblog.models import User
 
 class RegistrationForm(FlaskForm):
     firstname = StringField('First Name', validators=[
-        DataRequired(), Length(min=5, max=15)])
+        DataRequired(), Length(min=3, max=15)])
     lastname = StringField('Last Name', validators=[
-        DataRequired(), Length(min=5, max=15)])
+        DataRequired(), Length(min=3, max=15)])
     username = StringField('Username', validators=[
                            DataRequired(), Length(min=4, max=50)])
     email = StringField('E-mail Address', validators=[DataRequired(), Email()])

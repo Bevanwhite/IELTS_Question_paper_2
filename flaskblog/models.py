@@ -209,7 +209,8 @@ class Quiz(db.Model):
 
 class Quiz_radio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), unique=True, nullable=False)
+    title = db.Column(db.String(1000), unique=True, nullable=False)
+    question = db.Column(db.String(1000), nullable=False)
     answer01 = db.Column(db.String(100), nullable=False)
     answer02 = db.Column(db.String(100), nullable=False)
     answer03 = db.Column(db.String(100), nullable=False)
@@ -226,7 +227,8 @@ class Quiz_radio(db.Model):
 
 class Quiz_check(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), unique=True, nullable=False)
+    title = db.Column(db.String(1000), unique=True, nullable=False)
+    question = db.Column(db.String(1000), nullable=False)
     answer01 = db.Column(db.String(100), nullable=False)
     answer02 = db.Column(db.String(100), nullable=False)
     answer03 = db.Column(db.String(100), nullable=False)
@@ -245,8 +247,8 @@ class Quiz_check(db.Model):
 
 class Quiz_short(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), unique=True, nullable=False)
-    answer = db.Column(db.String(100), nullable=False)
+    title = db.Column(db.String(1000), unique=True, nullable=False)
+    question = db.Column(db.String(1000), nullable=False)
     correct_answer = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.now())
