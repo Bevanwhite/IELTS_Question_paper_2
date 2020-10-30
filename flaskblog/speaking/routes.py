@@ -11,7 +11,7 @@ import os
 import sqlite3
 from datetime import datetime, timedelta
 import mysql.connector
-
+import joblib
 
 speaking = Blueprint('speaking', __name__)
 
@@ -62,56 +62,38 @@ def show_speaking(speaking_id):
                 id=1, pid=speaking_id, date_posted=datetime.now(), speakanswer=current_user)
             db.session.add(speak)
             db.session.commit()
-            conn = mysql.connector.connect(
-                host="localhost", user="username", password="password", database="jeffery")
-            c = conn.cursor()
             if form.record1.data:
                 file_name1 = record(5)
                 print(file_name1)
                 if (file_name1 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer01 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name1, 1, speaking_id,
-                           current_user.id, datetime.now())
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == 1, Speakinganswer.user_id ==
+                                                            current_user.id, Speakinganswer.pid == speaking_id).update({Speakinganswer.answer01: file_name1}, synchronize_session=False)
+                    db.session.commit()
+
             elif form.record2.data:
                 file_name2 = record(5)
                 if (file_name2 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer02 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name2, datetime.now(), 1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == 1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer02: file_name2}, synchronize_session=False)
+                    db.session.commit()
             elif form.record3.data:
                 file_name3 = record(5)
                 if (file_name3 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer03 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name3, datetime.now(), 1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == 1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer03: file_name3}, synchronize_session=False)
+                    db.session.commit()
             elif form.record4.data:
                 file_name4 = record(5)
                 if (file_name4 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer04 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name4, datetime.now(), 1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == 1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer04: file_name4}, synchronize_session=False)
+                    db.session.commit()
             elif form.record5.data:
                 file_name5 = record(5)
                 if (file_name5 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer05 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name5, datetime.now(), 1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
-            conn.close()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == 1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer05: file_name5}, synchronize_session=False)
+                    db.session.commit()
         elif(speaks[-1].user_id != current_user.id):
             print("2")
             speak = Speakinganswer(
@@ -119,56 +101,38 @@ def show_speaking(speaking_id):
             print(speak)
             db.session.add(speak)
             db.session.commit()
-            conn = mysql.connector.connect(
-                host="localhost", user="username", password="password", database="jeffery")
-            c = conn.cursor()
             if form.record1.data:
                 file_name1 = record(5)
                 print(file_name1)
                 if (file_name1 != 'none'):
                     print(speaks[-1].id+1)
-                    sql = """UPDATE speakinganswer SET answer01 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name1, datetime.now(), speaks[-1].id+1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer01: file_name1}, synchronize_session=False)
+                    db.session.commit()
             elif form.record2.data:
                 file_name2 = record(5)
                 if (file_name2 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer02 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name2, datetime.now(), speaks[-1].id+1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer02: file_name2}, synchronize_session=False)
+                    db.session.commit()
             elif form.record3.data:
                 file_name3 = record(5)
                 if (file_name3 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer03 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name3, datetime.now(), speaks[-1].id+1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer03: file_name3}, synchronize_session=False)
+                    db.session.commit()
             elif form.record4.data:
                 file_name4 = record(5)
                 if (file_name4 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer04 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name4, datetime.now(), speaks[-1].id+1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer04: file_name4}, synchronize_session=False)
+                    db.session.commit()
             elif form.record5.data:
                 file_name5 = record(5)
                 if (file_name5 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer05 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name5, datetime.now(), speaks[-1].id+1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer05: file_name5}, synchronize_session=False)
+                    db.session.commit()
             conn.close()
         elif (datetime.now() - speaks[-1].date_posted > timedelta(seconds=900)) and (speaks[-1].user_id == current_user.id):
             print("3")
@@ -177,108 +141,71 @@ def show_speaking(speaking_id):
                 id=speaks[-1].id+1, pid=speaking_id, date_posted=datetime.now(), speakanswer=current_user)
             db.session.add(speak)
             db.session.commit()
-            conn = mysql.connector.connect(
-                host="localhost", user="username", password="password", database="jeffery")
-            c = conn.cursor()
             if form.record1.data:
                 file_name1 = record(5)
                 print(file_name1)
                 if (file_name1 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer01 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name1, datetime.now(), speaks[-1].id+1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer01: file_name1}, synchronize_session=False)
+                    db.session.commit()
             elif form.record2.data:
                 file_name2 = record(5)
                 if (file_name2 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer02 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name2, datetime.now(), speaks[-1].id+1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer02: file_name2}, synchronize_session=False)
+                    db.session.commit()
             elif form.record3.data:
                 file_name3 = record(5)
                 if (file_name3 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer03 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name3, datetime.now(), speaks[-1].id+1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer03: file_name3}, synchronize_session=False)
+                    db.session.commit()
             elif form.record4.data:
                 file_name4 = record(5)
                 if (file_name4 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer04 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name4, datetime.now(), speaks[-1].id+1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer04: file_name4}, synchronize_session=False)
+                    db.session.commit()
             elif form.record5.data:
                 file_name5 = record(5)
                 if (file_name5 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer05 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name5, datetime.now(), speaks[-1].id+1,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
-            conn.close()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer05: file_name5}, synchronize_session=False)
+                    db.session.commit()
         elif (datetime.now() - speaks[-1].date_posted <= timedelta(seconds=900)) and (speaks[-1].user_id == current_user.id):
             print("4")
-            conn = mysql.connector.connect(
-                host="localhost", user="username", password="password", database="jeffery")
-            c = conn.cursor()
             if form.record1.data:
                 file_name1 = record(5)
                 print(file_name1)
                 if (file_name1 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer01 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name1, datetime.now(), speaks[-1].id,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer01: file_name1}, synchronize_session=False)
+                    db.session.commit()
             elif form.record2.data:
                 file_name2 = record(5)
                 if (file_name2 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer02 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name2, datetime.now(), speaks[-1].id,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer02: file_name2}, synchronize_session=False)
+                    db.session.commit()
             elif form.record3.data:
                 file_name3 = record(5)
                 if (file_name3 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer03 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name3, datetime.now(), speaks[-1].id,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer03: file_name3}, synchronize_session=False)
+                    db.session.commit()
+
             elif form.record4.data:
                 file_name4 = record(5)
                 if (file_name4 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer04 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name4, datetime.now(), speaks[-1].id,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer04: file_name4}, synchronize_session=False)
+                    db.session.commit()
             elif form.record5.data:
                 file_name5 = record(50)
                 if (file_name5 != 'none'):
-                    sql = """UPDATE speakinganswer SET answer05 = %s, date_posted = %s 
-                    WHERE id = %s AND pid = %s AND user_id = %s"""
-                    val = (file_name5, datetime.now(), speaks[-1].id,
-                           speaking_id, current_user.id)
-                    c.execute(sql, val)
-                    conn.commit()
-            conn.close()
+                    db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
+                                                            ).update({Speakinganswer.answer05: file_name5}, synchronize_session=False)
+                    db.session.commit()
         speaks = Speakinganswer.query.all()
         if form.submit.data:
             if speaks[-1].answer01 != None and speaks[-1].answer02 != None and speaks[-1].answer03 != None and speaks[-1].answer04 != None and speaks[-1].answer05 != None:
@@ -293,13 +220,24 @@ def show_speaking(speaking_id):
                 cohesion_04 = get_cohesion_result(speaks[-1].answer04)
                 grammar_05 = get_grammar_result(speaks[-1].answer05)
                 cohesion_05 = get_cohesion_result(speaks[-1].answer05)
+                print(grammar_01, "hi beva")
+                print(grammar_02, "hi beva")
+                print(grammar_03, "hi beva")
+                print(grammar_04, "hi beva")
+                print(grammar_05, "hi beva")
+                print(cohesion_01, "hi beva")
+                print(cohesion_02, "hi beva")
+                print(cohesion_03, "hi beva")
+                print(cohesion_04, "hi beva")
+                print(cohesion_05, "hi beva")
+
                 speaksaved = Speakinganswersaved(
                     pid=speaking_id,
-                    answer01=speaks[-1].answer01, cohesion_01=cohesion_01, grammar_01=grammar_01,
-                    answer02=speaks[-1].answer02, cohesion_02=cohesion_02, grammar_02=grammar_02,
-                    answer03=speaks[-1].answer03, cohesion_03=cohesion_03, grammar_03=grammar_03,
-                    answer04=speaks[-1].answer04, cohesion_04=cohesion_04, grammar_04=grammar_04,
-                    answer05=speaks[-1].answer05, cohesion_05=cohesion_05, grammar_05=grammar_05,
+                    answer01=speaks[-1].answer01, cohesion_01=float(cohesion_01), grammar_01=float(grammar_01),
+                    answer02=speaks[-1].answer02, cohesion_02=float(cohesion_02), grammar_02=float(grammar_02),
+                    answer03=speaks[-1].answer03, cohesion_03=float(cohesion_03), grammar_03=float(grammar_03),
+                    answer04=speaks[-1].answer04, cohesion_04=float(cohesion_04), grammar_04=float(grammar_04),
+                    answer05=speaks[-1].answer05, cohesion_05=float(cohesion_05), grammar_05=float(grammar_05),
                     date_posted=datetime.now(), speakinganswersaved=current_user)
                 db.session.add(speaksaved)
                 db.session.commit()
@@ -324,3 +262,18 @@ def result(speaking_id):
             'static', filename='profile_pics/' + current_user.image_file)
         return render_template('speaking_anwser.html', title='Update',
                                legend='Update', speaking_answer=speaking_answer, spic_file=spic_file, speaking_ans=speaking_ans)
+
+
+# @speaking.route("/speaking/<int:speaking_id>/results", methods=['POST', 'GET'])
+# def result_machinelearning(speaking_id):
+
+#     grammerAvg = 24
+#     coheshionAvg = 30
+
+#     test_data = [[grammerAvg, coheshionAvg]]
+#     model = joblib.load('improvePlan.sav')
+#     category = model.predict(test_data)
+
+#     print(category)
+
+#     return render_template('result_machinelearning.html', category=category)

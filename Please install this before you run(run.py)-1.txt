@@ -24,3 +24,13 @@ pipwin install pyaudio
 pip install speechrecognition
 pip install wavio
 pip install pyspellchecker
+
+
+engine = create_engine(
+    'mysql+pymysql://username:password@localhost/jeffery', echo=True)
+Session = sessionmaker(bind=engine)
+session = Session()
+
+db.session.add_all([Quiz_answers_type(texts="Answer 01"), Quiz_answers_type(
+    texts="Answer 02"), Quiz_answers_type(texts="Answer 03"), Quiz_answers_type(texts="Answer 04")])
+db.session.commit()

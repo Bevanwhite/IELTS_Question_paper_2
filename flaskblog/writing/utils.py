@@ -127,6 +127,7 @@ def grammar():
 def get_grammar_result(test_answer):
 
     test_answer = essay_to_wordlist(test_answer, remove_stopwords=True)
+    print(os.getcwd())
     # model = Word2Vec.load('word2vecmodel.bin', binary=True)
     model = KeyedVectors.load_word2vec_format(
         'word2vecmodel.bin', binary=True, limit=10 ** 5)

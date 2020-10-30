@@ -36,11 +36,17 @@ def quiz_speak():
 @quiz.route("/quiz/<int:quiz_id>")
 def show_quiz(quiz_id):
     quiz = Quiz.query.get_or_404(quiz_id)
+    print(quiz.noq)
     quiz_checks = Quiz_check.query.filter(Quiz_check.quiz_id == quiz_id).all()
     quiz_radios = Quiz_radio.query.filter(Quiz_radio.quiz_id == quiz_id).all()
     quiz_shorts = Quiz_short.query.filter(Quiz_short.quiz_id == quiz_id).all()
+    see1 = Quiz_check.query.filter(Quiz_check.quiz_id == quiz_id).count()
+    see2 = Quiz_radio.query.filter(Quiz_radio.quiz_id == quiz_id).count()
+    see3 = Quiz_short.query.filter(Quiz_short.quiz_id == quiz_id).count()
+    val = see1+see2+see3
+    print(val)
 
-    return render_template('quiz/quiz.html', quiz=quiz)
+    return render_template('quiz/quiz.html', quiz=quiz, quiz_checks=quiz_checks, quiz_radios=quiz_radios, quiz_shorts=quiz_shorts)
 
 
 @quiz.route("/quiz/new", methods=['GET', 'POST'])
