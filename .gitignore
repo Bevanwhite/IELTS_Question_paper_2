@@ -12,3 +12,4 @@ LSTM-score.h5
 Listening_activity_suggestion_up1.sav
 Reading_activity_suggestion_up1.sav
 word2vecmodel.bin
+flaskblog/word2vecmodel.bin
