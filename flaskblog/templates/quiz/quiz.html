@@ -1,5 +1,5 @@
 {% extends 'layout.html' %} {% block content %}
-<div class="row justify-content-center mt-3">
+<div class="row justify-content-center mt-3 mb-5">
   <div class="col-md-10">
     {% if current_user.is_authenticated %}
     <div class="col-md-13 text-md-right mb-3">
@@ -17,22 +17,58 @@
         <h5>New Quiz Questions</h5>
       </div>
     </div>
-    {% for quiz in quizs %}
+    {% for quiz_check in quiz_checks %}
     <div class="list-group">
       <a
-        href="{{ url_for('quiz.show_quiz', quiz_id=quiz.id)}}"
+        href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quiz_check.quiz_id, id=quiz_check.id)}}"
         class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{ quiz.name }}</h5>
+          <h5 class="mb-1">{{ quiz_check.title }}</h5>
           <small>
-            {{ quiz.quiz.username }} - {{quiz.date_posted.strftime('%Y-%m-%d')
-            }}</small
+            {{ quiz_check.qcheck.username }} -
+            {{quiz_check.date_posted.strftime('%Y-%m-%d') }}</small
           >
         </div>
       </a>
     </div>
     {% endfor %}
+    <div class="mt-3">
+      {% for quiz_radio in quiz_radios %}
+      <div class="list-group">
+        <a
+          href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quiz_radio.quiz_id, id=quiz_radio.id)}}"
+          class="list-group-item list-group-item-action"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ quiz_radio.title }}</h5>
+            <small>
+              {{ quiz_radio.qradio.username }} -
+              {{quiz_radio.date_posted.strftime('%Y-%m-%d') }}</small
+            >
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="mt-3">
+      {% for quiz_short in quiz_shorts %}
+      <div class="list-group">
+        <a
+          href="{{ url_for('quiz.quiz_short_answer', quiz_id=quiz_short.quiz_id, id=quiz_short.id)}}"
+          class="list-group-item list-group-item-action"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ quiz_short.title }}</h5>
+            <small>
+              {{ quiz_short.qshort.username }} -
+              {{quiz_short.date_posted.strftime('%Y-%m-%d') }}</small
+            >
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
   </div>
 </div>
 {% endblock content %}

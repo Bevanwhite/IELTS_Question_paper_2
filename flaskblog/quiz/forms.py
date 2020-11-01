@@ -1,15 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, IntegerField, SelectField, SelectMultipleField
+from wtforms import StringField, SubmitField, TextAreaField, IntegerField, SelectField, SelectMultipleField, RadioField
 from wtforms.validators import DataRequired, ValidationError,  Length, Regexp, NumberRange
 from wtforms.widgets import ListWidget, CheckboxInput
-from flaskblog.models import Quiz, Quiz_answers_type
+from flaskblog.models import Quiz, Quiz_answers_type, Quiz_check, Quiz_radio, Quiz_short
 
 
 class QuizCreationForm(FlaskForm):
     name = StringField('Question Title', validators=[
         DataRequired(), Length(min=6, max=30)])
-    noq = IntegerField('Number of Questions', validators=[
-        DataRequired(), NumberRange(min=0, max=40)])
     toq = SelectField(u'Type of Question', choices=[
                       ('writing', 'Writing'), ('reading', 'Reading'), ('listening', 'Listening'), ('speaking', 'Speaking')])
     submit = SubmitField('Submit the Quiz')
@@ -41,21 +39,34 @@ class MultiCheckboxField(SelectMultipleField):
 class QuestionChecklistForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(max=50)])
     question = TextAreaField('Question', validators=[
-        DataRequired(), Length(max=250)])
+        DataRequired(), Length(max=1000)])
     answer01 = StringField('Answer 01', validators=[DataRequired()])
     answer02 = StringField('Answer 02', validators=[DataRequired()])
     answer03 = StringField('Answer 03', validators=[DataRequired()])
     answer04 = StringField('Answer 04', validators=[DataRequired()])
     correct_answer = MultiCheckboxField(
         u'Correct Answer', choices=[], coerce=int)
-
     submit = SubmitField('Submit the Question')
+
+    def validate_title(self, title):
+        quiz_check = Quiz_check.query.filter_by(title=title.data).first()
+        if quiz_check:
+            raise ValidationError(
+                'This title is taken. Please choose a diffrent one')
+        quiz_radio = Quiz_radio.query.filter_by(title=title.data).first()
+        if quiz_radio:
+            raise ValidationError(
+                'This title is taken. Please choose a diffrent one')
+        quiz_short = Quiz_short.query.filter_by(title=title.data).first()
+        if quiz_short:
+            raise ValidationError(
+                'This title is taken. Please choose a diffrent one')
 
 
 class QuestionRadioForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(max=50)])
     question = TextAreaField('Question', validators=[
-        DataRequired(), Length(max=250)])
+        DataRequired(), Length(max=1000)])
     answer01 = StringField('Answer 01', validators=[DataRequired()])
     answer02 = StringField('Answer 02', validators=[DataRequired()])
     answer03 = StringField('Answer 03', validators=[DataRequired()])
@@ -63,10 +74,55 @@ class QuestionRadioForm(FlaskForm):
     correct_answer = SelectField(u'Correct Answer', choices=[], coerce=int)
     submit = SubmitField('Submit the Question')
 
+    def validate_title(self, title):
+        quiz_check = Quiz_check.query.filter_by(title=title.data).first()
+        if quiz_check:
+            raise ValidationError(
+                'This title is taken. Please choose a diffrent one')
+        quiz_radio = Quiz_radio.query.filter_by(title=title.data).first()
+        if quiz_radio:
+            raise ValidationError(
+                'This title is taken. Please choose a diffrent one')
+        quiz_short = Quiz_short.query.filter_by(title=title.data).first()
+        if quiz_short:
+            raise ValidationError(
+                'This title is taken. Please choose a diffrent one')
+
 
 class QuestionShortForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(max=50)])
     question = TextAreaField('Question', validators=[
-        DataRequired(), Length(max=250)])
+        DataRequired(), Length(max=1000)])
+    correct_answer = StringField('Correct Answer', validators=[DataRequired()])
+    submit = SubmitField('Submit the Question')
+
+    def validate_title(self, title):
+        quiz_check = Quiz_check.query.filter_by(title=title.data).first()
+        if quiz_check:
+            raise ValidationError(
+                'This title is taken. Please choose a diffrent one')
+        quiz_radio = Quiz_radio.query.filter_by(title=title.data).first()
+        if quiz_radio:
+            raise ValidationError(
+                'This title is taken. Please choose a diffrent one')
+        quiz_short = Quiz_short.query.filter_by(title=title.data).first()
+        if quiz_short:
+            raise ValidationError(
+                'This title is taken. Please choose a diffrent one')
+
+
+class ChecklistForm(FlaskForm):
+    correct_answer = MultiCheckboxField(
+        u'Correct Answer', choices=[], coerce=int)
+    submit = SubmitField('Submit the Question')
+
+
+class RadioForm(FlaskForm):
+    correct_answer = RadioField(
+        u'Correct Answer', choices=[], coerce=int)
+    submit = SubmitField('Submit the Question')
+
+
+class ShortForm(FlaskForm):
     correct_answer = StringField('Correct Answer', validators=[DataRequired()])
     submit = SubmitField('Submit the Question')

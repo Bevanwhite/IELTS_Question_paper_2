@@ -34,3 +34,8 @@ session = Session()
 db.session.add_all([Quiz_answers_type(texts="Answer 01"), Quiz_answers_type(
     texts="Answer 02"), Quiz_answers_type(texts="Answer 03"), Quiz_answers_type(texts="Answer 04")])
 db.session.commit()
+
+insert into quiz_answers_type(texts) values("Answer 01")
+insert into quiz_answers_type(texts) values("Answer 02")
+insert into quiz_answers_type(texts) values("Answer 03")
+insert into quiz_answers_type(texts) values("Answer 04")

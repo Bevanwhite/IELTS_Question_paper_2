@@ -220,17 +220,6 @@ def show_speaking(speaking_id):
                 cohesion_04 = get_cohesion_result(speaks[-1].answer04)
                 grammar_05 = get_grammar_result(speaks[-1].answer05)
                 cohesion_05 = get_cohesion_result(speaks[-1].answer05)
-                print(grammar_01, "hi beva")
-                print(grammar_02, "hi beva")
-                print(grammar_03, "hi beva")
-                print(grammar_04, "hi beva")
-                print(grammar_05, "hi beva")
-                print(cohesion_01, "hi beva")
-                print(cohesion_02, "hi beva")
-                print(cohesion_03, "hi beva")
-                print(cohesion_04, "hi beva")
-                print(cohesion_05, "hi beva")
-
                 speaksaved = Speakinganswersaved(
                     pid=speaking_id,
                     answer01=speaks[-1].answer01, cohesion_01=float(cohesion_01), grammar_01=float(grammar_01),
@@ -242,6 +231,8 @@ def show_speaking(speaking_id):
                 db.session.add(speaksaved)
                 db.session.commit()
                 return redirect(url_for('speaking.speak'))
+                flash(
+                    'Your Speaking Paper has been Subbmited to the Database!', 'success')
             else:
                 flash(
                     'please submit all five answers and try to save the paper', 'danger')
