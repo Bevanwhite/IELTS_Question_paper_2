@@ -17,57 +17,54 @@
         <h5>New Quiz Questions</h5>
       </div>
     </div>
-    {% for quiz_check in quiz_checks %}
+    {% for quiz_create in quiz_creates %} {% if quiz_create.toq == "short"%}
     <div class="list-group">
       <a
-        href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quiz_check.quiz_id, id=quiz_check.id)}}"
+        href="{{ url_for('quiz.quiz_short_answer', quiz_id=quiz_create.quiz_id, id=quiz_create.id)}}"
         class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{ quiz_check.title }}</h5>
+          <h5 class="mb-1">{{ quiz_create.title }}</h5>
           <small>
-            {{ quiz_check.qcheck.username }} -
-            {{quiz_check.date_posted.strftime('%Y-%m-%d') }}</small
+            {{ quiz_create.createquiz.username }} -
+            {{quiz_create.date_posted.strftime('%Y-%m-%d') }}</small
           >
         </div>
       </a>
     </div>
-    {% endfor %}
-    <div class="mt-3">
-      {% for quiz_radio in quiz_radios %}
-      <div class="list-group">
-        <a
-          href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quiz_radio.quiz_id, id=quiz_radio.id)}}"
-          class="list-group-item list-group-item-action"
-        >
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{ quiz_radio.title }}</h5>
-            <small>
-              {{ quiz_radio.qradio.username }} -
-              {{quiz_radio.date_posted.strftime('%Y-%m-%d') }}</small
-            >
-          </div>
-        </a>
-      </div>
-      {% endfor %}
+    {% endif %} {% if quiz_create.toq == "checklist"%}
+    <div class="list-group">
+      <a
+        href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quiz_create.quiz_id, id=quiz_create.id)}}"
+        class="list-group-item list-group-item-action"
+      >
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ quiz_create.title }}</h5>
+          <small>
+            {{ quiz_create.createquiz.username }} -
+            {{quiz_create.date_posted.strftime('%Y-%m-%d') }}</small
+          >
+        </div>
+      </a>
     </div>
-    <div class="mt-3">
-      {% for quiz_short in quiz_shorts %}
-      <div class="list-group">
-        <a
-          href="{{ url_for('quiz.quiz_short_answer', quiz_id=quiz_short.quiz_id, id=quiz_short.id)}}"
-          class="list-group-item list-group-item-action"
-        >
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{ quiz_short.title }}</h5>
-            <small>
-              {{ quiz_short.qshort.username }} -
-              {{quiz_short.date_posted.strftime('%Y-%m-%d') }}</small
-            >
-          </div>
-        </a>
-      </div>
-      {% endfor %}
+    {% endif %} 
+    {% if quiz_create.toq == "radio"%}
+    <div class="list-group">
+      <a
+        href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quiz_create.quiz_id, id=quiz_create.id)}}"
+        class="list-group-item list-group-item-action"
+      >
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ quiz_create.title }}</h5>
+          <small>
+            {{ quiz_create.createquiz.username }} -
+            {{quiz_create.date_posted.strftime('%Y-%m-%d') }}</small
+          >
+        </div>
+      </a>
+    </div>
+    {% endif %}
+    {% endfor %}
     </div>
   </div>
 </div>

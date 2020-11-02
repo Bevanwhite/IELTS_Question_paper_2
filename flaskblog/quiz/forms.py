@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, IntegerField, SelectField, SelectMultipleField, RadioField
 from wtforms.validators import DataRequired, ValidationError,  Length, Regexp, NumberRange
 from wtforms.widgets import ListWidget, CheckboxInput
-from flaskblog.models import Quiz, Quiz_answers_type, Quiz_check, Quiz_radio, Quiz_short
+from flaskblog.models import Quiz, Quiz_answers_type, Create_quiz
 
 
 class QuizCreationForm(FlaskForm):
@@ -49,16 +49,8 @@ class QuestionChecklistForm(FlaskForm):
     submit = SubmitField('Submit the Question')
 
     def validate_title(self, title):
-        quiz_check = Quiz_check.query.filter_by(title=title.data).first()
+        quiz_check = Create_quiz.query.filter_by(title=title.data).first()
         if quiz_check:
-            raise ValidationError(
-                'This title is taken. Please choose a diffrent one')
-        quiz_radio = Quiz_radio.query.filter_by(title=title.data).first()
-        if quiz_radio:
-            raise ValidationError(
-                'This title is taken. Please choose a diffrent one')
-        quiz_short = Quiz_short.query.filter_by(title=title.data).first()
-        if quiz_short:
             raise ValidationError(
                 'This title is taken. Please choose a diffrent one')
 
@@ -75,16 +67,8 @@ class QuestionRadioForm(FlaskForm):
     submit = SubmitField('Submit the Question')
 
     def validate_title(self, title):
-        quiz_check = Quiz_check.query.filter_by(title=title.data).first()
+        quiz_check = Create_quiz.query.filter_by(title=title.data).first()
         if quiz_check:
-            raise ValidationError(
-                'This title is taken. Please choose a diffrent one')
-        quiz_radio = Quiz_radio.query.filter_by(title=title.data).first()
-        if quiz_radio:
-            raise ValidationError(
-                'This title is taken. Please choose a diffrent one')
-        quiz_short = Quiz_short.query.filter_by(title=title.data).first()
-        if quiz_short:
             raise ValidationError(
                 'This title is taken. Please choose a diffrent one')
 
@@ -97,16 +81,8 @@ class QuestionShortForm(FlaskForm):
     submit = SubmitField('Submit the Question')
 
     def validate_title(self, title):
-        quiz_check = Quiz_check.query.filter_by(title=title.data).first()
+        quiz_check = Create_quiz.query.filter_by(title=title.data).first()
         if quiz_check:
-            raise ValidationError(
-                'This title is taken. Please choose a diffrent one')
-        quiz_radio = Quiz_radio.query.filter_by(title=title.data).first()
-        if quiz_radio:
-            raise ValidationError(
-                'This title is taken. Please choose a diffrent one')
-        quiz_short = Quiz_short.query.filter_by(title=title.data).first()
-        if quiz_short:
             raise ValidationError(
                 'This title is taken. Please choose a diffrent one')
 
@@ -125,4 +101,8 @@ class RadioForm(FlaskForm):
 
 class ShortForm(FlaskForm):
     correct_answer = StringField('Correct Answer', validators=[DataRequired()])
+    submit = SubmitField('Submit the Question')
+
+
+class QuestionsForm(FlaskForm):
     submit = SubmitField('Submit the Question')

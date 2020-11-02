@@ -1,10 +1,10 @@
 {% extends 'layout.html' %} {% block content %}
-<div class="row justify-content-center mt-3 mb-5">
-  <div class="col-md-10">
+<div class="row mt-3 mb-5">
+  <div class="col-md-7">
     <div class="card">
       <div class="card-header">{{ legend }}</div>
       <div class="card-body">
-        <h1>{{quiz.title}}</h1>
+        <h2>{{quiz.title}}</h2>
         <div class="text-md-left">
           {% autoescape false %} {{quiz.question.replace('\n', '<br />')}} {%
           endautoescape %}
@@ -17,10 +17,13 @@
             <td>{{ subfield.label }}</td>
           </tr>
           <br />
-          {% endfor %} <br />{{ form.submit(class="btn btn-primary")}}
+          {% endfor %} <br />{{ form.submit(class="btn btn-primary btn-sm")}}
         </form>
       </div>
     </div>
+  </div>
+  <div class="col-md-5">
+    <div class="card">{% include 'includes/_buttonlist.html' %}</div>
   </div>
 </div>
 {% endblock content %}

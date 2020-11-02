@@ -36,12 +36,8 @@ class User(db.Model, UserMixin):
         'Speakinganswersaved', backref='speakinganswersaved', lazy=True)
     quiz = db.relationship(
         'Quiz', backref='quiz', lazy=True)
-    quiz_radio_user = db.relationship(
-        'Quiz_radio', backref='qradio', lazy=True)
-    quiz_check_user = db.relationship(
-        'Quiz_check', backref='qcheck', lazy=True)
-    quiz_short_user = db.relationship(
-        'Quiz_short', backref='qshort', lazy=True)
+    create_quiz = db.relationship(
+        'Create_quiz', backref='createquiz', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(app.config['SECRET_KEY'], expires_sec)
@@ -200,18 +196,18 @@ class Quiz(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.now())
 
-    quiz_radio = db.relationship('Quiz_radio', backref='radio', lazy=True)
-    quiz_check = db.relationship('Quiz_check', backref='check', lazy=True)
-    quiz_short = db.relationship('Quiz_short', backref='short', lazy=True)
+    create_quiz = db.relationship(
+        'Create_quiz', backref='qcreatequiz', lazy=True)
 
     def __repr__(self):
         return f"Quiz('{self.id}','{self.name}','{self.typeofquestion}')"
 
 
-class Quiz_radio(db.Model):
+class Create_quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(1000), unique=True, nullable=False)
     question = db.Column(db.String(1000), nullable=False)
+    toq = db.Column(db.String(50), nullable=False)
     answer01 = db.Column(db.String(100), nullable=False)
     answer02 = db.Column(db.String(100), nullable=False)
     answer03 = db.Column(db.String(100), nullable=False)
@@ -221,53 +217,9 @@ class Quiz_radio(db.Model):
                             default=datetime.now())
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    def __repr__(self):
-        return f"Quiz_radio('{self.id}','{self.quiz_id}','{self.user_id}')"
-
-
-class Quiz_check(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(1000), unique=True, nullable=False)
-    question = db.Column(db.String(1000), nullable=False)
-    answer01 = db.Column(db.String(100), nullable=False)
-    answer02 = db.Column(db.String(100), nullable=False)
-    answer03 = db.Column(db.String(100), nullable=False)
-    answer04 = db.Column(db.String(100), nullable=False)
-    correct_answer = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.now())
-    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    quiz_check = db.relationship('Quiz_answers', backref='answers', lazy=True)
 
     def __repr__(self):
         return f"Quiz_check('{self.id}','{self.title}','{self.quiz_id}')"
-
-
-class Quiz_short(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(1000), unique=True, nullable=False)
-    question = db.Column(db.String(1000), nullable=False)
-    correct_answer = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.now())
-    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    def __repr__(self):
-        return f"Quiz_short('{self.id}','{self.title}','{self.quiz_id}')"
-
-
-class Quiz_answers(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(50), nullable=False)
-    quiz_id = db.Column(db.Integer, db.ForeignKey(
-        'quiz_check.id'), nullable=False)
-
-    def __repr__(self):
-        return f"Quiz_answers('{self.id}','{self.text}','{self.quiz_id}')"
 
 
 class Quiz_answers_type(db.Model):
