@@ -23,42 +23,42 @@
       </div>
       <div class="card-footer text-muted">
         <div class="d-flex bd-highlight">
-          {% if pquiz.toq == "checklist"%}
+          {% if pquiz.toq == "checklist" and pquiz.id != 0%}
           <div class="mr-auto bd-highlight">
             <a
               href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=pquiz.quiz_id, id=pquiz.id) }}"
               >{{ form1.previous(class="btn btn-primary btn-sm")}}</a
             >
           </div>
-          {% endif %} {% if pquiz.toq == "radio"%}
+          {% endif %} {% if pquiz.toq == "radio" and pquiz.id != 0%}
           <div class="mr-auto bd-highlight">
             <a
               href="{{ url_for('quiz.quiz_radio_answer', quiz_id=pquiz.quiz_id, id=pquiz.id) }}"
               >{{ form1.previous(class="btn btn-primary btn-sm")}}</a
             >
           </div>
-          {% endif %} {% if pquiz.toq == "short"%}
+          {% endif %} {% if pquiz.toq == "short" and pquiz.id != 0%}
           <div class="mr-auto bd-highlight">
             <a
               href="{{ url_for('quiz.quiz_short_answer', quiz_id=pquiz.quiz_id, id=pquiz.id) }}"
               >{{ form1.previous(class="btn btn-primary btn-sm")}}</a
             >
           </div>
-          {% endif %}{% if nquiz.toq == "checklist"%}
+          {% endif %}{% if nquiz.toq == "checklist" and nquiz.id != null %}
           <div class="bd-highlight">
             <a
               href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=nquiz.quiz_id, id=nquiz.id) }}"
               >{{ form1.next(class="btn btn-primary btn-sm")}}</a
             >
           </div>
-          {% endif %}{% if nquiz.toq == "radio"%}
+          {% endif %}{% if nquiz.toq == "radio" and nquiz.id != null %}
           <div class="bd-highlight">
             <a
               href="{{ url_for('quiz.quiz_radio_answer', quiz_id=nquiz.quiz_id, id=nquiz.id) }}"
               >{{ form1.next(class="btn btn-primary btn-sm")}}</a
             >
           </div>
-          {% endif %}{% if nquiz.toq == "short"%}
+          {% endif %}{% if nquiz.toq == "short" and nquiz.id != null %}
           <div class="bd-highlight">
             <a
               href="{{ url_for('quiz.quiz_short_answer', quiz_id=nquiz.quiz_id, id=nquiz.id) }}"

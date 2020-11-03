@@ -255,16 +255,15 @@ def result(speaking_id):
                                legend='Update', speaking_answer=speaking_answer, spic_file=spic_file, speaking_ans=speaking_ans)
 
 
-# @speaking.route("/speaking/<int:speaking_id>/results", methods=['POST', 'GET'])
-# def result_machinelearning(speaking_id):
+def result_machinelearning(task,):
 
-#     grammerAvg = 24
-#     coheshionAvg = 30
+    grammerAvg = 24
+    coheshionAvg = 30
 
-#     test_data = [[grammerAvg, coheshionAvg]]
-#     model = joblib.load('improvePlan.sav')
-#     category = model.predict(test_data)
+    test_data = [[grammerAvg, coheshionAvg]]
+    model = joblib.load('improvePlan.sav')
+    category = model.predict(test_data)
 
-#     print(category)
+    print(category)
 
-#     return render_template('result_machinelearning.html', category=category)
+    return render_template('result_machinelearning.html', category=category)

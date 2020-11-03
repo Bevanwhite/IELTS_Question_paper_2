@@ -1,4 +1,5 @@
 import os
+from spellchecker import SpellChecker
 import re
 import secrets
 import nltk
@@ -188,3 +189,26 @@ def get_cohesion_result(paragraph):
         marksArray.append(marks)
         print(results)
     return np.mean(np.array(marksArray))
+
+
+def check_spellings(paragraph):
+    miss_words = []
+    corrected_words = []
+    candidate_words = []
+
+    data_tok = nltk.word_tokenize(paragraph)
+    print(paragraph, data_tok)
+
+    spell = SpellChecker()
+
+    # find those words that may be misspelled
+    # find those words that may be misspelled
+    misspelled = spell.unknown(data_tok)
+
+    for word in misspelled:
+        # Get the one `most likely` answer
+
+        miss_words.append(
+            [word, spell.correction(word), spell.candidates(word)])
+
+    return str([miss_words])

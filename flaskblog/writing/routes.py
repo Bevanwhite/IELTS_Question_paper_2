@@ -1,11 +1,17 @@
+import joblib
 from flask import render_template, Blueprint, flash, url_for, redirect, request, abort
 from flask_login import login_user, login_required, current_user
 from flaskblog import db
 from flaskblog.models import Writingpaper, Writingpaperanswer, Writingimprovementplan
 from flaskblog.writing.forms import WritingpaperForm, WritingUpdateForm, WritingpaperoneForm
-from flaskblog.writing.utils import paper_picture, get_grammar_result, get_cohesion_result
+from flaskblog.writing.utils import paper_picture, get_grammar_result, get_cohesion_result, check_spellings
 from datetime import datetime
-
+import numpy as np
+from spellchecker import SpellChecker
+from flask import Flask, request, jsonify
+import nltk
+# nltk.download('punkt')
+activityModel = joblib.load('Writing_Activity_Suggestion.sav')
 
 writing = Blueprint('writing', __name__)
 
@@ -15,6 +21,42 @@ def write():
     page = request.args.get('page', 1, type=int)
     writingpapers = Writingpaper.query.paginate(page=page, per_page=6)
     return render_template('writing.html', writingpapers=writingpapers)
+
+
+similarity_model = joblib.load('cosine_model.sav')
+
+test_answer1 = "The line graph illustrates the amount of three kinds of spreads (margarine, low fat and reduced spreads and butter) which were consumed over 26 years from 1981 to 2007."
+
+
+def cosine_sim(text1, text2):
+    tfidf = similarity_model.fit_transform([text1, text2])
+    return ((tfidf * tfidf.T).A)[0, 1]
+
+
+# @writing.route('/check_spellings', methods=['POST', 'GET'])
+# def check_spellings():
+
+#     User_json = request.json
+#     paragraph = User_json['para']
+
+#     data_tok = nltk.word_tokenize(paragraph)
+#     print(paragraph, data_tok)
+
+#     spell = SpellChecker()
+
+# # find those words that may be misspelled
+#     misspelled = spell.unknown(data_tok)
+
+#     for word in misspelled:
+#         # Get the one `most likely` answer
+
+#         miss_words.append(
+#             [word, spell.correction(word), spell.candidates(word)])
+
+#     return str([miss_words])
+
+
+# app.run(debug=True)
 
 
 @writing.route("/writing/new", methods=['GET', 'POST'])
@@ -41,11 +83,13 @@ def new_writingpaper():
 def show_writing(writing_id):
     writingpaper = Writingpaper.query.get_or_404(writing_id)
     form1 = WritingpaperoneForm()
+    activitySuggestion(1, 9)
     if form1.validate_on_submit():
         grammar_01 = get_grammar_result(form1.task01_answer.data)
         cohesion_01 = get_cohesion_result(form1.task01_answer.data)
+        score = cosine_sim(test_answer1, form1.task01_answer.data)
         writing = Writingpaperanswer(pid=writing_id, task=form1.task01_answer.data,
-                                     type="type1", grammar=float(grammar_01), cohesion=float(cohesion_01), wcandidate=current_user)
+                                     type="type1", grammar=float(grammar_01), cohesion=float(cohesion_01), similarity=str(round(score*100)), wcandidate=current_user)
         db.session.add(writing)
         db.session.commit()
         flash(
@@ -92,13 +136,16 @@ def delete_writing(writing_id):
 @writing.route("/writing/<int:writing_result_id>/result", methods=['POST', 'GET'])
 @login_required
 def result(writing_result_id):
+
     writing_answer = Writingpaperanswer.query.get_or_404(writing_result_id)
+    para = check_spellings(writing_answer.task)
+
     if writing_answer.wcandidate != current_user:
         abort(403)
     else:
         pic_file = url_for(
             'static', filename='profile_pics/' + current_user.image_file)
-        return render_template('writing_answer.html', title='Update', legend='Update', writing_answer=writing_answer, pic_file=pic_file)
+        return render_template('writing_answer.html', title='Update', legend='Update', writing_answer=writing_answer, pic_file=pic_file, para=para)
 
 
 @writing.route('/writing/<int:writing_result_id>/summary', methods=['POST', 'GET'])
@@ -183,3 +230,11 @@ def plan2_2():
 @writing.route("/writing/plan2_3")
 def plan2_3():
     return render_template('plan2.3.html')
+
+
+def activitySuggestion(section, marks):
+
+    test_data = np.array([section, marks]).reshape(1, 2)
+    activity = activityModel.predict(test_data)[0]
+    print(activity)
+    return activity

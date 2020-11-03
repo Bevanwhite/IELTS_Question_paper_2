@@ -136,14 +136,22 @@ def quiz_short(quiz_id):
 def quiz_radio_answer(quiz_id, id):
     quiz = Create_quiz.query.get_or_404(id)
     quizes = Create_quiz.query.all()
-    pquiz = Create_quiz.query.get_or_404(id-1)
-    nquiz = Create_quiz.query.get_or_404(id+1)
+    pquiz = Create_quiz.query.get_or_404(id)
+    print(pquiz)
+    if quiz.id != 1:
+        pquiz = Create_quiz.query.get_or_404(id-1)
+        print(pquiz)
+    if quiz.id < 39:
+        nquiz = Create_quiz.query.get_or_404(id+1)
+        print(nquiz)
     if quiz.toq != "radio":
         abort(403)
 
     form1 = PreviewForm()
     form = RadioForm()
-    legend = "Answer the Radio Question"
+    legend = "A"
+    if form.validate_on_submit():
+        legend = "Answer the Radio Question"
     list = []
     list.append((1, quiz.answer01))
     list.append((2, quiz.answer02))
@@ -158,15 +166,23 @@ def quiz_radio_answer(quiz_id, id):
 @quiz.route("/quiz/<int:quiz_id>/checklist/<int:id>", methods=['GET', 'POST'])
 def quiz_checklist_answer(quiz_id, id):
     quizes = Create_quiz.query.all()
-    pquiz = Create_quiz.query.get_or_404(id-1)
-    nquiz = Create_quiz.query.get_or_404(id+1)
     quiz = Create_quiz.query.get_or_404(id)
+    pquiz = Create_quiz.query.get_or_404(id)
+    print(pquiz)
+    if quiz.id != 1:
+        pquiz = Create_quiz.query.get_or_404(id-1)
+        print(pquiz)
+    if quiz.id < 39:
+        nquiz = Create_quiz.query.get_or_404(id+1)
+        print(nquiz)
     if quiz.toq != "checklist":
         abort(403)
     form1 = PreviewForm()
     form = ChecklistForm()
+    legend = "A"
+    if form.validate_on_submit():
+        legend = "Answer Checklist Question"
     quiz = Create_quiz.query.get_or_404(id)
-    legend = "Answer Checklist Question"
 
     list = []
     list.append((1, quiz.answer01))
@@ -179,18 +195,28 @@ def quiz_checklist_answer(quiz_id, id):
     return render_template('quiz/checklist.html', quiz=quiz, quizes=quizes, legend=legend, form=form, form1=form1, pquiz=pquiz, nquiz=nquiz)
 
 
-@quiz.route("/quiz/<int:quiz_id>/short/<int:id>", methods=['GET', 'POST'])
+@quiz.route("/quiz/<int:quiz_id>/short/<int:id>/", methods=['GET', 'POST'])
 def quiz_short_answer(quiz_id, id):
     quiz = Create_quiz.query.get_or_404(id)
-    pquiz = Create_quiz.query.get_or_404(id-1)
-    nquiz = Create_quiz.query.get_or_404(id+1)
+    pquiz = Create_quiz.query.get_or_404(id)
+    print(pquiz)
+    if quiz.id != 1:
+        pquiz = Create_quiz.query.get_or_404(id-1)
+        print(pquiz)
+    if quiz.id < 39:
+        nquiz = Create_quiz.query.get_or_404(id+1)
+        print(nquiz)
+
     quizes = Create_quiz.query.all()
     if quiz.toq != "short":
         abort(403)
     form1 = PreviewForm()
     quiz = Create_quiz.query.get_or_404(id)
-    legend = "Answer Short Question"
     form = ShortForm()
+    legend = "A"
+    if form.validate_on_submit():
+        legend = "Answer Short Question"
+
     return render_template('quiz/short.html', quiz=quiz, quizes=quizes, legend=legend, form=form, form1=form1, pquiz=pquiz, nquiz=nquiz)
 
 

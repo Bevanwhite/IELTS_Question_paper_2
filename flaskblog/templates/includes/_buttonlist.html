@@ -1,8 +1,8 @@
 <div class="card-header">{{ legend }}</div>
 <div class="card-body">
   <div class="btn-group mb-3" role="group" aria-label="First group">
-    {% for quize in quizes %} {% if quize.id < 10 %} {% if quize.toq ==
-    "radio"%}
+    {% for quize in quizes %} {% if quize.id < 10 and quize.quiz_id ==
+    quiz.quiz_id%} {% if quize.toq == "radio"%}
     <a
       class="btn btn-info mr-2 btn-sm"
       href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
@@ -23,8 +23,8 @@
     {% endif %} {% endif %}{% endfor %}
   </div>
   <div class="btn-group mb-3" role="group" aria-label="First group">
-    {% for quize in quizes %} {% if quize.id > 9 and quize.id <19 %} {% if
-    quize.toq == "radio"%}
+    {% for quize in quizes %} {% if quize.id > 9 and quize.id <19 and
+    quize.quiz_id == quiz.quiz_id%} {% if quize.toq == "radio"%}
     <a
       class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
@@ -45,8 +45,8 @@
     {% endif %} {% endif %} {% endfor %}
   </div>
   <div class="btn-group mb-3" role="group" aria-label="First group">
-    {% for quize in quizes %} {% if quize.id > 18 and quize.id <28 %} {% if
-    quize.toq == "radio"%}
+    {% for quize in quizes %} {% if quize.id > 18 and quize.id <28 and
+    quize.quiz_id == quiz.quiz_id%} {% if quize.toq == "radio"%}
     <a
       class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
@@ -67,8 +67,8 @@
     {% endif %} {% endif %} {% endfor %}
   </div>
   <div class="btn-group mb-3" role="group" aria-label="First group">
-    {% for quize in quizes %} {% if quize.id > 27 and quize.id <37 %} {% if
-    quize.toq == "radio"%}
+    {% for quize in quizes %} {% if quize.id > 27 and quize.id <37 and
+    quize.quiz_id == quiz.quiz_id%} {% if quize.toq == "radio"%}
     <a
       class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
@@ -89,8 +89,8 @@
     {% endif %} {% endif %} {% endfor %}
   </div>
   <div class="btn-group mb-3" role="group" aria-label="First group">
-    {% for quize in quizes %} {% if quize.id > 36 and quize.id < 41 %} {% if
-    quize.toq == "radio"%}
+    {% for quize in quizes %} {% if quize.id > 36 and quize.id < 41 and
+    quize.quiz_id == quiz.quiz_id%} {% if quize.toq == "radio"%}
     <a
       class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.id) }}"

@@ -10,6 +10,8 @@
             {% autoescape false %} {{writing_answer.task.replace('\n', '<br />')}}
             {% endautoescape %}
           </div>
+          <br /><br /><br />
+          {{para}}
         </div>
       </div>
       <div class="col-md-4">
@@ -48,6 +50,9 @@
               </p>
               <p class="card-text">
                 Cohesion: <br />{{ writing_answer.cohesion }}
+              </p>
+              <p class="card-text">
+                Sentence Similarity: <br />{{ writing_answer.similarity }}
               </p>
               <p class="card-text">
                 <a

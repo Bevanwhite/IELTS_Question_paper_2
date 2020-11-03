@@ -93,6 +93,7 @@ class Writingpaperanswer(db.Model):
                             default=datetime.now())
     grammar = db.Column(db.Integer, nullable=False)
     cohesion = db.Column(db.Integer, nullable=False)
+    similarity = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
