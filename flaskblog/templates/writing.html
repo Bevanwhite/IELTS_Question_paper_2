@@ -34,9 +34,9 @@
     </div>
     {% endfor %}
     <div class="text-center mt-3">
-      {% for page_num in writingpapers.iter_pages( left_edge=1, right_edge=1,  left_current=1, right_current=2) %}
-      {% if page_num %} 
-      {% if writingpapers.page == page_num %}
+      {% for page_num in writingpapers.iter_pages( left_edge=1, right_edge=1,
+      left_current=1, right_current=2) %} {% if page_num %} {% if
+      writingpapers.page == page_num %}
       <a
         class="btn btn-info mb-4"
         href="{{ url_for('writing.write', page=page_num) }}"

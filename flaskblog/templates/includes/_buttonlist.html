@@ -1,126 +1,113 @@
 <div class="card-header">{{ legend }}</div>
-      <div class="card-body">
-        <div class="btn-group mr-2 mb-3" role="group" aria-label="First group">
-          <button type="button" class="btn btn-secondary btn-sm">01</button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            02
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            03
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            04
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            05
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            06
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            07
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            08
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            09
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            10
-          </button>
-        </div>
-        <div class="btn-group mr-2 mb-3" role="group" aria-label="First group">
-          <button type="button" class="btn btn-secondary btn-sm">11</button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            12
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            13
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            14
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            15
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            16
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            17
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            18
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            19
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            20
-          </button>
-        </div>
-        <div class="btn-group mr-2 mb-3" role="group" aria-label="First group">
-          <button type="button" class="btn btn-secondary btn-sm">21</button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            22
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            23
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            24
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            25
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            26
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            27
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            28
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            29
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            30
-          </button>
-        </div>
-        <div class="btn-group mr-2 mb-3" role="group" aria-label="First group">
-          <button type="button" class="btn btn-secondary btn-sm">31</button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            32
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            33
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            34
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            35
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            36
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            37
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            38
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            39
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm ml-1">
-            40
-          </button>
-        </div>
-      </div>
-    </div>
-    
+<div class="card-body">
+  <div class="btn-group mb-3" role="group" aria-label="First group">
+    {% for quize in quizes %} {% if quize.id < 10 %} {% if quize.toq ==
+    "radio"%}
+    <a
+      class="btn btn-info mr-2 btn-sm"
+      href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{ quize.id}}</a
+    >
+    {% endif %} {% if quize.toq == "checklist"%}
+    <a
+      class="btn btn-info mr-2 btn-sm"
+      href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{quize.id}}</a
+    >
+    {% endif %} {% if quize.toq == "short"%}
+    <a
+      class="btn btn-info mr-2 btn-sm"
+      href="{{ url_for('quiz.quiz_short_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{quize.id}}</a
+    >
+    {% endif %} {% endif %}{% endfor %}
   </div>
+  <div class="btn-group mb-3" role="group" aria-label="First group">
+    {% for quize in quizes %} {% if quize.id > 9 and quize.id <19 %} {% if
+    quize.toq == "radio"%}
+    <a
+      class="btn btn-info mr-1 btn-sm"
+      href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{ quize.id}}</a
+    >
+    {% endif %} {% if quize.toq == "checklist"%}
+    <a
+      class="btn btn-info mr-1 btn-sm"
+      href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{quize.id}}</a
+    >
+    {% endif %} {% if quize.toq == "short"%}
+    <a
+      class="btn btn-info mr-1 btn-sm"
+      href="{{ url_for('quiz.quiz_short_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{quize.id}}</a
+    >
+    {% endif %} {% endif %} {% endfor %}
+  </div>
+  <div class="btn-group mb-3" role="group" aria-label="First group">
+    {% for quize in quizes %} {% if quize.id > 18 and quize.id <28 %} {% if
+    quize.toq == "radio"%}
+    <a
+      class="btn btn-info mr-1 btn-sm"
+      href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{ quize.id}}</a
+    >
+    {% endif %} {% if quize.toq == "checklist"%}
+    <a
+      class="btn btn-info mr-1 btn-sm"
+      href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{quize.id}}</a
+    >
+    {% endif %} {% if quize.toq == "short"%}
+    <a
+      class="btn btn-info mr-1 btn-sm"
+      href="{{ url_for('quiz.quiz_short_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{quize.id}}</a
+    >
+    {% endif %} {% endif %} {% endfor %}
+  </div>
+  <div class="btn-group mb-3" role="group" aria-label="First group">
+    {% for quize in quizes %} {% if quize.id > 27 and quize.id <37 %} {% if
+    quize.toq == "radio"%}
+    <a
+      class="btn btn-info mr-1 btn-sm"
+      href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{ quize.id}}</a
+    >
+    {% endif %} {% if quize.toq == "checklist"%}
+    <a
+      class="btn btn-info mr-1 btn-sm"
+      href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{quize.id}}</a
+    >
+    {% endif %} {% if quize.toq == "short"%}
+    <a
+      class="btn btn-info mr-1 btn-sm"
+      href="{{ url_for('quiz.quiz_short_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{quize.id}}</a
+    >
+    {% endif %} {% endif %} {% endfor %}
+  </div>
+  <div class="btn-group mb-3" role="group" aria-label="First group">
+    {% for quize in quizes %} {% if quize.id > 36 and quize.id < 41 %} {% if
+    quize.toq == "radio"%}
+    <a
+      class="btn btn-info mr-1 btn-sm"
+      href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{ quize.id}}</a
+    >
+    {% endif %} {% if quize.toq == "checklist"%}
+    <a
+      class="btn btn-info mr-1 btn-sm"
+      href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{quize.id}}</a
+    >
+    {% endif %} {% if quize.toq == "short"%}
+    <a
+      class="btn btn-info mr-1 btn-sm"
+      href="{{ url_for('quiz.quiz_short_answer', quiz_id=quize.quiz_id, id=quize.id) }}"
+      >{{quize.id}}</a
+    >
+    {% endif %} {% endif %} {% endfor %}
+  </div>
+</div>

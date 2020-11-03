@@ -106,3 +106,8 @@ class ShortForm(FlaskForm):
 
 class QuestionsForm(FlaskForm):
     submit = SubmitField('Submit the Question')
+
+
+class PreviewForm(FlaskForm):
+    previous = SubmitField('Previous')
+    next = SubmitField('Next')

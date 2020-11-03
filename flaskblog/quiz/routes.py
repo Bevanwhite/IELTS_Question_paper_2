@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, flash, url_for, redirect, request,
 from flask_login import login_user, login_required, current_user
 from flaskblog import db
 from flaskblog.models import Quiz, Create_quiz, Quiz_answers_type
-from flaskblog.quiz.forms import QuizCreationForm, QuestionForm, QuestionChecklistForm, QuestionRadioForm, QuestionShortForm, ChecklistForm, RadioForm, ShortForm
+from flaskblog.quiz.forms import QuizCreationForm, QuestionForm, QuestionChecklistForm, QuestionRadioForm, QuestionShortForm, ChecklistForm, RadioForm, ShortForm, PreviewForm
 from datetime import datetime
 
 quiz = Blueprint('quiz', __name__)
@@ -115,6 +115,7 @@ def quiz_checklist(quiz_id):
 
 @quiz.route("/quiz/<int:quiz_id>/short", methods=['GET', 'POST'])
 def quiz_short(quiz_id):
+    form1 = PreviewForm()
     form = QuestionShortForm()
     legend = "Creating Short Answer Question"
     quiz = Quiz.query.get_or_404(quiz_id)
@@ -128,12 +129,19 @@ def quiz_short(quiz_id):
         db.session.commit()
         flash('Your Short Answer Question has been Created!', 'success')
         return redirect(url_for('quiz.show_quiz', quiz_id=quiz_id))
-    return render_template('quiz/create_short.html', quiz=quiz, form=form, legend=legend)
+    return render_template('quiz/create_short.html', quiz=quiz, form=form, legend=legend, form1=form1)
 
 
 @quiz.route("/quiz/<int:quiz_id>/radio/<int:id>", methods=['GET', 'POST'])
 def quiz_radio_answer(quiz_id, id):
     quiz = Create_quiz.query.get_or_404(id)
+    quizes = Create_quiz.query.all()
+    pquiz = Create_quiz.query.get_or_404(id-1)
+    nquiz = Create_quiz.query.get_or_404(id+1)
+    if quiz.toq != "radio":
+        abort(403)
+
+    form1 = PreviewForm()
     form = RadioForm()
     legend = "Answer the Radio Question"
     list = []
@@ -144,14 +152,22 @@ def quiz_radio_answer(quiz_id, id):
     print(type(list))
     form.correct_answer.choices = [
         (int(list[x][0]), str(list[x][1]))for x in range(4)]
-    return render_template('quiz/radio.html', quiz=quiz, form=form, legend=legend)
+    return render_template('quiz/radio.html', quiz=quiz, quizes=quizes, form=form, legend=legend, form1=form1, pquiz=pquiz, nquiz=nquiz)
 
 
 @quiz.route("/quiz/<int:quiz_id>/checklist/<int:id>", methods=['GET', 'POST'])
 def quiz_checklist_answer(quiz_id, id):
+    quizes = Create_quiz.query.all()
+    pquiz = Create_quiz.query.get_or_404(id-1)
+    nquiz = Create_quiz.query.get_or_404(id+1)
+    quiz = Create_quiz.query.get_or_404(id)
+    if quiz.toq != "checklist":
+        abort(403)
+    form1 = PreviewForm()
+    form = ChecklistForm()
     quiz = Create_quiz.query.get_or_404(id)
     legend = "Answer Checklist Question"
-    form = ChecklistForm()
+
     list = []
     list.append((1, quiz.answer01))
     list.append((2, quiz.answer02))
@@ -160,15 +176,22 @@ def quiz_checklist_answer(quiz_id, id):
     print(type(list))
     form.correct_answer.choices = [
         (int(list[x][0]), str(list[x][1]))for x in range(4)]
-    return render_template('quiz/checklist.html', quiz=quiz, legend=legend, form=form)
+    return render_template('quiz/checklist.html', quiz=quiz, quizes=quizes, legend=legend, form=form, form1=form1, pquiz=pquiz, nquiz=nquiz)
 
 
 @quiz.route("/quiz/<int:quiz_id>/short/<int:id>", methods=['GET', 'POST'])
 def quiz_short_answer(quiz_id, id):
     quiz = Create_quiz.query.get_or_404(id)
+    pquiz = Create_quiz.query.get_or_404(id-1)
+    nquiz = Create_quiz.query.get_or_404(id+1)
+    quizes = Create_quiz.query.all()
+    if quiz.toq != "short":
+        abort(403)
+    form1 = PreviewForm()
+    quiz = Create_quiz.query.get_or_404(id)
     legend = "Answer Short Question"
     form = ShortForm()
-    return render_template('quiz/short.html', quiz=quiz, legend=legend, form=form)
+    return render_template('quiz/short.html', quiz=quiz, quizes=quizes, legend=legend, form=form, form1=form1, pquiz=pquiz, nquiz=nquiz)
 
 
 @quiz.route("/quiz/<int:quiz_id>/radio/<int:id>/update", methods=['GET', 'POST'])
@@ -180,6 +203,8 @@ def update_quiz_radio(quiz_id, id):
                                    for x in Quiz_answers_type.query.all()]
     create_quiz = Create_quiz.query.get_or_404(id)
     if create_quiz.createquiz != current_user:
+        abort(403)
+    if create_quiz.toq != "radio":
         abort(403)
     if form.validate_on_submit():
         create_quiz.title = form.title.data
@@ -213,6 +238,8 @@ def update_checklist(quiz_id, id):
                                    for x in Quiz_answers_type.query.all()]
     if create_quiz.createquiz != current_user:
         abort(403)
+    if create_quiz.toq != "checklist":
+        abort(403)
     if form.validate_on_submit():
         list = ' '.join([str(i) for i in form.correct_answer.data])
         create_quiz.title = form.title.data
@@ -245,6 +272,8 @@ def update_quiz_short(quiz_id, id):
     quiz = Quiz.query.get_or_404(quiz_id)
     create_quiz = Create_quiz.query.get_or_404(id)
     if create_quiz.createquiz != current_user:
+        abort(403)
+    if create_quiz.toq != "short":
         abort(403)
     if form.validate_on_submit():
         create_quiz.title = form.title.data
