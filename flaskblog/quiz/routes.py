@@ -78,13 +78,20 @@ def quiz_question(quiz_id):
 def quiz_radio(quiz_id):
     form = QuestionRadioForm()
     quiz = Quiz.query.get_or_404(quiz_id)
+    tasks = Create_quiz.query.all()
+    test = 0
+    if len(tasks) == 0:
+        test = 1
+    if len(tasks) != 0:
+        test = indexno(tasks[-1].id + 1)
+    print(test)
     legend = "Creating Radio Button Question"
     form.correct_answer.choices = [(x.id, x.texts)
                                    for x in Quiz_answers_type.query.all()]
     if form.validate_on_submit():
         create_quiz = Create_quiz(title=form.title.data, question=form.question.data, toq="radio", answer01=form.answer01.data,
                                   answer02=form.answer02.data, answer03=form.answer03.data,
-                                  answer04=form.answer04.data, correct_answer=form.correct_answer.data,
+                                  answer04=form.answer04.data, correct_answer=form.correct_answer.data, index_no=test,
                                   quiz_id=quiz_id, user_id=current_user.id)
         db.session.add(create_quiz)
         db.session.commit()
@@ -96,6 +103,13 @@ def quiz_radio(quiz_id):
 @quiz.route("/quiz/<int:quiz_id>/checklist", methods=['GET', 'POST'])
 def quiz_checklist(quiz_id):
     form = QuestionChecklistForm()
+    tasks = Create_quiz.query.all()
+    test = 0
+    if len(tasks) == 0:
+        test = 1
+    if len(tasks) != 0:
+        test = indexno(tasks[-1].id + 1)
+    print(test)
     legend = "Creating Checklist Question"
     quiz = Quiz.query.get_or_404(quiz_id)
     form.correct_answer.choices = [(x.id, x.texts)
@@ -104,7 +118,7 @@ def quiz_checklist(quiz_id):
         list = ' '.join([str(i) for i in form.correct_answer.data])
         create_quiz = Create_quiz(title=form.title.data, question=form.question.data, toq="checklist", answer01=form.answer01.data,
                                   answer02=form.answer02.data, answer03=form.answer03.data,
-                                  answer04=form.answer04.data, correct_answer=list,
+                                  answer04=form.answer04.data, correct_answer=list, index_no=test,
                                   quiz_id=quiz_id, user_id=current_user.id)
         db.session.add(create_quiz)
         db.session.commit()
@@ -117,13 +131,20 @@ def quiz_checklist(quiz_id):
 def quiz_short(quiz_id):
     form1 = PreviewForm()
     form = QuestionShortForm()
+    tasks = Create_quiz.query.all()
+    test = 0
+    if len(tasks) == 0:
+        test = 1
+    if len(tasks) != 0:
+        test = indexno(tasks[-1].id+1)
+    print(test)
     legend = "Creating Short Answer Question"
     quiz = Quiz.query.get_or_404(quiz_id)
     be = 'none'
     if form.validate_on_submit():
         create_quiz = Create_quiz(
             title=form.title.data, question=form.question.data, toq="short", answer01=be,
-            answer02=be, answer03=be, answer04=be, correct_answer=form.correct_answer.data,
+            answer02=be, answer03=be, answer04=be, correct_answer=form.correct_answer.data, index_no=test,
             quiz_id=quiz_id, user_id=current_user.id)
         db.session.add(create_quiz)
         db.session.commit()
@@ -313,3 +334,13 @@ def update_quiz_short(quiz_id, id):
         form.question.data = create_quiz.question
         form.correct_answer.data = create_quiz.correct_answer
     return render_template('quiz/create_short.html', quiz=quiz, form=form, legend=legend)
+
+
+def indexno(name):
+    print("bye " + str(name))
+    if name == "":
+        bev = 1
+    elif name > 0:
+        bev = (name) % 40
+    print("hi " + str(bev))
+    return bev

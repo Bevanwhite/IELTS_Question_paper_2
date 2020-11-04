@@ -205,10 +205,28 @@ def check_spellings(paragraph):
     # find those words that may be misspelled
     misspelled = spell.unknown(data_tok)
 
+    words = []
+    corrections = []
+    candidates = []
+
     for word in misspelled:
         # Get the one `most likely` answer
 
-        miss_words.append(
-            [word, spell.correction(word), spell.candidates(word)])
+        words.append(word)
+        corrections.append(spell.correction(word))
+        candidateStr = ""
+        for candidate in spell.candidates(word):
+            candidateStr = candidateStr+" "+candidate
+        candidates.append(candidateStr)
+    print("---------------------------------------------")
+    print(words, corrections, candidates)
+    print("---------------------------------------------")
 
-    return str([miss_words])
+    myStr = ""
+
+    for i in range(len(words)):
+        myStr = myStr+"Misplled Word-" + \
+            words[i]+", Correction-"+corrections[i] + \
+            ", Candidate Words-"+candidates[i]+'\n'
+
+    return myStr

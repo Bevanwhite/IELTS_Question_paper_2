@@ -11,7 +11,8 @@
             {% endautoescape %}
           </div>
           <br /><br /><br />
-          {{para}}
+          {% autoescape false %} {{para.replace('\n', '<br />')}} {%
+          endautoescape %}
         </div>
       </div>
       <div class="col-md-4">

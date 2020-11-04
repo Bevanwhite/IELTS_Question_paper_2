@@ -214,6 +214,7 @@ class Create_quiz(db.Model):
     answer03 = db.Column(db.String(100), nullable=False)
     answer04 = db.Column(db.String(100), nullable=False)
     correct_answer = db.Column(db.String(100), nullable=False)
+    index_no = db.Column(db.Integer, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.now())
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
