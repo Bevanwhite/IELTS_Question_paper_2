@@ -1,3 +1,7 @@
+# Senevirathne S.S. - IT17127042
+# 3.0
+# 10-05-2020 
+
 import joblib
 from flask import render_template, Blueprint, flash, url_for, redirect, request, abort
 from flask_login import login_user, login_required, current_user
@@ -11,6 +15,11 @@ from spellchecker import SpellChecker
 from flask import Flask, request, jsonify
 import nltk
 # nltk.download('punkt')
+
+""" Load the Writing_Activity_Suggestion.sav file to 
+    provide the improvement plan of writing paper
+    Train the dataset with the k-neighbors classifier """
+
 activityModel = joblib.load('Writing_Activity_Suggestion.sav')
 
 writing = Blueprint('writing', __name__)
@@ -22,43 +31,26 @@ def write():
     writingpapers = Writingpaper.query.paginate(page=page, per_page=6)
     return render_template('writing.html', writingpapers=writingpapers)
 
+    """ Sentnce similarity model 
+        Check the similarity of the ielts academic writing task 1 papers' topic sentence """
 
+#Load the cosine_model.sav file
 similarity_model = joblib.load('cosine_model.sav')
 
+# Model answer of topic sentence 
 test_answer1 = "The line graph illustrates the amount of three kinds of spreads (margarine, low fat and reduced spreads and butter) which were consumed over 26 years from 1981 to 2007."
 
-
+""" text 1 = model answer
+    text 2 = candidate answer
+    Calculating and returning the cosine similarity using pre trained similarity model """
+    
 def cosine_sim(text1, text2):
+    index=text2.find(".")
+    text2=text2[:index]
     tfidf = similarity_model.fit_transform([text1, text2])
     return ((tfidf * tfidf.T).A)[0, 1]
 
-
-# @writing.route('/check_spellings', methods=['POST', 'GET'])
-# def check_spellings():
-
-#     User_json = request.json
-#     paragraph = User_json['para']
-
-#     data_tok = nltk.word_tokenize(paragraph)
-#     print(paragraph, data_tok)
-
-#     spell = SpellChecker()
-
-# # find those words that may be misspelled
-#     misspelled = spell.unknown(data_tok)
-
-#     for word in misspelled:
-#         # Get the one `most likely` answer
-
-#         miss_words.append(
-#             [word, spell.correction(word), spell.candidates(word)])
-
-#     return str([miss_words])
-
-
-# app.run(debug=True)
-
-
+""" Create the writing paper and commit to the database """
 @writing.route("/writing/new", methods=['GET', 'POST'])
 @login_required
 def new_writingpaper():
@@ -77,7 +69,7 @@ def new_writingpaper():
         return redirect(url_for('writing.write'))
     return render_template('create_writing.html', title='Writing Paper', form=form, legend='Writing Paper')
 
-
+""" Get the result of grammar, cohesion and similarity of the topic sentence and commit to the database """
 @writing.route("/writing/<int:writing_id>", methods=['GET', 'POST'])
 @login_required
 def show_writing(writing_id):
@@ -97,7 +89,7 @@ def show_writing(writing_id):
         return redirect(url_for('writing.show_writing', writing_id=writing_id))
     return render_template('writing_paper.html',  writingpaper=writingpaper, form1=form1)
 
-
+""" Update the writing paper and commit to the database """
 @writing.route("/writing/<int:writing_id>/update", methods=['GET', 'POST'])
 @login_required
 def update_writing(writing_id):
@@ -120,7 +112,7 @@ def update_writing(writing_id):
         form.task01_img.data = writing.task01_img
     return render_template('create_writing.html', title='Update', form=form, legend='Update')
 
-
+""" Delete the writing paper and commit to the database """
 @writing.route("/writing/<int:writing_id>/delete", methods=['POST'])
 @login_required
 def delete_writing(writing_id):
@@ -132,7 +124,7 @@ def delete_writing(writing_id):
     flash('Your Writing Paper has been deleted!!', 'success')
     return redirect(url_for('writing.write'))
 
-
+""" Provide the writing paper result """
 @writing.route("/writing/<int:writing_result_id>/result", methods=['POST', 'GET'])
 @login_required
 def result(writing_result_id):
@@ -147,53 +139,10 @@ def result(writing_result_id):
             'static', filename='profile_pics/' + current_user.image_file)
         return render_template('writing_answer.html', title='Update', legend='Update', writing_answer=writing_answer, pic_file=pic_file, para=para)
 
-
+# Provide improvement plan to the specific candidate
 @writing.route('/writing/<int:writing_result_id>/summary', methods=['POST', 'GET'])
 def summary(writing_result_id):
     writing = Writingpaperanswer.query.get_or_404(writing_result_id)
-
-    grammar1 = writing.grammar
-    cohesion1 = writing.cohesion
-    sp = 'stage 0'
-    pln_no = 0
-    feedback = 'feedback 1'
-
-    if -1 < grammar1 < 11 or -1 < cohesion1 < 11:
-        pln_no = 1
-        feedback = 'feedback 2'
-        sp = 'stage 1'
-    elif 0 < grammar1 < 11 or 10 < cohesion1 < 21:
-        pln_no = 2
-        feedback = 'no feedback 3'
-        sp = 'stage 2'
-    elif 0 < grammar1 < 11 or 20 < cohesion1 < 26:
-        pln_no = 3
-        feedback = 'Observed difficulty in grammar. Work hard for improvement. Keep up the good work with the improvement plan.'
-        sp = 'stage 3'
-    elif 10 < grammar1 < 21 or 0 < cohesion1 < 11:
-        pln_no = 4
-        feedback = 'no feedback 5'
-        sp = 'stage 4'
-    elif 10 < grammar1 < 21 or 10 < cohesion1 < 21:
-        pln_no = 5
-        feedback = 'no feedback 6'
-        sp = 'stage 5'
-    elif 10 < grammar1 < 21 or 20 < cohesion1 < 26:
-        pln_no = 6
-        feedback = 'no feedback 7'
-        sp = 'stage 6'
-    elif 20 < grammar1 < 26 or 0 < cohesion1 < 11:
-        pln_no = 7
-        feedback = 'no feedback 8'
-        sp = 'stage 7'
-    elif 20 < grammar1 < 26 or 10 < cohesion1 < 21:
-        pln_no = 8
-        feedback = 'no feedback 9'
-        sp = 'stage 8'
-    elif 20 < grammar1 < 26 or 20 < cohesion1 < 26:
-        pln_no = 9
-        feedback = 'no feedback 10'
-        sp = 'stage 9'
 
     writing = Writingimprovementplan(study_plan=sp, study_plan_no=pln_no,
                                      feedback=feedback, date_posted=datetime.now(), user_id=current_user.id)
@@ -231,9 +180,8 @@ def plan2_2():
 def plan2_3():
     return render_template('plan2.3.html')
 
-
+# Return the improvement plan paper
 def activitySuggestion(section, marks):
-
     test_data = np.array([section, marks]).reshape(1, 2)
     activity = activityModel.predict(test_data)[0]
     print(activity)

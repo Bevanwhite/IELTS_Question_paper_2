@@ -20,7 +20,7 @@
     {% for quiz_create in quiz_creates %} {% if quiz_create.toq == "short"%}
     <div class="list-group">
       <a
-        href="{{ url_for('quiz.quiz_short_answer', quiz_id=quiz_create.quiz_id, id=quiz_create.id)}}"
+        href="{{ url_for('quiz.quiz_short_answer', quiz_id=quiz_create.quiz_id, id=quiz_create.index_no)}}"
         class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">
@@ -35,7 +35,7 @@
     {% endif %} {% if quiz_create.toq == "checklist"%}
     <div class="list-group">
       <a
-        href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quiz_create.quiz_id, id=quiz_create.id)}}"
+        href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quiz_create.quiz_id, id=quiz_create.index_no)}}"
         class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">
@@ -51,7 +51,7 @@
     {% if quiz_create.toq == "radio"%}
     <div class="list-group">
       <a
-        href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quiz_create.quiz_id, id=quiz_create.id)}}"
+        href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quiz_create.quiz_id, id=quiz_create.index_no)}}"
         class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">

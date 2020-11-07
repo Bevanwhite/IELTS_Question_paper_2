@@ -1,4 +1,22 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %} {% block content %} {% if quiz.createquiz ==
+current_user %}
+<div class="col-md-13 text-md-right">
+  <a
+    type="button"
+    class="btn btn-outline-info btn-sm"
+    href="{{ url_for('quiz.update_radio',quiz_id=quiz.quiz_id, id=quiz.index_no)}}"
+    >Update Post</a
+  >
+  <button
+    type="button"
+    class="btn btn-outline-danger btn-sm"
+    data-toggle="modal"
+    data-target="#deleteModal"
+  >
+    Delete Post
+  </button>
+</div>
+{% endif %}
 <div class="row mt-3 mb-5">
   <div class="col-md-8">
     <div class="card">
@@ -22,56 +40,49 @@
         </form>
       </div>
       <div class="card-footer text-muted">
-        <div class="d-flex bd-highlight">
-          {% if pquiz.toq == "checklist" and pquiz.id != 0%}
-          <div class="mr-auto bd-highlight">
-            <a
-              href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=pquiz.quiz_id, id=pquiz.id) }}"
-              >{{ form1.previous(class="btn btn-primary btn-sm")}}</a
-            >
-          </div>
-          {% endif %} {% if pquiz.toq == "radio" and pquiz.id != 0%}
-          <div class="mr-auto bd-highlight">
-            <a
-              href="{{ url_for('quiz.quiz_radio_answer', quiz_id=pquiz.quiz_id, id=pquiz.id) }}"
-              >{{ form1.previous(class="btn btn-primary btn-sm")}}</a
-            >
-          </div>
-          {% endif %} {% if pquiz.toq == "short" and pquiz.id != 0%}
-          <div class="mr-auto bd-highlight">
-            <a
-              href="{{ url_for('quiz.quiz_short_answer', quiz_id=pquiz.quiz_id, id=pquiz.id) }}"
-              >{{ form1.previous(class="btn btn-primary btn-sm")}}</a
-            >
-          </div>
-          {% endif %}{% if nquiz.toq == "checklist"and nquiz.id != quiz[-1].id%}
-          <div class="bd-highlight">
-            <a
-              href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=nquiz.quiz_id, id=nquiz.id) }}"
-              >{{ form1.next(class="btn btn-primary btn-sm")}}</a
-            >
-          </div>
-          {% endif %}{% if nquiz.toq == "radio" and nquiz.id != quiz[-1].id%}
-          <div class="bd-highlight">
-            <a
-              href="{{ url_for('quiz.quiz_radio_answer', quiz_id=nquiz.quiz_id, id=nquiz.id) }}"
-              >{{ form1.next(class="btn btn-primary btn-sm")}}</a
-            >
-          </div>
-          {% endif %}{% if nquiz.toq == "short" and nquiz.id != quiz[-1].id%}
-          <div class="bd-highlight">
-            <a
-              href="{{ url_for('quiz.quiz_short_answer', quiz_id=nquiz.quiz_id, id=nquiz.id) }}"
-              >{{ form1.next(class="btn btn-primary btn-sm")}}</a
-            >
-          </div>
-          {% endif %}
-        </div>
+        {% include 'includes/_nextprevious.html' %}
       </div>
     </div>
   </div>
   <div class="col-md-4">
     <div class="card">{% include 'includes/_buttonlist.html' %}</div>
+  </div>
+</div>
+<!-- for Delete Modal -->
+<!-- for Delete Modal -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Writing</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <form
+          action="{{ url_for('quiz.delete_radio', quiz_id=quiz.quiz_id, id=quiz.index_no)}}"
+          method="POST"
+        >
+          <input class="btn btn-danger" type="submit" value="Delete" />
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock content %}

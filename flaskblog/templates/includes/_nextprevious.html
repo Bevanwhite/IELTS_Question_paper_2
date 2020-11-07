@@ -1,0 +1,45 @@
+<div class="d-flex bd-highlight">
+  {% if pquiz.toq == "checklist"%}
+  <div class="mr-auto bd-highlight">
+    <a
+      href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=pquiz.quiz_id, id=pquiz.index_no) }}"
+      >{{ form1.previous(class="btn btn-primary btn-sm")}}</a
+    >
+  </div>
+  {% endif %} {% if pquiz.toq == "radio" %}
+  <div class="mr-auto bd-highlight">
+    <a
+      href="{{ url_for('quiz.quiz_radio_answer', quiz_id=pquiz.quiz_id, id=pquiz.index_no) }}"
+      >{{ form1.previous(class="btn btn-primary btn-sm")}}</a
+    >
+  </div>
+  {% endif %} {% if pquiz.toq == "short"%}
+  <div class="mr-auto bd-highlight">
+    <a
+      href="{{ url_for('quiz.quiz_short_answer', quiz_id=pquiz.quiz_id, id=pquiz.index_no) }}"
+      >{{ form1.previous(class="btn btn-primary btn-sm")}}</a
+    >
+  </div>
+  {% endif %}{% if nquiz.toq == "checklist" and nquiz.index_no != null %}
+  <div class="bd-highlight">
+    <a
+      href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=nquiz.quiz_id, id=nquiz.index_no) }}"
+      >{{ form1.next(class="btn btn-primary btn-sm")}}</a
+    >
+  </div>
+  {% endif %}{% if nquiz.toq == "radio" and nquiz.index_no != null %}
+  <div class="bd-highlight">
+    <a
+      href="{{ url_for('quiz.quiz_radio_answer', quiz_id=nquiz.quiz_id, id=nquiz.index_no) }}"
+      >{{ form1.next(class="btn btn-primary btn-sm")}}</a
+    >
+  </div>
+  {% endif %}{% if nquiz.toq == "short" and nquiz.index_no != null %}
+  <div class="bd-highlight">
+    <a
+      href="{{ url_for('quiz.quiz_short_answer', quiz_id=nquiz.quiz_id, id=nquiz.index_no) }}"
+      >{{ form1.next(class="btn btn-primary btn-sm")}}</a
+    >
+  </div>
+  {% endif %}
+</div>
