@@ -19,7 +19,7 @@ speaking = Blueprint('speaking', __name__)
 @speaking.route("/speaking")
 def speak():
     speakings = Speaking.query.all()
-    return render_template('speaking.html', speakings=speakings)
+    return render_template('speaking/speaking.html', speakings=speakings)
 
 
 @speaking.route("/speaking/new", methods=['GET', 'POST'])
@@ -41,7 +41,7 @@ def new_speaking():
         db.session.commit()
         flash('Your Speaking Paper has been Created!', 'success')
         return redirect(url_for('speaking.speak'))
-    return render_template('create_speak.html', title='Speaking Paper', form=form, legend='Speaking Paper')
+    return render_template('speaking/create_speak.html', title='Speaking Paper', form=form, legend='Speaking Paper')
 
 
 @speaking.route("/speaking/<int:speaking_id>", methods=['GET', 'POST'])
@@ -237,7 +237,7 @@ def show_speaking(speaking_id):
                 flash(
                     'please submit all five answers and try to save the paper', 'danger')
         return render_template('speaking_paper.html',  speaking=speaking, form=form, speaks=speaks)
-    return render_template('speaking_paper.html',  speaking=speaking, form=form)
+    return render_template('speaking/speaking_paper.html',  speaking=speaking, form=form)
 
 
 @speaking.route("/speaking/<int:speaking_id>/result", methods=['POST', 'GET'])
@@ -251,11 +251,11 @@ def result(speaking_id):
     else:
         spic_file = url_for(
             'static', filename='profile_pics/' + current_user.image_file)
-        return render_template('speaking_anwser.html', title='Update',
+        return render_template('speaking/speaking_anwser.html', title='Update',
                                legend='Update', speaking_answer=speaking_answer, spic_file=spic_file, speaking_ans=speaking_ans)
 
 
-def result_machinelearning(task,):
+def result_machinelearning(task):
 
     grammerAvg = 24
     coheshionAvg = 30
@@ -266,4 +266,4 @@ def result_machinelearning(task,):
 
     print(category)
 
-    return render_template('result_machinelearning.html', category=category)
+    return render_template('speaking/result_machinelearning.html', category=category)

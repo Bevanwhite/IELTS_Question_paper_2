@@ -201,7 +201,7 @@ class Quiz(db.Model):
         'Create_quiz', backref='qcreatequiz', lazy=True)
 
     def __repr__(self):
-        return f"Quiz('{self.id}','{self.name}','{self.typeofquestion}')"
+        return f"Quiz('{self.id}','{self.name}','{self.toq}')"
 
 
 class Create_quiz(db.Model):

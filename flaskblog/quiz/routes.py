@@ -165,8 +165,6 @@ def quiz_radio_answer(quiz_id, id):
         nquiz = Create_quiz.query.filter(
             Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no + 1).first()
         print(nquiz)
-    if quiz.toq != "radio":
-        abort(403)
 
     form1 = PreviewForm()
     form = RadioForm()
@@ -197,8 +195,6 @@ def quiz_checklist_answer(quiz_id, id):
         nquiz = Create_quiz.query.filter(
             Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no + 1).first()
         print(nquiz)
-    if quiz.toq != "checklist":
-        abort(403)
     form1 = PreviewForm()
     form = ChecklistForm()
     legend = "Answer Checklist Question"
@@ -219,7 +215,6 @@ def quiz_short_answer(quiz_id, id):
     quiz = Create_quiz.query.filter(
         Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == id).first()
     quizes = Create_quiz.query.filter(Create_quiz.quiz_id == quiz_id).all()
-
     if quiz.index_no > 0:
         pquiz = Create_quiz.query.filter(
             Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no - 1).first()
@@ -229,8 +224,6 @@ def quiz_short_answer(quiz_id, id):
             Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no + 1).first()
         print(nquiz)
 
-    if quiz.toq != "short":
-        abort(403)
     form1 = PreviewForm()
     form = ShortForm()
     legend = "Answer Short Question"
@@ -249,8 +242,7 @@ def update_radio(quiz_id, id):
         Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == id).first()
     if create_quiz.createquiz != current_user:
         abort(403)
-    if create_quiz.toq != "radio":
-        abort(403)
+
     if form.validate_on_submit():
         create_quiz.title = form.title.data
         create_quiz.question = form.question.data
@@ -284,8 +276,7 @@ def update_checklist(quiz_id, id):
                                    for x in Quiz_answers_type.query.all()]
     if create_quiz.createquiz != current_user:
         abort(403)
-    if create_quiz.toq != "checklist":
-        abort(403)
+
     if form.validate_on_submit():
         list = ' '.join([str(i) for i in form.correct_answer.data])
         create_quiz.title = form.title.data

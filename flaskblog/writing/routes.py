@@ -1,12 +1,12 @@
 # Senevirathne S.S. - IT17127042
 # 3.0
-# 10-05-2020 
+# 10-05-2020
 
 import joblib
 from flask import render_template, Blueprint, flash, url_for, redirect, request, abort
 from flask_login import login_user, login_required, current_user
 from flaskblog import db
-from flaskblog.models import Writingpaper, Writingpaperanswer, Writingimprovementplan
+from flaskblog.models import Writingpaper, Writingpaperanswer, Writingimprovementplan, Quiz, Create_quiz
 from flaskblog.writing.forms import WritingpaperForm, WritingUpdateForm, WritingpaperoneForm
 from flaskblog.writing.utils import paper_picture, get_grammar_result, get_cohesion_result, check_spellings
 from datetime import datetime
@@ -29,28 +29,33 @@ writing = Blueprint('writing', __name__)
 def write():
     page = request.args.get('page', 1, type=int)
     writingpapers = Writingpaper.query.paginate(page=page, per_page=6)
-    return render_template('writing.html', writingpapers=writingpapers)
+    return render_template('writing/writing.html', writingpapers=writingpapers)
 
     """ Sentnce similarity model 
         Check the similarity of the ielts academic writing task 1 papers' topic sentence """
 
-#Load the cosine_model.sav file
+
+# Load the cosine_model.sav file
 similarity_model = joblib.load('cosine_model.sav')
 
-# Model answer of topic sentence 
+# Model answer of topic sentence
 test_answer1 = "The line graph illustrates the amount of three kinds of spreads (margarine, low fat and reduced spreads and butter) which were consumed over 26 years from 1981 to 2007."
 
 """ text 1 = model answer
     text 2 = candidate answer
     Calculating and returning the cosine similarity using pre trained similarity model """
-    
+
+
 def cosine_sim(text1, text2):
-    index=text2.find(".")
-    text2=text2[:index]
+    index = text2.find(".")
+    text2 = text2[:index]
     tfidf = similarity_model.fit_transform([text1, text2])
     return ((tfidf * tfidf.T).A)[0, 1]
 
+
 """ Create the writing paper and commit to the database """
+
+
 @writing.route("/writing/new", methods=['GET', 'POST'])
 @login_required
 def new_writingpaper():
@@ -67,9 +72,12 @@ def new_writingpaper():
         db.session.commit()
         flash('Your Writing Paper has been Created!', 'success')
         return redirect(url_for('writing.write'))
-    return render_template('create_writing.html', title='Writing Paper', form=form, legend='Writing Paper')
+    return render_template('writing/create_writing.html', title='Writing Paper', form=form, legend='Writing Paper')
+
 
 """ Get the result of grammar, cohesion and similarity of the topic sentence and commit to the database """
+
+
 @writing.route("/writing/<int:writing_id>", methods=['GET', 'POST'])
 @login_required
 def show_writing(writing_id):
@@ -87,9 +95,12 @@ def show_writing(writing_id):
         flash(
             'Your Question 01 Answer has been saved in the database successfully', 'success')
         return redirect(url_for('writing.show_writing', writing_id=writing_id))
-    return render_template('writing_paper.html',  writingpaper=writingpaper, form1=form1)
+    return render_template('writing/writing_paper.html',  writingpaper=writingpaper, form1=form1)
+
 
 """ Update the writing paper and commit to the database """
+
+
 @writing.route("/writing/<int:writing_id>/update", methods=['GET', 'POST'])
 @login_required
 def update_writing(writing_id):
@@ -110,9 +121,12 @@ def update_writing(writing_id):
         form.title.data = writing.title
         form.task01.data = writing.task01
         form.task01_img.data = writing.task01_img
-    return render_template('create_writing.html', title='Update', form=form, legend='Update')
+    return render_template('writing/create_writing.html', title='Update', form=form, legend='Update')
+
 
 """ Delete the writing paper and commit to the database """
+
+
 @writing.route("/writing/<int:writing_id>/delete", methods=['POST'])
 @login_required
 def delete_writing(writing_id):
@@ -124,7 +138,10 @@ def delete_writing(writing_id):
     flash('Your Writing Paper has been deleted!!', 'success')
     return redirect(url_for('writing.write'))
 
+
 """ Provide the writing paper result """
+
+
 @writing.route("/writing/<int:writing_result_id>/result", methods=['POST', 'GET'])
 @login_required
 def result(writing_result_id):
@@ -137,23 +154,25 @@ def result(writing_result_id):
     else:
         pic_file = url_for(
             'static', filename='profile_pics/' + current_user.image_file)
-        return render_template('writing_answer.html', title='Update', legend='Update', writing_answer=writing_answer, pic_file=pic_file, para=para)
+        return render_template('writing/writing_answer.html', title='Update', legend='Update', writing_answer=writing_answer, pic_file=pic_file, para=para)
 
 # Provide improvement plan to the specific candidate
+
+
 @writing.route('/writing/<int:writing_result_id>/summary', methods=['POST', 'GET'])
 def summary(writing_result_id):
     writing = Writingpaperanswer.query.get_or_404(writing_result_id)
-
-    writing = Writingimprovementplan(study_plan=sp, study_plan_no=pln_no,
-                                     feedback=feedback, date_posted=datetime.now(), user_id=current_user.id)
-    db.session.add(writing)
-    db.session.commit()
-    return render_template('writing_home.html', writing=writing)
+    quizs = Quiz.query.filter(Quiz.toq == 'writing').all()
+    print(quizs)
+    for quiz in quizs:
+        quiz_creates = Create_quiz.query.filter(
+            Create_quiz.quiz_id == quiz.id, Create_quiz.index_no == 1).all()
+    return render_template('writing/writing_home.html', writing=writing, quizs=quizs, quiz_creates=quiz_creates)
 
 
 @writing.route("/writing/plan_g11")
 def plan_g11():
-    return render_template('writing_g1.6.html')
+    return render_template('writing/writing_g1.6.html')
 
 
 @writing.route("/writing/plan_g12")
@@ -181,6 +200,8 @@ def plan2_3():
     return render_template('plan2.3.html')
 
 # Return the improvement plan paper
+
+
 def activitySuggestion(section, marks):
     test_data = np.array([section, marks]).reshape(1, 2)
     activity = activityModel.predict(test_data)[0]
