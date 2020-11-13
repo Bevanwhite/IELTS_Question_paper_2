@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(20), nullable=False)
     lastname = db.Column(db.String(20), nullable=False)
-    username = db.Column(db.String(20), unique=True, nullable=False)
+    username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
     image_file = db.Column(db.String(20), nullable=False,
@@ -193,6 +193,8 @@ class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     toq = db.Column(db.String(50), nullable=False)
+    gandco = db.Column(db.String(50), nullable=False)
+    userbased = db.Column(db.String(50), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.now())

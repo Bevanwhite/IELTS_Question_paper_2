@@ -49,7 +49,8 @@ def new_quiz():
     form = QuizCreationForm()
     legend = "Creating Questions"
     if form.validate_on_submit():
-        quiz = Quiz(name=form.name.data, toq=form.toq.data, quiz=current_user)
+        quiz = Quiz(name=form.name.data, toq=form.toq.data,
+                    gandco=form.gandco.data, userbased=form.userbased.data, quiz=current_user)
         db.session.add(quiz)
         db.session.commit()
         flash('Your paper has created successfully !!!', 'success')

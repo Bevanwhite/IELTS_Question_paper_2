@@ -30,6 +30,30 @@
             {% else %} {{ form.toq(class_="form-control col-md-5")}} {% endif %}
           </div>
           <div class="form-group row">
+            {{ form.gandco.label(class_="col-md-3 col-form-label
+            text-md-right")}} {% if form.gandco.errors %}
+            {{form.gandco(class="form-control col-md-5 is-invalid")}}
+            <div class="invaild-feedback col-md-3 text-danger">
+              {% for error in form.gandco.errors %}
+              <small>{{ error }}</small>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.gandco(class_="form-control col-md-5")}} {% endif
+            %}
+          </div>
+          <div class="form-group row">
+            {{ form.userbased.label(class_="col-md-3 col-form-label
+            text-md-right")}} {% if form.userbased.errors %}
+            {{form.userbased(class="form-control col-md-5 is-invalid")}}
+            <div class="invaild-feedback col-md-3 text-danger">
+              {% for error in form.userbased.errors %}
+              <small>{{ error }}</small>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.userbased(class_="form-control col-md-5")}} {%
+            endif %}
+          </div>
+          <div class="form-group row">
             <div class="offset-md-3">
               {{ form.submit(class="btn btn-primary")}}
             </div>

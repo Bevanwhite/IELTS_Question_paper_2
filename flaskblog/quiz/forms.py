@@ -10,6 +10,10 @@ class QuizCreationForm(FlaskForm):
         DataRequired(), Length(min=6, max=30)])
     toq = SelectField(u'Type of Question', choices=[
                       ('writing', 'Writing'), ('reading', 'Reading'), ('listening', 'Listening'), ('speaking', 'Speaking')])
+    gandco = SelectField(u'Type of the Paper', choices=[
+                         ('none', 'None'), ('grammar', 'Grammar'), ('cohesion', 'Cohesion')])
+    userbased = SelectField(u'Type of User Group', choices=[
+        ('preliminary', 'Preliminary'), ('intermediate', 'Intermediate'), ('advanced', 'Advanced')])
     submit = SubmitField('Submit the Quiz')
 
     def validate_quiztitle(self, name):

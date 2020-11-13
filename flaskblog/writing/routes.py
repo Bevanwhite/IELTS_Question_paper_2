@@ -142,11 +142,11 @@ def delete_writing(writing_id):
 """ Provide the writing paper result """
 
 
-@writing.route("/writing/<int:writing_result_id>/result", methods=['POST', 'GET'])
+@writing.route("/writing/<int:writing_id>/result", methods=['POST', 'GET'])
 @login_required
-def result(writing_result_id):
+def result(writing_id):
 
-    writing_answer = Writingpaperanswer.query.get_or_404(writing_result_id)
+    writing_answer = Writingpaperanswer.query.get_or_404(writing_id)
     para = check_spellings(writing_answer.task)
 
     if writing_answer.wcandidate != current_user:
@@ -159,47 +159,16 @@ def result(writing_result_id):
 # Provide improvement plan to the specific candidate
 
 
-@writing.route('/writing/<int:writing_result_id>/summary', methods=['POST', 'GET'])
-def summary(writing_result_id):
-    writing = Writingpaperanswer.query.get_or_404(writing_result_id)
-    quizs = Quiz.query.filter(Quiz.toq == 'writing').all()
-    print(quizs)
-    for quiz in quizs:
-        quiz_creates = Create_quiz.query.filter(
-            Create_quiz.quiz_id == quiz.id, Create_quiz.index_no == 1).all()
-    return render_template('writing/writing_home.html', writing=writing, quizs=quizs, quiz_creates=quiz_creates)
-
-
-@writing.route("/writing/plan_g11")
-def plan_g11():
-    return render_template('writing/writing_g1.6.html')
-
-
-@writing.route("/writing/plan_g12")
-def plan_g12():
-    return render_template('writing_g1.2.html')
-
-
-@writing.route("/writing/plan1_5")
-def plan1_5():
-    return render_template('plan1.5.html')
-
-
-@writing.route("/writing/plan2_1")
-def plan2_1():
-    return render_template('plan2.1.html')
-
-
-@writing.route("/writing/plan2_2")
-def plan2_2():
-    return render_template('plan2.2.html')
-
-
-@writing.route("/writing/plan2_3")
-def plan2_3():
-    return render_template('plan2.3.html')
-
-# Return the improvement plan paper
+@writing.route('/writing/<int:writing_id>/summary', methods=['POST', 'GET'])
+def summary(writing_id):
+    writing = Writingpaperanswer.query.get_or_404(writing_id)
+    quiz_creates = Create_quiz.query.filter(
+        Create_quiz.index_no == 1).all()
+    for quiz_create in quiz_creates:
+        if quiz_create.qcreatequiz.toq == 'writing':
+            quiz_creates = Create_quiz.query.filter(
+                Create_quiz.index_no == 1).all()
+    return render_template('writing/writing_quiz.html', writing=writing, quiz_creates=quiz_creates)
 
 
 def activitySuggestion(section, marks):
