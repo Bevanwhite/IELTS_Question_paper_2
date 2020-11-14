@@ -83,7 +83,6 @@ def new_writingpaper():
 def show_writing(writing_id):
     writingpaper = Writingpaper.query.get_or_404(writing_id)
     form1 = WritingpaperoneForm()
-    activitySuggestion(1, 9)
     if form1.validate_on_submit():
         grammar_01 = get_grammar_result(form1.task01_answer.data)
         cohesion_01 = get_cohesion_result(form1.task01_answer.data)
@@ -164,10 +163,13 @@ def summary(writing_id):
     writing = Writingpaperanswer.query.get_or_404(writing_id)
     quiz_creates = Create_quiz.query.filter(
         Create_quiz.index_no == 1).all()
+    activitySuggestion(1, writing.grammar)
+    activitySuggestion(2, writing.cohesion)
     for quiz_create in quiz_creates:
         if quiz_create.qcreatequiz.toq == 'writing':
             quiz_creates = Create_quiz.query.filter(
                 Create_quiz.index_no == 1).all()
+
     return render_template('writing/writing_quiz.html', writing=writing, quiz_creates=quiz_creates)
 
 
