@@ -25,7 +25,6 @@ from nltk.tokenize import sent_tokenize
 num_features = 300
 
 # Word2vec model
-# C:\\Users\\Bevan\\Desktop\\New folder (3)\\
 model = Magnitude(
     'C://Users//Bevan//Desktop//New folder (3)//flask//GoogleNews-vectors-negative300.magnitude')
 
@@ -195,6 +194,7 @@ def get_grammar_result(test_answer):
     print(os.getcwd())
     # model = Word2Vec.load('word2vecmodel.bin', binary=True)
     # Load the word2vec model
+
     model = KeyedVectors.load_word2vec_format(
         'word2vecmodel.bin', binary=True, limit=10 ** 5)
     model.init_sims(replace=True)
@@ -214,7 +214,7 @@ def get_grammar_result(test_answer):
 
     # Get the model
     lstm_model = get_model()
-
+    print(test_answer)
     # Get the prediction
     result = lstm_model.predict(test_answer)
 

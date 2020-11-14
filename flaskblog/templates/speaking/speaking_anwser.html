@@ -1,5 +1,4 @@
 {% extends 'layout.html' %} {% block content %}
-{% if speaking_answer.speakquestion == current_user %}
 <div class="row justify-content-center mt-3">
   <div class="col-md-10 mb-5">
     <div class="card-group">
@@ -8,66 +7,85 @@
         <div class="card-body">
           <div class="text-md-left">
             <h5>Question 01</h5>
-            {% autoescape false %} {{speaking_answer.question_01.replace('\n', '<br />')}} {% endautoescape %}
-            <br/>
-            {% autoescape false %}<b>Answer :</b> {{speaking_ans.answer01.replace('\n', '<br />')}} {% endautoescape %}
+            {% autoescape false %} {{speaking_q.question_01.replace('\n', '<br />')}}
+            {% endautoescape %}
+            <br />
+            {% autoescape false %}<b>Answer :</b>
+            {{speaking_a.answer01.replace('\n', '<br />')}} {% endautoescape %}
           </div>
-          <br/>
+          <br />
           <div class="text-md-left">
             <h5>Question 02</h5>
-            {% autoescape false %} {{speaking_answer.question_02.replace('\n', '<br />')}} {% endautoescape %}
-            <br/>
-            {% autoescape false %}<b>Answer :</b> {{speaking_ans.answer02.replace('\n', '<br />')}} {% endautoescape %}
+            {% autoescape false %} {{speaking_q.question_02.replace('\n', '<br />')}}
+            {% endautoescape %}
+            <br />
+            {% autoescape false %}<b>Answer :</b>
+            {{speaking_a.answer02.replace('\n', '<br />')}} {% endautoescape %}
           </div>
-          <br/>
+          <br />
           <div class="text-md-left">
             <h5>Question 03</h5>
-            {% autoescape false %} {{speaking_answer.question_03.replace('\n', '<br />')}} {% endautoescape %}<br/>
-            {% autoescape false %}<b>Answer :</b> {{speaking_ans.answer03.replace('\n', '<br />')}} {% endautoescape %}
+            {% autoescape false %} {{speaking_q.question_03.replace('\n', '<br />')}}
+            {% endautoescape %}<br />
+            {% autoescape false %}<b>Answer :</b>
+            {{speaking_a.answer03.replace('\n', '<br />')}} {% endautoescape %}
           </div>
-          <br/>
+          <br />
           <div class="text-md-left">
             <h5>Question 04</h5>
-            {% autoescape false %} {{speaking_answer.question_04.replace('\n', '<br />')}} {% endautoescape %}<br/>
-            {% autoescape false %}<b>Answer :</b> {{speaking_ans.answer04.replace('\n', '<br />')}} {% endautoescape %}
+            {% autoescape false %} {{speaking_q.question_04.replace('\n', '<br />')}}
+            {% endautoescape %}<br />
+            {% autoescape false %}<b>Answer :</b>
+            {{speaking_a.answer04.replace('\n', '<br />')}} {% endautoescape %}
           </div>
-          <br/>
+          <br />
           <div class="text-md-left">
             <h5>Question 05</h5>
-            {% autoescape false %} {{speaking_answer.question_05.replace('\n', '<br />')}} {% endautoescape %}<br/>
-            {% autoescape false %}<b>Answer :</b> {{speaking_ans.answer05.replace('\n', '<br />')}} {% endautoescape %}
+            {% autoescape false %} {{speaking_q.question_05.replace('\n', '<br />')}}
+            {% endautoescape %}<br />
+            {% autoescape false %}<b>Answer :</b>
+            {{speaking_a.answer05.replace('\n', '<br />')}} {% endautoescape %}
           </div>
         </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card md-2 mb-3">
+          <div class="card-header">User Details</div>
+          <div class="media justify-content-center">
+            <img
+              class="rounded-circle mt-2"
+              src="{{ spic_file }}"
+              alt="Card image cap"
+            />
+          </div>
+          <div class="card-body">
+            <p class="card-text">Exam Paper ID: <br />{{ speaking_a.pid }}</p>
+            <p class="card-text">
+              Exam Paper Name:<br />{{ speaking_q.title }}
+            </p>
+            <p class="card-text">
+              Date Submitted:
+              <br />{{speaking_a.date_posted.strftime("%Y-%m-%d %H:%M:%S")}}
+            </p>
+
+            <p class="card-text">User index: <br />{{ current_user.id }}</p>
+            <p class="card-text">User Name: <br />{{ current_user.username}}</p>
+            <p class="card-text">Email: <br />{{ current_user.email}}</p>
+          </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-13">
           <div class="card md-2 mb-1">
-            <div class="card-header">User Details</div>
-            <div class="media justify-content-center">
-                  <img
-                    class="rounded-circle mt-2"
-                    src="{{ spic_file }}"
-                    alt="Card image cap"
-                  />
-                </div>
+            <div class="card-header">Grammar and Cohesion Result</div>
             <div class="card-body">
-                <p class="card-text">
-                Exam Paper ID: <br />{{ speaking_answer.speakquestion.id }}
-                </p>
-                <p class="card-text">
-                Exam Paper Name:<br />{{ speaking_answer.title }}
-                </p>
-                <p class="card-text">
-                Date Submitted:
-                <br />{{speaking_answer.date_posted.strftime("%Y-%m-%d %H:%M:%S")}}
-                </p>
-                
-                <p class="card-text">
-                    User index: <br />{{ current_user.id }}
-                </p>
-                <p class="card-text">
-                    User Name: <br />{{ current_user.username}}
-                </p>
-                <p class="card-text">Email: <br />{{ current_user.email}}</p>
+              <p class="card-text">Grammar: <br />{{ grammar }}</p>
+              <p class="card-text">Cohesion: <br />{{ cohesion }}</p>
+              <p class="card-text">
+                <a
+                  href="{{ url_for('speaking.summary', speaking_aid= speaking_a.id, speaking_qid =speaking_a.speaker.id)}}"
+                  class="btn btn-outline-success"
+                  >GO to improvement plan
+                </a>
+              </p>
             </div>
           </div>
         </div>
@@ -75,5 +93,4 @@
     </div>
   </div>
 </div>
-{% endif %}
 {% endblock content %}

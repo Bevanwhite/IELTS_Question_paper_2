@@ -196,22 +196,21 @@
               </tr>
             </thead>
             <tbody>
-              {% for speakinganswersave in speakinganswersaves %} {% if
-              speakinganswersave.user_id == current_user.id %}
+              {% for speaking_a in speaking_as %} {% if speaking_a.user_id ==
+              current_user.id %}
               <tr>
-                <th scope="row">{{ speakinganswersave.id}}</th>
-                <td>{{ speakinganswersave.speaker.id}}</td>
-                <td>{{ speakinganswersave.speaker.title}}</td>
+                <th scope="row">{{ speaking_a.id}}</th>
+                <td>{{ speaking_a.speaker.id}}</td>
+                <td>{{ speaking_a.speaker.title}}</td>
                 <td>
-                  {{ speakinganswersave.date_posted.strftime("%Y-%m-%d --
-                  %H:%M:%S")}}
+                  {{ speaking_a.date_posted.strftime("%Y-%m-%d -- %H:%M:%S")}}
                 </td>
 
                 <td>
                   <a
                     type="button"
                     class="btn btn-outline-primary btn-sm"
-                    href="{{ url_for('speaking.result', speaking_id= speakinganswersave.id )}}"
+                    href="{{ url_for('speaking.result', speaking_aid= speaking_a.id, speaking_qid =speaking_a.speaker.id)}}"
                   >
                     Result
                   </a>

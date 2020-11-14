@@ -100,19 +100,6 @@ class Writingpaperanswer(db.Model):
         return f"Writingpaperanswer('{self.id}','{self.pid}')"
 
 
-class Writingimprovementplan(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    study_plan = db.Column(db.String(100), nullable=False)
-    study_plan_no = db.Column(db.String(30), nullable=False)
-    feedback = db.Column(db.String(10000), nullable=True)
-    date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    def __repr__(self):
-        return f"Writingimprovementplan('{self.id}','{self.study_plan}')"
-
-
 class Speaking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(300), unique=True, nullable=False)

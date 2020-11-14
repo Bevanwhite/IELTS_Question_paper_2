@@ -6,7 +6,7 @@ import joblib
 from flask import render_template, Blueprint, flash, url_for, redirect, request, abort
 from flask_login import login_user, login_required, current_user
 from flaskblog import db
-from flaskblog.models import Writingpaper, Writingpaperanswer, Writingimprovementplan, Quiz, Create_quiz
+from flaskblog.models import Writingpaper, Writingpaperanswer, Quiz, Create_quiz
 from flaskblog.writing.forms import WritingpaperForm, WritingUpdateForm, WritingpaperoneForm
 from flaskblog.writing.utils import paper_picture, get_grammar_result, get_cohesion_result, check_spellings
 from datetime import datetime
@@ -137,8 +137,7 @@ def delete_writing(writing_id):
     flash('Your Writing Paper has been deleted!!', 'success')
     return redirect(url_for('writing.write'))
 
-
-""" Provide the writing paper result """
+# Provide the writing paper result
 
 
 @writing.route("/writing/<int:writing_id>/result", methods=['POST', 'GET'])

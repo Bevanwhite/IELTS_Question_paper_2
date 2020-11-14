@@ -4,7 +4,7 @@ from flaskblog.speaking.forms import SpeakForm, RecodingForm
 from flaskblog.speaking.utils import Someaudio, record
 from flaskblog.writing.utils import get_grammar_result, get_cohesion_result
 from flaskblog import db
-from flaskblog.models import Speaking, Speakinganswer, Speakinganswersaved, Speakingquestion
+from flaskblog.models import Speaking, Speakinganswer, Speakinganswersaved, Speakingquestion, Create_quiz
 from flask_login import current_user
 import speech_recognition as sr
 import os
@@ -49,8 +49,6 @@ def new_speaking():
 def show_speaking(speaking_id):
     speaking = Speaking.query.get_or_404(speaking_id)
     form = RecodingForm()
-    speakanswer = Speakinganswer.query.order_by(
-        Speakinganswer.date_posted.desc()).first()
     if form.is_submitted():
         speaks = Speakinganswer.query.all()
         speaking = Speaking.query.get_or_404(speaking_id)
@@ -63,36 +61,36 @@ def show_speaking(speaking_id):
             db.session.add(speak)
             db.session.commit()
             if form.record1.data:
-                file_name1 = record(5)
+                file_name1 = record(20)
                 print(file_name1)
                 if (file_name1 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == 1, Speakinganswer.user_id ==
-                                                            current_user.id, Speakinganswer.pid == speaking_id).update({Speakinganswer.answer01: file_name1}, synchronize_session=False)
+                                                            current_user.id, Speakinganswer.pid == speaking_id).update({Speakinganswer.answer01: file_name1, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
 
             elif form.record2.data:
-                file_name2 = record(5)
+                file_name2 = record(20)
                 if (file_name2 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == 1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer02: file_name2}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer02: file_name2, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record3.data:
-                file_name3 = record(5)
+                file_name3 = record(20)
                 if (file_name3 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == 1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer03: file_name3}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer03: file_name3, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record4.data:
-                file_name4 = record(5)
+                file_name4 = record(20)
                 if (file_name4 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == 1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer04: file_name4}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer04: file_name4, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record5.data:
-                file_name5 = record(5)
+                file_name5 = record(20)
                 if (file_name5 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == 1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer05: file_name5}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer05: file_name5, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
         elif(speaks[-1].user_id != current_user.id):
             print("2")
@@ -102,36 +100,36 @@ def show_speaking(speaking_id):
             db.session.add(speak)
             db.session.commit()
             if form.record1.data:
-                file_name1 = record(5)
+                file_name1 = record(20)
                 print(file_name1)
                 if (file_name1 != 'none'):
                     print(speaks[-1].id+1)
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer01: file_name1}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer01: file_name1, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record2.data:
-                file_name2 = record(5)
+                file_name2 = record(20)
                 if (file_name2 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer02: file_name2}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer02: file_name2, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record3.data:
-                file_name3 = record(5)
+                file_name3 = record(20)
                 if (file_name3 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer03: file_name3}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer03: file_name3, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record4.data:
-                file_name4 = record(5)
+                file_name4 = record(20)
                 if (file_name4 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer04: file_name4}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer04: file_name4, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record5.data:
-                file_name5 = record(5)
+                file_name5 = record(20)
                 if (file_name5 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer05: file_name5}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer05: file_name5, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             conn.close()
         elif (datetime.now() - speaks[-1].date_posted > timedelta(seconds=900)) and (speaks[-1].user_id == current_user.id):
@@ -142,69 +140,69 @@ def show_speaking(speaking_id):
             db.session.add(speak)
             db.session.commit()
             if form.record1.data:
-                file_name1 = record(5)
+                file_name1 = record(20)
                 print(file_name1)
                 if (file_name1 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer01: file_name1}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer01: file_name1, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record2.data:
-                file_name2 = record(5)
+                file_name2 = record(20)
                 if (file_name2 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer02: file_name2}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer02: file_name2, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record3.data:
-                file_name3 = record(5)
+                file_name3 = record(20)
                 if (file_name3 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer03: file_name3}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer03: file_name3, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record4.data:
-                file_name4 = record(5)
+                file_name4 = record(20)
                 if (file_name4 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer04: file_name4}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer04: file_name4, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record5.data:
-                file_name5 = record(5)
+                file_name5 = record(20)
                 if (file_name5 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id+1, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer05: file_name5}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer05: file_name5, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
         elif (datetime.now() - speaks[-1].date_posted <= timedelta(seconds=900)) and (speaks[-1].user_id == current_user.id):
             print("4")
             if form.record1.data:
-                file_name1 = record(5)
+                file_name1 = record(20)
                 print(file_name1)
                 if (file_name1 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer01: file_name1}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer01: file_name1, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record2.data:
-                file_name2 = record(5)
+                file_name2 = record(20)
                 if (file_name2 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer02: file_name2}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer02: file_name2, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record3.data:
-                file_name3 = record(5)
+                file_name3 = record(20)
                 if (file_name3 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer03: file_name3}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer03: file_name3, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
 
             elif form.record4.data:
-                file_name4 = record(5)
+                file_name4 = record(20)
                 if (file_name4 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer04: file_name4}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer04: file_name4, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
             elif form.record5.data:
-                file_name5 = record(50)
+                file_name5 = record(20)
                 if (file_name5 != 'none'):
                     db.session.query(Speakinganswer).filter(Speakinganswer.id == speaks[-1].id, Speakinganswer.user_id == current_user.id, Speakinganswer.pid == speaking_id
-                                                            ).update({Speakinganswer.answer05: file_name5}, synchronize_session=False)
+                                                            ).update({Speakinganswer.answer05: file_name5, Speakinganswer.date_posted: datetime.now()}, synchronize_session=False)
                     db.session.commit()
         speaks = Speakinganswer.query.all()
         if form.submit.data:
@@ -230,29 +228,54 @@ def show_speaking(speaking_id):
                     date_posted=datetime.now(), speakinganswersaved=current_user)
                 db.session.add(speaksaved)
                 db.session.commit()
-                return redirect(url_for('speaking.speak'))
                 flash(
                     'Your Speaking Paper has been Subbmited to the Database!', 'success')
+                return redirect(url_for('speaking.speak'))
             else:
                 flash(
                     'please submit all five answers and try to save the paper', 'danger')
-        return render_template('speaking_paper.html',  speaking=speaking, form=form, speaks=speaks)
+        return render_template('speaking/speaking_paper.html',  speaking=speaking, form=form, speaks=speaks)
     return render_template('speaking/speaking_paper.html',  speaking=speaking, form=form)
 
 
-@speaking.route("/speaking/<int:speaking_id>/result", methods=['POST', 'GET'])
+@speaking.route("/speaking/<int:speaking_qid>/result/<int:speaking_aid>", methods=['POST', 'GET'])
 @login_required
-def result(speaking_id):
-    speaking_answer = Speakingquestion.query.get_or_404(speaking_id)
-    speaking_ans = Speakinganswersaved.query.get_or_404(speaking_id)
-    print(speaking_answer)
-    if speaking_answer.speakquestion != current_user:
+def result(speaking_qid, speaking_aid):
+    speaking_q = Speakingquestion.query.get_or_404(speaking_qid)
+    speaking_a = Speakinganswersaved.query.get_or_404(speaking_aid)
+    grammar = (speaking_a.grammar_01 + speaking_a.grammar_02 +
+               speaking_a.grammar_03 + speaking_a.grammar_04 + speaking_a.grammar_05)/5
+    cohesion = (speaking_a.cohesion_01 + speaking_a.cohesion_02 +
+                speaking_a.cohesion_03 + speaking_a.cohesion_04 + speaking_a.cohesion_05)/5
+    print(grammar)
+    print(cohesion)
+    print(speaking_a)
+    if speaking_a.speakinganswersaved != current_user:
         abort(403)
     else:
         spic_file = url_for(
             'static', filename='profile_pics/' + current_user.image_file)
-        return render_template('speaking/speaking_anwser.html', title='Update',
-                               legend='Update', speaking_answer=speaking_answer, spic_file=spic_file, speaking_ans=speaking_ans)
+        return render_template('speaking/speaking_anwser.html', speaking_q=speaking_q, speaking_a=speaking_a, spic_file=spic_file,  grammar=grammar, cohesion=cohesion)
+
+
+@speaking.route("/speaking/<int:speaking_qid>/summary/<int:speaking_aid>", methods=['POST', 'GET'])
+def summary(speaking_qid, speaking_aid):
+    speaking_q = Speakingquestion.query.get_or_404(speaking_qid)
+    speaking_a = Speakinganswersaved.query.get_or_404(speaking_aid)
+    quiz_creates = Create_quiz.query.filter(Create_quiz.index_no == 1).all()
+    grammar = (speaking_a.grammar_01 + speaking_a.grammar_02 +
+               speaking_a.grammar_03 + speaking_a.grammar_04 + speaking_a.grammar_05)/5
+    cohesion = (speaking_a.cohesion_01 + speaking_a.cohesion_02 +
+                speaking_a.cohesion_03 + speaking_a.cohesion_04 + speaking_a.cohesion_05)/5
+    print(grammar)
+    print(cohesion)
+    for quiz_create in quiz_creates:
+        if quiz_create.qcreatequiz.toq == 'speaking':
+            quiz_creates = Create_quiz.query.filter(
+                Create_quiz.index_no == 1).all()
+
+    return render_template('speaking/speaking_quiz.html', speaking_q=speaking_q,
+                           speaking_a=speaking_a, quiz_creates=quiz_creates, grammar=grammar, cohesion=cohesion)
 
 
 def result_machinelearning(task):
