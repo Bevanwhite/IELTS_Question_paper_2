@@ -344,5 +344,5 @@ def check_spellings(paragraph):
         myStr = myStr+"Misplled Word-" + \
             words[i]+", Correction-"+corrections[i] + \
             ", Candidate Words-"+candidates[i]+'\n'
-
+    print(myStr)
     return myStr
