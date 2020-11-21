@@ -2,7 +2,9 @@ from flask import render_template, Blueprint, flash, url_for, redirect, request,
 from flask_login import login_user, login_required, current_user
 from flaskblog import db
 from flaskblog.models import Quiz, Create_quiz, Quiz_answers_type
-from flaskblog.quiz.forms import QuizCreationForm, QuestionForm, QuestionChecklistForm, QuestionRadioForm, QuestionShortForm, ChecklistForm, RadioForm, ShortForm, PreviewForm
+from flaskblog.quiz.forms import QuizCreationForm, QuestionForm, QuestionChecklistForm, QuestionRadioForm
+from flaskblog.quiz.forms import QuestionShortForm, ChecklistForm, RadioForm, ShortForm, PreviewForm
+from flaskblog.quiz.forms import UpdateQuestionChecklistForm, UpdateQuestionShortForm, UpdateQuestionRadioForm
 from datetime import datetime
 
 quiz = Blueprint('quiz', __name__)
@@ -77,22 +79,16 @@ def quiz_question(quiz_id):
 
 @quiz.route("/quiz/<int:quiz_id>/radio", methods=['GET', 'POST'])
 def quiz_radio(quiz_id):
-    form = QuestionRadioForm()
+    form = QuestionRadioForm(quiz_id=quiz_id)
     quiz = Quiz.query.get_or_404(quiz_id)
-    tasks = Create_quiz.query.filter(Create_quiz.quiz_id == quiz_id).count()
-    test = 0
-    if tasks == 0:
-        test = 1
-    if tasks != 0:
-        test = indexno(tasks + 1)
     legend = "Creating Radio Button Question"
     form.correct_answer.choices = [(x.id, x.texts)
                                    for x in Quiz_answers_type.query.all()]
     if form.validate_on_submit():
         create_quiz = Create_quiz(title=form.title.data, question=form.question.data, toq="radio", answer01=form.answer01.data,
                                   answer02=form.answer02.data, answer03=form.answer03.data,
-                                  answer04=form.answer04.data, correct_answer=form.correct_answer.data, index_no=test,
-                                  quiz_id=quiz_id, user_id=current_user.id)
+                                  answer04=form.answer04.data, correct_answer=form.correct_answer.data, index_no=form.index_no.data,
+                                  quiz_id=form.quiz_id.data, user_id=current_user.id)
         db.session.add(create_quiz)
         db.session.commit()
         flash('Your Radio Question has been Created!', 'success')
@@ -102,24 +98,17 @@ def quiz_radio(quiz_id):
 
 @quiz.route("/quiz/<int:quiz_id>/checklist", methods=['GET', 'POST'])
 def quiz_checklist(quiz_id):
-    form = QuestionChecklistForm()
-    tasks = Create_quiz.query.filter(Create_quiz.quiz_id == quiz_id).count()
-    test = 0
-    if tasks == 0:
-        test = 1
-    if tasks != 0:
-        test = indexno(tasks + 1)
-
+    form = QuestionChecklistForm(quiz_id=quiz_id)
     legend = "Creating Checklist Question"
     quiz = Quiz.query.get_or_404(quiz_id)
     form.correct_answer.choices = [(x.id, x.texts)
                                    for x in Quiz_answers_type.query.all()]
     if form.validate_on_submit():
         list = ' '.join([str(i) for i in form.correct_answer.data])
-        create_quiz = Create_quiz(title=form.title.data, question=form.question.data, toq="checklist", answer01=form.answer01.data,
-                                  answer02=form.answer02.data, answer03=form.answer03.data,
-                                  answer04=form.answer04.data, correct_answer=list, index_no=test,
-                                  quiz_id=quiz_id, user_id=current_user.id)
+        create_quiz = Create_quiz(
+            title=form.title.data, question=form.question.data, toq="checklist", answer01=form.answer01.data,
+            answer02=form.answer02.data, answer03=form.answer03.data, answer04=form.answer04.data,
+            correct_answer=list, index_no=form.index_no.data, quiz_id=form.quiz_id.data, user_id=current_user.id)
         db.session.add(create_quiz)
         db.session.commit()
         flash('Your Checklist Question has been Created!', 'success')
@@ -129,27 +118,20 @@ def quiz_checklist(quiz_id):
 
 @quiz.route("/quiz/<int:quiz_id>/short", methods=['GET', 'POST'])
 def quiz_short(quiz_id):
-    form1 = PreviewForm()
-    form = QuestionShortForm()
-    tasks = Create_quiz.query.filter(Create_quiz.quiz_id == quiz_id).count()
-    test = 0
-    if tasks == 0:
-        test = 1
-    if tasks != 0:
-        test = indexno(tasks + 1)
+    form = QuestionShortForm(quiz_id=quiz_id)
     legend = "Creating Short Answer Question"
     quiz = Quiz.query.get_or_404(quiz_id)
     be = 'none'
     if form.validate_on_submit():
         create_quiz = Create_quiz(
             title=form.title.data, question=form.question.data, toq="short", answer01=be,
-            answer02=be, answer03=be, answer04=be, correct_answer=form.correct_answer.data, index_no=test,
-            quiz_id=quiz_id, user_id=current_user.id)
+            answer02=be, answer03=be, answer04=be, correct_answer=form.correct_answer.data, index_no=form.index_no.data,
+            quiz_id=form.quiz_id.data, user_id=current_user.id)
         db.session.add(create_quiz)
         db.session.commit()
         flash('Your Short Answer Question has been Created!', 'success')
         return redirect(url_for('quiz.show_quiz', quiz_id=quiz_id))
-    return render_template('quiz/create_short.html', quiz=quiz, form=form, legend=legend, form1=form1)
+    return render_template('quiz/create_short.html', quiz=quiz, form=form, legend=legend)
 
 
 @quiz.route("/quiz/<int:quiz_id>/radio/<int:id>", methods=['GET', 'POST'])
@@ -234,7 +216,7 @@ def quiz_short_answer(quiz_id, id):
 
 @quiz.route("/quiz/<int:quiz_id>/radio/<int:id>/update", methods=['GET', 'POST'])
 def update_radio(quiz_id, id):
-    form = QuestionRadioForm()
+    form = UpdateQuestionRadioForm(quiz_id=quiz_id, index_no=id)
     quiz = Quiz.query.get_or_404(quiz_id)
     legend = "Updating Radio Button Question"
     form.correct_answer.choices = [(x.id, x.texts)
@@ -263,12 +245,12 @@ def update_radio(quiz_id, id):
         form.answer03.data = create_quiz.answer03
         form.answer04.data = create_quiz.answer04
         form.correct_answer.data = create_quiz.correct_answer
-    return render_template('quiz/create_radio.html', quiz=quiz, form=form, legend=legend)
+    return render_template('quiz/update_radio.html', quiz=quiz, form=form, legend=legend)
 
 
 @quiz.route("/quiz/<int:quiz_id>/checklist/<int:id>/update", methods=['GET', 'POST'])
 def update_checklist(quiz_id, id):
-    form = QuestionChecklistForm()
+    form = UpdateQuestionChecklistForm(quiz_id=quiz_id, index_no=id)
     legend = "Updating Checklist Question"
     quiz = Quiz.query.get_or_404(quiz_id)
     create_quiz = Create_quiz.query.filter(
@@ -300,12 +282,12 @@ def update_checklist(quiz_id, id):
         form.answer03.data = create_quiz.answer03
         form.answer04.data = create_quiz.answer04
         form.correct_answer.data = test
-    return render_template('quiz/create_checklist.html', quiz=quiz, form=form, legend=legend)
+    return render_template('quiz/update_checklist.html', quiz=quiz, form=form, legend=legend)
 
 
 @quiz.route("/quiz/<int:quiz_id>/short/<int:id>/update", methods=['GET', 'POST'])
 def update_short(quiz_id, id):
-    form = QuestionShortForm()
+    form = UpdateQuestionShortForm(quiz_id=quiz_id, index_no=id)
     legend = "Updating Short Answer Question"
     quiz = Quiz.query.get_or_404(quiz_id)
     create_quiz = Create_quiz.query.filter(
@@ -325,7 +307,7 @@ def update_short(quiz_id, id):
         form.title.data = create_quiz.title
         form.question.data = create_quiz.question
         form.correct_answer.data = create_quiz.correct_answer
-    return render_template('quiz/create_short.html', quiz=quiz, form=form, legend=legend)
+    return render_template('quiz/update_short.html', quiz=quiz, form=form, legend=legend)
 
 
 @quiz.route("/quiz/<int:quiz_id>/radio/<int:id>/delete", methods=['GET', 'POST'])
@@ -362,13 +344,3 @@ def delete_short(quiz_id, id):
     db.session.commit()
     flash('Your Quiz Short has been deleted!!', 'success')
     return redirect(url_for('quiz.show_quiz', quiz_id=quiz_id))
-
-
-def indexno(name):
-    print("bye " + str(name))
-    if name == "":
-        bev = 1
-    elif name > 0:
-        bev = (name) % 40
-    print("hi " + str(bev))
-    return bev

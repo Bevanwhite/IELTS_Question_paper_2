@@ -1,23 +1,11 @@
 {% extends 'layout.html' %} {% block content %}
-<div class="row justify-content-center mt-3">
+<div class="row justify-content-center mt-3 mb-5">
   <div class="col-md-10">
     <div class="card">
       <div class="card-header">{{ legend }}</div>
       <div class="card-body">
         <form method="post" action="" enctype="multipart/form-data">
           {{ form.hidden_tag() }}
-          <div class="form-group row">
-            {{ form.index_no.label(class_="col-md-3 col-form-label
-            text-md-right")}} {% if form.index_no.errors %}
-            {{form.index_no(class="form-control col-md-5 is-invalid")}}
-            <div class="invaild-feedback col-md-3 text-danger">
-              {% for error in form.index_no.errors %}
-              <small>{{ error }}</small>
-              {% endfor %}
-            </div>
-            {% else %} {{ form.index_no(class_="form-control col-md-5")}} {%
-            endif %}
-          </div>
           <div class="form-group row">
             {{ form.title.label(class_="col-md-3 col-form-label
             text-md-right")}} {% if form.title.errors %}
@@ -92,15 +80,12 @@
           </div>
           <div class="form-group row">
             {{ form.correct_answer.label(class_="col-md-3 col-form-label
-            text-md-right")}} {% if form.correct_answer.errors %}
-            {{form.correct_answer(class="form-control col-md-5 is-invalid")}}
-            <div class="invaild-feedback col-md-3 text-danger">
-              {% for error in form.correct_answer.errors %}
-              <small>{{ error }}</small>
-              {% endfor %}
+            text-md-right")}} {% for correct_answer in form.correct_answer %}
+            <div class="form-check form-check-inline">
+              {{ correct_answer (class_="form-check-input")}} {{
+              correct_answer.label(class_="form-check-label")}}
             </div>
-            {% else %} {{ form.correct_answer(class_="form-control col-md-5")}}
-            {% endif %}
+            {% endfor %}
           </div>
           <div class="form-group row">
             <div class="offset-md-3">
