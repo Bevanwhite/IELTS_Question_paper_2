@@ -13,14 +13,12 @@ from flaskblog.models import Writingpaper
 
 class WritingpaperForm(FlaskForm):
     # Create the ielts academic writing task 1 paper with the required fields
-    title = StringField('Question Paper Title',
-                        validators=[DataRequired()])
+    title = StringField('Question Paper Title', validators=[DataRequired()])
     task01 = TextAreaField('Question 01', validators=[DataRequired()])
     task01_img = FileField('Question 01 img', validators=[
                            FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Save the Writing Paper')
 
-    
     def validate_title(self, title):
         # Validate title field of ielts academic writing task 1 paper
         writingpaper = Writingpaper.query.filter_by(title=title.data).first()
@@ -40,7 +38,7 @@ class WritingUpdateForm(FlaskForm):
 
 
 class WritingpaperoneForm(FlaskForm):
-    # After the candidate giving the answers, the answer will be saved with 150 minimum word 
+    # After the candidate giving the answers, the answer will be saved with 150 minimum word
     task01_answer = TextAreaField(
         'Answer', validators=[DataRequired(), Length(min=150)])
     submit = SubmitField('Save Your answer')

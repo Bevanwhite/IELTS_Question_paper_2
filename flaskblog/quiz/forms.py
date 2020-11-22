@@ -24,12 +24,6 @@ class QuizCreationForm(FlaskForm):
                 'This quiz name it taken please choose a another one')
 
 
-class QuestionForm(FlaskForm):
-    toq = SelectField(u'Type of Question', choices=[
-                      ('radio', 'Radio'), ('checklist', 'Check List'), ('short', 'Short Answer')])
-    submit = SubmitField('Submit the Quiz')
-
-
 class MultiCheckboxField(SelectMultipleField):
     """
     A multiple-select, except displays a list of checkboxes.

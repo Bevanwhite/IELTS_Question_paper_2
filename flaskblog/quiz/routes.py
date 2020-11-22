@@ -2,8 +2,8 @@ from flask import render_template, Blueprint, flash, url_for, redirect, request,
 from flask_login import login_user, login_required, current_user
 from flaskblog import db
 from flaskblog.models import Quiz, Create_quiz, Quiz_answers_type
-from flaskblog.quiz.forms import QuizCreationForm, QuestionForm, QuestionChecklistForm, QuestionRadioForm
-from flaskblog.quiz.forms import QuestionShortForm, ChecklistForm, RadioForm, ShortForm, PreviewForm
+from flaskblog.quiz.forms import QuizCreationForm, QuestionChecklistForm, QuestionRadioForm, QuestionShortForm
+from flaskblog.quiz.forms import ChecklistForm, RadioForm, ShortForm, PreviewForm
 from flaskblog.quiz.forms import UpdateQuestionChecklistForm, UpdateQuestionShortForm, UpdateQuestionRadioForm
 from datetime import datetime
 
@@ -58,23 +58,6 @@ def new_quiz():
         flash('Your paper has created successfully !!!', 'success')
         return redirect(url_for('quiz.quiz_write'))
     return render_template('quiz/create_quiz.html', legend=legend, form=form)
-
-
-@quiz.route("/quiz/<int:quiz_id>/create_quiz", methods=['GET', 'POST'])
-def quiz_question(quiz_id):
-    form = QuestionForm()
-    quiz = Quiz.query.get_or_404(quiz_id)
-    legend = "Create Quiz Category"
-    if form.validate_on_submit():
-        if form.toq.data == "radio":
-            return redirect(url_for('quiz.quiz_radio', quiz_id=quiz.id))
-
-        elif form.toq.data == "checklist":
-            return redirect(url_for('quiz.quiz_checklist', quiz_id=quiz.id))
-
-        elif form.toq.data == "short":
-            return redirect(url_for('quiz.quiz_short', quiz_id=quiz.id))
-    return render_template('quiz/create_question.html', form=form, legend=legend)
 
 
 @quiz.route("/quiz/<int:quiz_id>/radio", methods=['GET', 'POST'])
@@ -144,7 +127,7 @@ def quiz_radio_answer(quiz_id, id):
         pquiz = Create_quiz.query.filter(
             Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no - 1).first()
         print(pquiz)
-    if quiz.index_no < 40:
+    if quiz.index_no < 41:
         nquiz = Create_quiz.query.filter(
             Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no + 1).first()
         print(nquiz)
@@ -174,7 +157,7 @@ def quiz_checklist_answer(quiz_id, id):
         pquiz = Create_quiz.query.filter(
             Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no - 1).first()
         print(pquiz)
-    if quiz.index_no < 40:
+    if quiz.index_no < 41:
         nquiz = Create_quiz.query.filter(
             Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no + 1).first()
         print(nquiz)
@@ -198,19 +181,18 @@ def quiz_short_answer(quiz_id, id):
     quiz = Create_quiz.query.filter(
         Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == id).first()
     quizes = Create_quiz.query.filter(Create_quiz.quiz_id == quiz_id).all()
-    if quiz.index_no > 0:
-        pquiz = Create_quiz.query.filter(
-            Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no - 1).first()
-        print(pquiz)
-    if quiz.index_no < 40:
-        nquiz = Create_quiz.query.filter(
-            Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no + 1).first()
-        print(nquiz)
-
     form1 = PreviewForm()
     form = ShortForm()
     legend = "Answer Short Question"
 
+    if quiz.index_no > 0:
+        pquiz = Create_quiz.query.filter(
+            Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no - 1).first()
+        print(pquiz)
+    if quiz.index_no < 41:
+        nquiz = Create_quiz.query.filter(
+            Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no + 1).first()
+        print(nquiz)
     return render_template('quiz/short.html', quiz=quiz, quizes=quizes, legend=legend, form=form, form1=form1, pquiz=pquiz, nquiz=nquiz)
 
 

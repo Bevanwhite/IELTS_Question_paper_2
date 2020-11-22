@@ -6,9 +6,23 @@
       <a
         type="button"
         class="btn btn-outline-primary btn-sm"
-        href="{{ url_for('quiz.quiz_question', quiz_id=quiz.id)}}"
+        href="{{ url_for('quiz.quiz_radio', quiz_id=quiz.id)}}"
       >
-        + Questions
+        + Radio Question
+      </a>
+      <a
+        type="button"
+        class="btn btn-outline-primary btn-sm"
+        href="{{ url_for('quiz.quiz_checklist', quiz_id=quiz.id)}}"
+      >
+        + Checklist Question
+      </a>
+      <a
+        type="button"
+        class="btn btn-outline-primary btn-sm"
+        href="{{ url_for('quiz.quiz_short', quiz_id=quiz.id)}}"
+      >
+        + Short Answer Question
       </a>
     </div>
     {% endif %}
