@@ -162,14 +162,14 @@ def summary(writing_id):
     writing = Writingpaperanswer.query.get_or_404(writing_id)
     quiz_creates = Create_quiz.query.filter(
         Create_quiz.index_no == 1).all()
-    activitySuggestion(1, writing.grammar)
-    activitySuggestion(2, writing.cohesion)
+    grammerActivity = activitySuggestion(1, writing.grammar)
+    cohesionActivity = activitySuggestion(2, writing.cohesion)
     for quiz_create in quiz_creates:
         if quiz_create.qcreatequiz.toq == 'writing':
             quiz_creates = Create_quiz.query.filter(
                 Create_quiz.index_no == 1).all()
 
-    return render_template('writing/writing_quiz.html', writing=writing, quiz_creates=quiz_creates)
+    return render_template('writing/writing_quiz.html', writing=writing, quiz_creates=quiz_creates, grammerActivity=grammerActivity, cohesionActivity=cohesionActivity-3)
 
 
 def activitySuggestion(section, marks):

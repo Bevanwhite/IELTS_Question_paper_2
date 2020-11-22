@@ -6,19 +6,19 @@
     <a
       class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
-      >{{ quize.index_no}}</a
+      >0{{ quize.index_no}}</a
     >
     {% endif %} {% if quize.toq == "checklist"%}
     <a
       class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
-      >{{quize.index_no}}</a
+      >0{{quize.index_no}}</a
     >
     {% endif %} {% if quize.toq == "short"%}
     <a
       class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_short_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
-      >{{quize.index_no}}</a
+      >0{{quize.index_no}}</a
     >
     {% endif %} {% endif %}{% endfor %}
   </div>

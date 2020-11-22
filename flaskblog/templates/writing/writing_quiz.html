@@ -37,30 +37,28 @@
           <h6 class="card-text text-light">Grammar Papers</h6>
         </div>
         {% for quiz_create in quiz_creates %} {% if quiz_create.qcreatequiz.toq
-        == "writing" %} {% if writing.grammar < 25 and writing.grammar > 21 and
+        == "writing" %} {% if grammerActivity == 0 and
         quiz_create.qcreatequiz.userbased == 'advanced' and
         quiz_create.qcreatequiz.gandco == 'grammar'%} {% include
-        'includes/_paper_list.html' %} {% endif %} {% if writing.grammar < 20
-        and writing.grammar > 11 and quiz_create.qcreatequiz.userbased ==
-        'intermediate' and quiz_create.qcreatequiz.gandco == 'grammar'%} {%
-        include 'includes/_paper_list.html' %} {% endif %} {% if writing.grammar
-        < 10 and writing.grammar > 0 and quiz_create.qcreatequiz.userbased ==
-        'preliminary' and quiz_create.qcreatequiz.gandco == 'grammar'%} {%
-        include 'includes/_paper_list.html' %} {% endif %} {% endif %} {% endfor
-        %}
+        'includes/_paper_list.html' %} {% endif %} {% if grammerActivity == 1
+        and quiz_create.qcreatequiz.userbased == 'intermediate' and
+        quiz_create.qcreatequiz.gandco == 'grammar'%} {% include
+        'includes/_paper_list.html' %} {% endif %} {% if grammerActivity == 2
+        and quiz_create.qcreatequiz.userbased == 'preliminary' and
+        quiz_create.qcreatequiz.gandco == 'grammar'%} {% include
+        'includes/_paper_list.html' %} {% endif %} {% endif %} {% endfor %}
         <div class="card-body">
           <h6 class="card-text text-light">Cohesion Papers</h6>
         </div>
         {% for quiz_create in quiz_creates %} {% if quiz_create.qcreatequiz.toq
-        == "writing" %} {% if writing.cohesion < 25 and writing.cohesion > 21
-        and quiz_create.qcreatequiz.userbased == 'advanced' and
+        == "writing" %} {% if cohesionActivity == 0 and
+        quiz_create.qcreatequiz.userbased == 'advanced' and
         quiz_create.qcreatequiz.gandco == 'cohesion'%} {% include
-        'includes/_paper_list.html' %} {% endif %} {% if writing.cohesion < 20
-        and writing.cohesion > 11 and quiz_create.qcreatequiz.userbased ==
-        'intermediate' and quiz_create.qcreatequiz.gandco == 'cohesion'%} {%
-        include 'includes/_paper_list.html' %} {% endif %} {% if
-        writing.cohesion < 10 and writing.cohesion > 0 and
-        quiz_create.qcreatequiz.userbased == 'preliminary' and
+        'includes/_paper_list.html' %} {% endif %} {% if cohesionActivity == 1
+        and quiz_create.qcreatequiz.userbased == 'intermediate' and
+        quiz_create.qcreatequiz.gandco == 'cohesion'%} {% include
+        'includes/_paper_list.html' %} {% endif %} {% if cohesionActivity == 2
+        and quiz_create.qcreatequiz.userbased == 'preliminary' and
         quiz_create.qcreatequiz.gandco == 'cohesion'%} {% include
         'includes/_paper_list.html' %} {% endif %} {% endif %} {% endfor %}
         <div class="card-body">
