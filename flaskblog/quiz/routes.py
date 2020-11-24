@@ -12,12 +12,8 @@ quiz = Blueprint('quiz', __name__)
 
 @quiz.route("/quiz/write")
 def quiz_write():
-    quiz_creates = Create_quiz.query.filter(Create_quiz.index_no == 1).all()
-    for quiz_create in quiz_creates:
-        if quiz_create.qcreatequiz.toq == 'writing':
-            quiz_creates = Create_quiz.query.filter(
-                Create_quiz.index_no == 1).all()
-    return render_template('quiz/write.html', quiz_creates=quiz_creates)
+    quizs = Quiz.query.filter(Quiz.toq == 'writing').all()
+    return render_template('quiz/write.html', quizs=quizs)
 
 
 @quiz.route("/quiz/read")
@@ -124,7 +120,8 @@ def quiz_short(quiz_id):
 def quiz_radio_answer(quiz_id, id):
     quiz = Create_quiz.query.filter(
         Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == id).first()
-    quizes = Create_quiz.query.filter(Create_quiz.quiz_id == quiz_id).all()
+    quizes = Create_quiz.query.filter(
+        Create_quiz.quiz_id == quiz_id).order_by(Create_quiz.index_no).all()
 
     if quiz.index_no > 0:
         pquiz = Create_quiz.query.filter(
@@ -152,9 +149,10 @@ def quiz_radio_answer(quiz_id, id):
 
 @quiz.route("/quiz/<int:quiz_id>/checklist/<int:id>", methods=['GET', 'POST'])
 def quiz_checklist_answer(quiz_id, id):
-    quizes = Create_quiz.query.filter(Create_quiz.quiz_id == quiz_id).all()
     quiz = Create_quiz.query.filter(
         Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == id).first()
+    quizes = Create_quiz.query.filter(
+        Create_quiz.quiz_id == quiz_id).order_by(Create_quiz.index_no).all()
 
     if quiz.index_no > 0:
         pquiz = Create_quiz.query.filter(
@@ -183,7 +181,8 @@ def quiz_checklist_answer(quiz_id, id):
 def quiz_short_answer(quiz_id, id):
     quiz = Create_quiz.query.filter(
         Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == id).first()
-    quizes = Create_quiz.query.filter(Create_quiz.quiz_id == quiz_id).all()
+    quizes = Create_quiz.query.filter(
+        Create_quiz.quiz_id == quiz_id).order_by(Create_quiz.index_no).all()
     form1 = PreviewForm()
     form = ShortForm()
     legend = "Answer Short Question"

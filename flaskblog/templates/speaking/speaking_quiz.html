@@ -69,39 +69,6 @@
         'includes/_paper_list.html' %} {% endif %} {% endif %} {% endfor %}
       </div>
     </div>
-    <div class="card mb-3" style="background-color: #e3f2fd">
-      <div class="card-header">
-        <h5>Speaking Grammar Papers</h5>
-      </div>
-      <div class="mt-1">
-        {% for quiz_create in quiz_creates %} {% if quiz_create.qcreatequiz.toq
-        == "speaking" %} {% if quiz_create.qcreatequiz.gandco == "grammar"%} {%
-        include 'includes/_paper_list.html' %} {% endif %} {% endif %} {% endfor
-        %}
-      </div>
-    </div>
-    <div class="card mb-3" style="background-color: #e3f2fd">
-      <div class="card-header">
-        <h5>Speaking Cohesion Papers</h5>
-      </div>
-      <div class="mt-1">
-        {% for quiz_create in quiz_creates %} {% if quiz_create.qcreatequiz.toq
-        == "speaking" %} {% if quiz_create.qcreatequiz.gandco == "cohesion"%} {%
-        include 'includes/_paper_list.html' %} {% endif %} {% endif %} {% endfor
-        %}
-      </div>
-    </div>
-    <div class="card mb-3" style="background-color: #e3f2fd">
-      <div class="card-header">
-        <h5>Speaking Papers</h5>
-      </div>
-      <div class="mt-1">
-        {% for quiz_create in quiz_creates %} {% if quiz_create.qcreatequiz.toq
-        == "speaking" %} {% if quiz_create.qcreatequiz.gandco == "none"%} {%
-        include 'includes/_paper_list.html' %} {% endif %} {% endif %} {% endfor
-        %}
-      </div>
-    </div>
   </div>
 </div>
 {% endblock content %}
