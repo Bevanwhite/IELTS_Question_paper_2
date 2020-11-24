@@ -1,6 +1,9 @@
-<nav class="navbar navbar-expand-md shadow-sm navbar-light bg-info">
+<nav
+  class="navbar navbar-expand-md shadow-sm navbar-light"
+  style="background-color: #29648a"
+>
   <div class="container">
-    <a class="navbar-brand" href="/">SPIACIE</a>
+    <a class="navbar-brand text-light" href="/">SPIACIE</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -46,20 +49,20 @@
         <!-- Authentication Links -->
         {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link text-dark" href="/post/new">New Post</a>
+          <a class="nav-link text-light" href="/post/new">New Post</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="/account">Account</a>
+          <a class="nav-link text-light" href="/account">Account</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="/logout">Logout</a>
+          <a class="nav-link text-light" href="/logout">Logout</a>
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-link text-dark" href="/login">Login</a>
+          <a class="nav-link text-light" href="/login">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="/register">Register</a>
+          <a class="nav-link text-light" href="/register">Register</a>
         </li>
         {% endif %}
       </ul>

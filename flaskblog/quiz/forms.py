@@ -55,7 +55,7 @@ class QuestionChecklistForm(FlaskForm):
     answer03 = StringField('Answer 03', validators=[DataRequired()])
     answer04 = StringField('Answer 04', validators=[DataRequired()])
     correct_answer = MultiCheckboxField(
-        u'Correct Answer', choices=[], coerce=int)
+        u'Correct Answer', choices=[], coerce=int, validators=[DataRequired()])
     submit = SubmitField('Submit the Question')
 
     def validate_title(self, title):
@@ -83,7 +83,8 @@ class QuestionRadioForm(FlaskForm):
     answer02 = StringField('Answer 02', validators=[DataRequired()])
     answer03 = StringField('Answer 03', validators=[DataRequired()])
     answer04 = StringField('Answer 04', validators=[DataRequired()])
-    correct_answer = SelectField(u'Correct Answer', choices=[], coerce=int)
+    correct_answer = SelectField(
+        u'Correct Answer', choices=[], coerce=int, validators=[DataRequired()])
     submit = SubmitField('Submit the Question')
 
     def validate_title(self, title):

@@ -4,19 +4,19 @@
     {% for quize in quizes %} {% if quize.index_no < 10 and quize.quiz_id ==
     quiz.quiz_id%} {% if quize.toq == "radio"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >0{{ quize.index_no}}</a
     >
     {% endif %} {% if quize.toq == "checklist"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >0{{quize.index_no}}</a
     >
     {% endif %} {% if quize.toq == "short"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_short_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >0{{quize.index_no}}</a
     >
@@ -26,19 +26,19 @@
     {% for quize in quizes %} {% if quize.index_no > 9 and quize.index_no <19
     and quize.quiz_id == quiz.quiz_id%} {% if quize.toq == "radio"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >{{ quize.index_no}}</a
     >
     {% endif %} {% if quize.toq == "checklist"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >{{quize.index_no}}</a
     >
     {% endif %} {% if quize.toq == "short"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_short_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >{{quize.index_no}}</a
     >
@@ -48,19 +48,19 @@
     {% for quize in quizes %} {% if quize.index_no > 18 and quize.index_no <28
     and quize.quiz_id == quiz.quiz_id%} {% if quize.toq == "radio"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >{{ quize.index_no}}</a
     >
     {% endif %} {% if quize.toq == "checklist"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >{{quize.index_no}}</a
     >
     {% endif %} {% if quize.toq == "short"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_short_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >{{quize.index_no}}</a
     >
@@ -70,19 +70,19 @@
     {% for quize in quizes %} {% if quize.index_no > 27 and quize.index_no <37
     and quize.quiz_id == quiz.quiz_id%} {% if quize.toq == "radio"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >{{ quize.index_no}}</a
     >
     {% endif %} {% if quize.toq == "checklist"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >{{quize.index_no}}</a
     >
     {% endif %} {% if quize.toq == "short"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_short_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >{{quize.index_no}}</a
     >
@@ -92,19 +92,19 @@
     {% for quize in quizes %} {% if quize.index_no > 36 and quize.index_no < 41
     and quize.quiz_id == quiz.quiz_id%} {% if quize.toq == "radio"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >{{ quize.index_no}}</a
     >
     {% endif %} {% if quize.toq == "checklist"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_checklist_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >{{quize.index_no}}</a
     >
     {% endif %} {% if quize.toq == "short"%}
     <a
-      class="btn btn-info btn-sm"
+      class="btn btn-info mr-1 btn-sm"
       href="{{ url_for('quiz.quiz_short_answer', quiz_id=quize.quiz_id, id=quize.index_no) }}"
       >{{quize.index_no}}</a
     >

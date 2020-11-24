@@ -1,0 +1,70 @@
+.triangle-down {
+	width: 0;
+	height: 0;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-top: 40px solid #555;
+}
+p.groove {
+	border-style: groove;
+	width: 700px;
+	margin-left: 200px;
+	text-align: center;
+	padding-top: 30px;
+	padding-bottom: : 10px;
+}
+input[type=text] {
+  border: none;
+  border-bottom: 2px solid black;
+  width: 200px;
+}
+.tbtype4box {
+  border: 1px solid black;
+  width: 60%;
+  align-self: center;
+}
+.section3img{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: max;
+
+}
+.tbtype4flow{
+	text-align: center;
+}
+.tbtype4td{
+	border: 1px solid black;
+}
+span {
+  font-size:70px;
+}
+.table1 {
+	width:70%; 
+    margin-left:15%; 
+    margin-right:15%;
+}
+.table2 {
+	margin-left:auto; 
+    margin-right:auto;
+}
+.border1{
+	border: 1px solid black;
+
+}
+.font1{
+	font-size: 26px;
+}
+.button1 {
+	background-color: #4CAF50;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	margin-left:45%; 
+    margin-right:45%;
+	
+}
+.h3_1 { text-align: center }

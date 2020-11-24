@@ -12,9 +12,12 @@ quiz = Blueprint('quiz', __name__)
 
 @quiz.route("/quiz/write")
 def quiz_write():
-    # quiz = Quiz.query.all()
-    quizs = Quiz.query.filter(Quiz.toq == 'writing').all()
-    return render_template('quiz/write.html', quizs=quizs)
+    quiz_creates = Create_quiz.query.filter(Create_quiz.index_no == 1).all()
+    for quiz_create in quiz_creates:
+        if quiz_create.qcreatequiz.toq == 'writing':
+            quiz_creates = Create_quiz.query.filter(
+                Create_quiz.index_no == 1).all()
+    return render_template('quiz/write.html', quiz_creates=quiz_creates)
 
 
 @quiz.route("/quiz/read")
