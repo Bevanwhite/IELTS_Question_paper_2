@@ -38,6 +38,10 @@ class User(db.Model, UserMixin):
         'Quiz', backref='quiz', lazy=True)
     create_quiz = db.relationship(
         'Create_quiz', backref='createquiz', lazy=True)
+    quiz_answer = db.relationship(
+        'Quiz_answer', backref='quizanswer', lazy=True)
+    confirm_quiz_answer = db.relationship(
+        'Confirm_quiz_answer', backref='quizanswersaved', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(app.config['SECRET_KEY'], expires_sec)
@@ -188,6 +192,10 @@ class Quiz(db.Model):
 
     create_quiz = db.relationship(
         'Create_quiz', backref='qcreatequiz', lazy=True)
+    quiz_answer = db.relationship(
+        'Quiz_answer', backref='qanswer', lazy=True)
+    confirm_quiz_answer = db.relationship(
+        'Confirm_quiz_answer', backref='qanswersaved', lazy=True)
 
     def __repr__(self):
         return f"Quiz('{self.id}','{self.name}','{self.toq}')"
@@ -219,3 +227,105 @@ class Quiz_answers_type(db.Model):
 
     def __repr__(self):
         return f"Quiz_answers_type('{self.id}','{self.texts}')"
+
+
+class Quiz_answer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    answer1 = db.Column(db.String(1000), nullable=True)
+    answer2 = db.Column(db.String(1000), nullable=True)
+    answer3 = db.Column(db.String(1000), nullable=True)
+    answer4 = db.Column(db.String(1000), nullable=True)
+    answer5 = db.Column(db.String(1000), nullable=True)
+    answer6 = db.Column(db.String(1000), nullable=True)
+    answer7 = db.Column(db.String(1000), nullable=True)
+    answer8 = db.Column(db.String(1000), nullable=True)
+    answer9 = db.Column(db.String(1000), nullable=True)
+    answer10 = db.Column(db.String(1000), nullable=True)
+    answer11 = db.Column(db.String(1000), nullable=True)
+    answer12 = db.Column(db.String(1000), nullable=True)
+    answer13 = db.Column(db.String(1000), nullable=True)
+    answer14 = db.Column(db.String(1000), nullable=True)
+    answer15 = db.Column(db.String(1000), nullable=True)
+    answer16 = db.Column(db.String(1000), nullable=True)
+    answer17 = db.Column(db.String(1000), nullable=True)
+    answer18 = db.Column(db.String(1000), nullable=True)
+    answer19 = db.Column(db.String(1000), nullable=True)
+    answer20 = db.Column(db.String(1000), nullable=True)
+    answer21 = db.Column(db.String(1000), nullable=True)
+    answer22 = db.Column(db.String(1000), nullable=True)
+    answer23 = db.Column(db.String(1000), nullable=True)
+    answer24 = db.Column(db.String(1000), nullable=True)
+    answer25 = db.Column(db.String(1000), nullable=True)
+    answer26 = db.Column(db.String(1000), nullable=True)
+    answer27 = db.Column(db.String(1000), nullable=True)
+    answer28 = db.Column(db.String(1000), nullable=True)
+    answer29 = db.Column(db.String(1000), nullable=True)
+    answer30 = db.Column(db.String(1000), nullable=True)
+    answer31 = db.Column(db.String(1000), nullable=True)
+    answer32 = db.Column(db.String(1000), nullable=True)
+    answer33 = db.Column(db.String(1000), nullable=True)
+    answer34 = db.Column(db.String(1000), nullable=True)
+    answer35 = db.Column(db.String(1000), nullable=True)
+    answer36 = db.Column(db.String(1000), nullable=True)
+    answer37 = db.Column(db.String(1000), nullable=True)
+    answer38 = db.Column(db.String(1000), nullable=True)
+    answer39 = db.Column(db.String(1000), nullable=True)
+    answer40 = db.Column(db.String(1000), nullable=True)
+    date_posted = db.Column(db.DateTime, nullable=False,
+                            default=datetime.now())
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Quiz_answer('{self.id}','{self.quiz_id}','{self.user_id}')"
+
+
+class Confirm_quiz_answer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    answer1 = db.Column(db.String(1000), nullable=False)
+    answer2 = db.Column(db.String(1000), nullable=False)
+    answer3 = db.Column(db.String(1000), nullable=False)
+    answer4 = db.Column(db.String(1000), nullable=False)
+    answer5 = db.Column(db.String(1000), nullable=False)
+    answer6 = db.Column(db.String(1000), nullable=False)
+    answer7 = db.Column(db.String(1000), nullable=False)
+    answer8 = db.Column(db.String(1000), nullable=False)
+    answer9 = db.Column(db.String(1000), nullable=False)
+    answer10 = db.Column(db.String(1000), nullable=False)
+    answer11 = db.Column(db.String(1000), nullable=False)
+    answer12 = db.Column(db.String(1000), nullable=False)
+    answer13 = db.Column(db.String(1000), nullable=False)
+    answer14 = db.Column(db.String(1000), nullable=False)
+    answer15 = db.Column(db.String(1000), nullable=False)
+    answer16 = db.Column(db.String(1000), nullable=False)
+    answer17 = db.Column(db.String(1000), nullable=False)
+    answer18 = db.Column(db.String(1000), nullable=False)
+    answer19 = db.Column(db.String(1000), nullable=False)
+    answer20 = db.Column(db.String(1000), nullable=False)
+    answer21 = db.Column(db.String(1000), nullable=False)
+    answer22 = db.Column(db.String(1000), nullable=False)
+    answer23 = db.Column(db.String(1000), nullable=False)
+    answer24 = db.Column(db.String(1000), nullable=False)
+    answer25 = db.Column(db.String(1000), nullable=False)
+    answer26 = db.Column(db.String(1000), nullable=False)
+    answer27 = db.Column(db.String(1000), nullable=False)
+    answer28 = db.Column(db.String(1000), nullable=False)
+    answer29 = db.Column(db.String(1000), nullable=False)
+    answer30 = db.Column(db.String(1000), nullable=False)
+    answer31 = db.Column(db.String(1000), nullable=False)
+    answer32 = db.Column(db.String(1000), nullable=False)
+    answer33 = db.Column(db.String(1000), nullable=False)
+    answer34 = db.Column(db.String(1000), nullable=False)
+    answer35 = db.Column(db.String(1000), nullable=False)
+    answer36 = db.Column(db.String(1000), nullable=False)
+    answer37 = db.Column(db.String(1000), nullable=False)
+    answer38 = db.Column(db.String(1000), nullable=False)
+    answer39 = db.Column(db.String(1000), nullable=False)
+    answer40 = db.Column(db.String(1000), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False,
+                            default=datetime.now())
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"confirm_quiz_answer('{self.id}','{self.quiz_id}','{self.user_id}')"
