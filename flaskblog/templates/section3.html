@@ -14,15 +14,17 @@
 
 <body>
   <div class="container mt-3">
-    <div class="card mb-3">
+    <div class="card mb-3 sticky-top">
       <div class="card-header">
-        <h5>Listening</h5>
+        <h5>Listening
+          <p class="float-right" style="font-weight: bold" id="quiz-time-left"></p>
+        </h5>
       </div>
     </div>
     <div class="card mt-3 mb-3">
       <div class="card-header">
 
-        <h5>SECTION 3 &nbsp&nbsp&nbsp&nbsp<i>Question 21-30</i></h5>
+        <h6>SECTION 3 &nbsp&nbsp&nbsp&nbsp<i>Question 21-30</i></h6>
       </div><br><br>
       <div class="audio_file">
         <audio controls>
@@ -34,7 +36,7 @@
           <br><i>Question 21-25</i><br>
           <i>Choose the correct letter <b> A,B or C</b></i><br>
         </h6>
-        <form action="/section3" method="post" id="section3">
+        <form action="/section3" method="post" id="section3_form">
           <p><b>21</b> Why is Jack interested in investigation seed germination?
           </p>
           <label>A</label>&nbsp&nbsp&nbsp&nbsp<input type="radio" id="a" name="q21" value="a">
@@ -43,6 +45,7 @@
           <label for="q21">He wants to have a career in plant science</label><br>
           <label>C</label>&nbsp&nbsp&nbsp&nbsp<input type="radio" id="c" name="q21" value="c">
           <label for="q21">He is thinking of choosing this topic for his dissertation</label><br>
+          <input type="hidden" id="q021" name="q021" value="">
 
           <p><b>22</b> Jack and Emma agree the main advantage of their present experiment is that it can be
           </p>
@@ -52,6 +55,7 @@
           <label for="q22">carried out inside the laboratory</label><br>
           <label>C</label>&nbsp&nbsp&nbsp&nbsp<input type="radio" id="c" name="q22" value="c">
           <label for="q22">completed in the time availble</label><br>
+          <input type="hidden" id="q022" name="q022" value="">
 
           <p><b>23</b> What do they decide to check with their tutor?
           </p>
@@ -61,6 +65,7 @@
           <label for="q23">whether anyone else has chosen this topic</label><br>
           <label>C</label>&nbsp&nbsp&nbsp&nbsp<input type="radio" id="c" name="q23" value="c">
           <label for="q23">whether the assignment contributes to their final grade</label><br>
+          <input type="hidden" id="q023" name="q023" value="">
 
           <p><b>24</b> They agree that Graves'book on seed germination is disappointing because
           </p>
@@ -70,7 +75,7 @@
           <label for="q24">the content is irrelevant for them</label><br>
           <label>C</label>&nbsp&nbsp&nbsp&nbsp<input type="radio" id="c" name="q24" value="c">
           <label for="q24">its focus is very theorical</label><br>
-
+          <input type="hidden" id="q024" name="q024" value="">
           <p><b>25</b> What does Jack say about the article on seed germination by Lee Hail?
           </p>
           <label>A</label>&nbsp&nbsp&nbsp&nbsp<input type="radio" id="a" name="q25" value="a">
@@ -79,6 +84,7 @@
           <label for="q25">The analysis of seed germination statics is through</label><br>
           <label>C</label>&nbsp&nbsp&nbsp&nbsp<input type="radio" id="c" name="q25" value="c">
           <label for="q25">The finding on seed germination after fires are surpricing</label><br>
+          <input type="hidden" id="q025" name="q025" value="">
 
       </div><!-- end of type 2-->
       <div class="type4">
@@ -150,12 +156,60 @@
           </tr>
         </table><br><br>
         <div class="card-footer text-muted text-right">
-          <input type="submit" value="Save Your answer" id="section3" name="section3" class="btn btn-primary btn-sm" />
+          <input type="submit" value="Save Your answer" onclick="SubmitFunction()" id="section3" name="section3" class="btn btn-primary btn-sm" />
         </div>
         </form>
       </div>
     </div>
   </div>
 </body>
+<script>
+  var div = document.getElementById('quiz-time-left');
+
+  function CountDown(duration, display) {
+
+    var timer = duration, minutes, seconds;
+
+    var interVal = setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      display.innerHTML = "<b>" + minutes + "m : " + seconds + "s" + "</b>";
+      if (timer > 0) {
+        --timer;
+      } else {
+        clearInterval(interVal)
+        SubmitFunction();
+      }
+
+    }, 1000);
+
+  }
+
+  function SubmitFunction() {
+    var i, mcq;
+    var form_elements = document.getElementById('section3_form').elements;
+    for (i = 21; i < 26; i++) {
+      var mcq = form_elements['q' + i].value;
+      if (mcq == "") {
+        document.getElementById("q0" + i).value = 'not answered';
+      }
+      else {
+        document.getElementById("q0" + i).value = mcq;
+      }
+    }
+    for (i = 26; i < 31; i++) {
+      var ans = document.getElementById('q' + i).value;
+      if (ans == "") {
+        document.getElementById("q" + i).value = 'not answered';
+      }
+    }
+    document.getElementById('section3_form').submit();
+
+  }
+  CountDown(600, div);
+</script>
 
 </html>

@@ -15,9 +15,11 @@
 
 <body>
 	<div class="container mt-3">
-		<div class="card mb-3">
+		<div class="card mb-3 sticky-top">
 			<div class="card-header">
-				<h5>Listening</h5>
+				<h5>Listening
+					<p class="float-right" style="font-weight: bold" id="quiz-time-left"></p>
+				</h5>
 			</div>
 		</div>
 		<div class="card mt-3 mb-3">
@@ -33,8 +35,7 @@
 				<h6 class="card-title">
 					<i>Complete the table below</i>
 					<i>Write <b>ONE WORD AND / OR A NUMBER</b> for each answer</i></h6>
-
-				<form action="/section1" method="post">
+				<form action="/section1" id="section1_form" method="post">
 					<br>
 					<h3>
 						<p align="center">COOKERY CLASSES</p>
@@ -47,38 +48,38 @@
 						</tr>
 						<tr>
 							<td><i>Example</i><br>The Food <i>Studio</i></td>
-							<td>how to <b>1</b>.<input type="text" name="q01" id="q01">&nbsp&nbsp and cook with seasonal
+							<td>how to <b>1</b>.<input type="text" name="q1" id="q1">&nbsp&nbsp and cook with seasonal
 								products</td>
 							<td>
 								<ul>
 									<li>small classes</li>
-									<li>also offers <b>2</b>. <input type="text" name="q02" id="q02">&nbsp&nbsp classes
+									<li>also offers <b>2</b>. <input type="text" name="q2" id="q2">&nbsp&nbsp classes
 									</li>
-									<li>clients who return get a <b>3</b>. <input type="text" name="q03"
-											id="q03">&nbsp&nbsp
+									<li>clients who return get a <b>3</b>. <input type="text" name="q3"
+											id="q3">&nbsp&nbsp
 										discount</li>
 								</ul>
 							</td>
 						</tr>
 						<tr>
 							<td>Bond's Cookery School</td>
-							<td>food that is <b>4</b>. <input type="text" name="q04" id="q04">&nbsp&nbsp</td>
+							<td>food that is <b>4</b>. <input type="text" name="q4" id="q4">&nbsp&nbsp</td>
 							<td>
 								<ul>
-									<li>includes recipes to strengthen your <b>5</b>. <input type="text" name="q05"
-											id="q05">&nbsp&nbsp</li>
-									<li>they have a free <b>6</b>. <input type="text" name="q06" id="q06">&nbsp&nbsp
+									<li>includes recipes to strengthen your <b>5</b>. <input type="text" name="q5"
+											id="q5">&nbsp&nbsp</li>
+									<li>they have a free <b>6</b>. <input type="text" name="q6" id="q6">&nbsp&nbsp
 										wever
 										Thursday</li>
 								</ul>
 							</td>
 						</tr>
 						<tr>
-							<td>The <b>7</b>. <input type="text" name="q07" id="q07">&nbsp&nbsp Centre</td>
-							<td>mainly <b>8</b>. <input type="text" name="q08" id="q08">&nbsp&nbsp food</td>
+							<td>The <b>7</b>. <input type="text" name="q7" id="q7">&nbsp&nbsp Centre</td>
+							<td>mainly <b>8</b>. <input type="text" name="q8" id="q8">&nbsp&nbsp food</td>
 							<td>
 								<ul>
-									<li>located near the <b>9</b>.<input type="text" name="q09" id="q09">&nbsp&nbsp</li>
+									<li>located near the <b>9</b>.<input type="text" name="q9" id="q9">&nbsp&nbsp</li>
 									<li>a special course in skills with a <b>10</b>.<input type="text" name="q10"
 											id="q10">&nbsp&nbsp is sometimes available</li>
 								</ul>
@@ -87,12 +88,50 @@
 
 					</table>
 					<div class="card-footer text-muted text-right">
-						<input type="submit" value="Save Your answer" id="section1" name="section1"
+						<input type="submit" value="Save Your answer" onclick="SubmitFunction()" id="section1" name="section1"
 							class="btn btn-primary btn-sm" />
 					</div>
 				</form>
 			</div>
 		</div>
 </body>
+<script>
+	var div = document.getElementById('quiz-time-left');
+
+	function CountDown(duration, display) {
+
+		var timer = duration, minutes, seconds;
+
+		var interVal = setInterval(function () {
+			minutes = parseInt(timer / 60, 10);
+			seconds = parseInt(timer % 60, 10);
+
+			minutes = minutes < 10 ? "0" + minutes : minutes;
+			seconds = seconds < 10 ? "0" + seconds : seconds;
+			display.innerHTML = "<b>" + minutes + "m : " + seconds + "s" + "</b>";
+			if (timer > 0) {
+				--timer;
+			} else {
+				clearInterval(interVal)
+				SubmitFunction();
+			}
+
+		}, 1000);
+
+	}
+
+	function SubmitFunction() {
+		var i = 1;
+		for (i = 1; i < 11; i++) {
+			var ans = document.getElementById('q' + i).value;
+			if (ans == "") {
+				document.getElementById("q" + i).value = 'not answered';
+			}
+		}
+		document.getElementById('section1_form').submit();
+
+	}
+	CountDown(600, div);
+</script>
 
 </html>

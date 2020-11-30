@@ -166,13 +166,13 @@ class UpdateQuestionShortForm(FlaskForm):
 
 class ChecklistForm(FlaskForm):
     correct_answer = MultiCheckboxField(
-        u'Correct Answer', choices=[], coerce=int)
+        u'Correct Answer', choices=[], coerce=int, validators=[DataRequired()])
     submit = SubmitField('Submit the Question')
 
 
 class RadioForm(FlaskForm):
     correct_answer = RadioField(
-        u'Correct Answer', choices=[], coerce=int)
+        u'Correct Answer', choices=[], coerce=int, validators=[DataRequired()])
     submit = SubmitField('Submit the Question')
 
 

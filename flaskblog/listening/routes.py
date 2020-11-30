@@ -1,16 +1,15 @@
-from flask import Flask, flash, Blueprint, render_template, request, url_for, redirect
-from flask import render_template, Blueprint, flash, redirect, url_for, request, jsonify
+from flask import Flask, flash, Blueprint, render_template, request, Blueprint
 from flask_login import login_required
-from flaskblog import db
 from flask_login import current_user
-import os
-import sqlite3
-from datetime import datetime, timedelta
 from flaskext.mysql import MySQL
 import joblib
-suggestion_model = joblib.load('Listening_activity_suggestion_up1.sav')
-
+# Import trained model
+suggestion_model = joblib.load(
+    'flaskblog/listening/Listening_activity_suggestion_up1.sav')
+# create blueprint to route
 listening = Blueprint('listening', __name__)
+
+# Import config to MYSQL db
 app = Flask(__name__)
 mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -18,6 +17,8 @@ app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_DB'] = 'ielts'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
+
+# Main page
 
 
 @listening.route("/listening")
@@ -31,6 +32,7 @@ def listen():
     try:
         c.execute(q1, uid)
         uid_db = c.fetchone()[0]
+        # if current user availble in database load their data to main page
         if uid_db:
             q1 = "SELECT study_plan FROM listening_user where user_id = %s"
             c.execute(q1, uid)
@@ -53,47 +55,68 @@ def listen():
             data = {'study_plan':  study_plan, 'progress': progress,
                     'weak_section': weak_section, 'study_plan_no': study_plan_no, 'pid': pid}
             return render_template('listening.html', data=data)
+        # if current user not in database load test paper
         else:
             return render_template("listening_test_paper1.html")
     except Exception as e:
         return render_template("listening_test_paper1.html")
 
+# teset paper section1 tempory answers save to database
+
 
 @listening.route("/section1", methods=['POST'])
 def section1():
     if request.method == "POST":
-        q01 = request.form['q01']
-        q02 = request.form['q02']
-        q03 = request.form['q03']
-        q04 = request.form['q04']
-        q05 = request.form['q05']
-        q06 = request.form['q06']
-        q07 = request.form['q07']
-        q08 = request.form['q08']
-        q09 = request.form['q09']
+        q01 = request.form['q1']
+        q02 = request.form['q2']
+        q03 = request.form['q3']
+        q04 = request.form['q4']
+        q05 = request.form['q5']
+        q06 = request.form['q6']
+        q07 = request.form['q7']
+        q08 = request.form['q8']
+        q09 = request.form['q9']
         q10 = request.form['q10']
 
         conn = mysql.connect()
         c = conn.cursor()
+        # delete previous user's temporary data
         drop = "DROP TABLE IF EXISTS  user_answer"
         c.execute(drop)
+        drop1 = "DROP TABLE IF EXISTS  test_paper1"
+        c.execute(drop1)
         create_table = "CREATE TABLE user_answer (id INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY,question VARCHAR(30) NOT NULL,answer VARCHAR(30))"
+        create_ans_table = "CREATE TABLE IF NOT EXISTS test_paper1 (id int(2) UNSIGNED NOT NULL AUTO_INCREMENT,question varchar(30) NOT NULL,answer varchar(30) NOT NULL,alter_answer varchar(50) NOT NULL,PRIMARY KEY (id))"
         c.execute(create_table)
-        query = "INSERT INTO user_answer(question,answer) VALUES (%s,%s)"
-        val = [("1", q01), ("2", q02), ("3", q03), ("4", q04), ("5", q05),
-               ("6", q06), ("7", q07), ("8", q08), ("9", q09), ("10", q10)]
+        c.execute(create_ans_table)
+        query = "INSERT INTO test_paper1(id,question,answer,alter_answer) VALUES (%s,%s,%s,%s)"
+        val = [(1, 1, "choose", "-1"), (2, 2, "private", "-1"), (3, 3, "20%", "20 percent"), (4, 4, "healthy", "-1"), (5, 5, "bones", "-1"), (6, 6, "lecture", "-1"), (7, 7, "Arretsa", "-1"), (8, 8, "vegetarian", "-1"),
+               (9, 9, "market", "-1"), (10, 10, "knife", "-1"), (11, 11, "b", "B"), (12, 12, "c", "C"), (13, 13, "b",
+                                                                                                         "B"), (14, 14, "e", "E"), (15, 15, "d", "D"), (16, 16, "b", "B"), (17, 17, "g", "G"), (18, 18, "c", "C"),
+               (19, 19, "h", "H"), (20, 20, "i", "I"), (21, 21, "a", "A"), (22, 22, "c", "C"), (23, 23, "b", "B"), (24, 24,
+                                                                                                                    "c", "C"), (25, 25, "c", "C"), (26, 26, "g", "G"), (27, 27, "c", "C"), (28, 28, "h", "H"), (29, 29, "a", "A"),
+               (30, 30, "e", "E"), (31, 31, "crow", "-1"), (32, 32, "cliffs", "-1"), (33, 33, "speed", "-1"), (34, 34, "brain",
+                                                                                                               "-1"), (35, 35, "food", "-1"), (36, 36, "behavior", "-1"), (37, 37, "frighten", "-1"), (38, 38, "blood", "-1"),
+               (39, 39, "tails", "-1"), (40, 40, "permanent", "-1")]
         c.executemany(query, val)
+
+        query1 = "INSERT INTO user_answer(question,answer) VALUES (%s,%s)"
+        val1 = [("1", q01), ("2", q02), ("3", q03), ("4", q04), ("5", q05),
+                ("6", q06), ("7", q07), ("8", q08), ("9", q09), ("10", q10)]
+        c.executemany(query1, val1)
         conn.commit()
         c.close()
         return render_template("section2.html")
+
+# teset paper section2 tempory answers save to database
 
 
 @listening.route("/section2", methods=['POST'])
 def section2():
     if request.method == "POST":
-        q11 = request.form['q11']
-        q12 = request.form['q12']
-        q13 = request.form['q13']
+        q11 = request.form['q011']
+        q12 = request.form['q012']
+        q13 = request.form['q013']
         q14 = request.form['q14']
         q15 = request.form['q15']
         q16 = request.form['q16']
@@ -101,7 +124,6 @@ def section2():
         q18 = request.form['q18']
         q19 = request.form['q19']
         q20 = request.form['q20']
-
         conn = mysql.connect()
         c = conn.cursor()
         query = "INSERT INTO user_answer(question,answer) VALUES (%s,%s)"
@@ -112,15 +134,17 @@ def section2():
         c.close()
         return render_template("section3.html")
 
+# teset paper section3 tempory answers save to database
+
 
 @listening.route("/section3", methods=['POST'])
 def section3():
     if request.method == "POST":
-        q21 = request.form['q21']
-        q22 = request.form['q22']
-        q23 = request.form['q23']
-        q24 = request.form['q24']
-        q25 = request.form['q25']
+        q21 = request.form['q021']
+        q22 = request.form['q022']
+        q23 = request.form['q023']
+        q24 = request.form['q024']
+        q25 = request.form['q025']
         q26 = request.form['q26']
         q27 = request.form['q27']
         q28 = request.form['q28']
@@ -136,6 +160,8 @@ def section3():
         conn.commit()
         c.close()
         return render_template("section4.html")
+
+# teset paper section4 tempory answers save to database
 
 
 @listening.route("/section4", methods=['POST'])
@@ -179,14 +205,20 @@ def section4():
         c.execute(q3)
         testq3 = [item[0] for item in c.fetchall()]
         c.close()
-
+        # get separate sections scores
         sec1 = section1ans()
         sec2 = section2ans()
         sec3 = section3ans()
         sec4 = section4ans()
+
+        # get lowest section score
         lower_section = get_lower_section(sec1, sec2, sec3, sec4)
+        # get suggested studyplan
         suggetion = get_suggestions(sec1, sec2, sec3, sec4)
+        # return above data to submitted_answer function
         return submitted_Answer(testq1, testq2, testq3, data, suggetion, lower_section)
+
+# teset paper section1 tempory answers get from data base and send to paper cheching
 
 
 def section1ans():
@@ -203,8 +235,11 @@ def section1ans():
     c.execute(q3)
     tq3 = [item[0] for item in c.fetchall()]
     c.close()
+    # send to check function
     s1Marks = section_score(tq1, tq2, tq3)
     return s1Marks
+
+# teset paper section2 tempory answers get from data base and send to paper checking
 
 
 def section2ans():
@@ -225,6 +260,8 @@ def section2ans():
     s2Marks = section_score(tq1, tq2, tq3)
     return s2Marks
 
+# teset paper section3 tempory answers get from data base and send to paper cheching
+
 
 def section3ans():
 
@@ -242,6 +279,8 @@ def section3ans():
     c.close()
     s3Marks = section_score(tq1, tq2, tq3)
     return s3Marks
+
+# teset paper section4 tempory answers get from data base and send to paper cheching
 
 
 def section4ans():
@@ -263,23 +302,50 @@ def section4ans():
     s4Marks = section_score(tq1, tq2, tq3)
     return s4Marks
 
+# find lowest section score
+
 
 @listening.route('/get_lower_section')
 def get_lower_section(sec1, sec2, sec3, sec4):
+
     sections = {sec1: "section 1", sec2: "section 2",
                 sec3: "section 3", sec4: "section 4"}
-    if sec1 < 5 and sec2 < 5 and sec3 < 5 and sec4 < 5:
-        if sec1 == sec2 and sec1 == sec3 and sec1 == sec4:
+
+    score = [sec1, sec2, sec3, sec4]
+    minimum = score[0]
+    for number in score:
+        if minimum > number:
+            minimum = number
+
+    if minimum == sec1 and minimum == sec2 and minimum == sec3 and minimum == sec4:
+        if sec1 < 6 and sec2 < 6 and sec3 < 6 and sec4 < 6:
             return "Weak all sections"
-        else:
-            score = [sec1, sec2, sec3, sec4]
-            minimum = score[0]
-            for number in score:
-                if minimum > number:
-                    minimum = number
-        return str(sections[minimum])
+        if sec1 > 6 and sec2 > 6 and sec3 > 6 and sec4 > 6:
+            return " Avarage scores"
+    elif minimum == sec1 and minimum == sec2 and minimum == sec3:
+        return "section 1 , 2 and 3"
+    elif minimum == sec1 and minimum == sec2 and minimum == sec4:
+        return "section 1 , 2 and 4"
+    elif minimum == sec1 and minimum == sec3 and minimum == sec4:
+        return "section 1 , 3 and 4"
+    elif minimum == sec1 and minimum == sec3 and minimum == sec4:
+        return "section 2 , 3 and 4"
+    elif minimum == sec1 and minimum == sec2:
+        return "section 1 and 2"
+    elif minimum == sec1 and minimum == sec3:
+        return "section 1 and 3"
+    elif minimum == sec1 and minimum == sec4:
+        return "section 1 and 4"
+    elif minimum == sec2 and minimum == sec3:
+        return "section 2 and 3"
+    elif minimum == sec2 and minimum == sec4:
+        return "section 2 and 4"
+    elif minimum == sec3 and minimum == sec4:
+        return "section 3 and 4"
     else:
-        return " Avarage scores for all sections"
+        return str(sections[minimum])
+
+# checking answers with real answers
 
 
 def submitted_Answer(answer1, answer2, altanswer, data, suggetion, lower_section):
@@ -296,7 +362,10 @@ def submitted_Answer(answer1, answer2, altanswer, data, suggetion, lower_section
         else:
             wrong = wrong + 1
             count = count + 1
+    # feedback and summarized report
     return render_template('correct.html', output_data=data, score=ca, wrong_answers=wrong, suggestion=suggetion, lowest=lower_section)
+
+# checking separate section  answers with real answers
 
 
 @listening.route('/section_score')
@@ -316,10 +385,12 @@ def section_score(answer1, answer2, altanswer):
             count = count + 1
     return ca
 
+# generate studyplan
+
 
 @listening.route('/get_suggestions')
 def get_suggestions(sec1, sec2, sec3, sec4):
-
+    # feedbacks
     suggestions = {1: "You are at stage 1 : Great! You got a higher score. You have to focus on key ideas. We will guide you to improve your listening skill",
                       2: "You are at stage 2 : Great! You got a good score. You have to focus on key ideas and speaker's opinions and attitudes. We will guide you to improve your listening skill",
                       3: "You are at stage 3 : Great! You got a good score. You have to focus on given facts, key ideas and speaker's opinions and attitudes. We will guide you to get a higher band score and improve your listening skill.",
@@ -333,6 +404,7 @@ def get_suggestions(sec1, sec2, sec3, sec4):
     test_data = [section1, section2, section3, section4]
     suggestion = suggestion_model.predict([test_data])[0]
     return str(suggestions[suggestion])
+# after test paper mainpage will load with this data
 
 
 @listening.route('/listening/summary')
@@ -358,6 +430,7 @@ def summary():
     uid = int(current_user.id)
     conn = mysql.connect()
     c = conn.cursor()
+    # insert data to listening user table
     query = "INSERT INTO listening_user(user_id,study_plan,study_plan_no,progress,pid,weak_section) VALUES (%s,%s,%s,%s,%s,%s)"
     val = (uid, sp, pln_no, 0, 0, ws)
     c.execute(query, val)
@@ -365,6 +438,8 @@ def summary():
     data = {'study_plan':  sp, 'progress': 0,
             'weak_section': ws, 'study_plan_no': pln_no, 'pid': 0}
     return render_template('listening.html', data=data)
+
+# after complete plan user can reset his current study plan and get new one
 
 
 @listening.route("/listening/evaluate")
@@ -376,6 +451,7 @@ def evaluate():
     c.execute(q1, uid)
     conn.commit()
     return listen()
+# study plan progress updater and validation
 
 
 @listening.route("/listening/progress1/<int:pid>", methods=['GET', 'POST'])
@@ -408,11 +484,14 @@ def update_plans(pid):
     conn.commit()
     c.close()
     return listen()
+# home link
 
 
 @listening.route("/listening/go_home")
 def load_home():
     return listen()
+
+# Practise papers,test papers,lessons routes
 
 
 @listening.route("/listening/lesson1")

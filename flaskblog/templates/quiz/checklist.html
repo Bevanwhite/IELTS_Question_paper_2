@@ -32,8 +32,18 @@ current_user %}
           <br />
           {% for subfield in form.correct_answer %}
           <tr>
+            {% if form.correct_answer.errors %}
+            <div class="invaild-feedback col-md-3 text-danger">
+              {% for error in form.correct_answer.errors %}
+              <small>{{ error }}</small>
+              {% endfor %}
+            </div>
             <td>{{ subfield }}</td>
             <td>{{ subfield.label }}</td>
+            {% else %}
+            <td>{{ subfield }}</td>
+            <td>{{ subfield.label }}</td>
+            {% endif %}
           </tr>
           <br />
           {% endfor %} <br />{{ form.submit(class="btn btn-primary btn-sm")}}
