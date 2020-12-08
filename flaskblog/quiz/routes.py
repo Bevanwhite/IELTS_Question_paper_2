@@ -47,6 +47,8 @@ def show_quiz(quiz_id):
 @quiz.route("/quiz/new", methods=['GET', 'POST'])
 @login_required
 def new_quiz():
+    if current_user.is_authenticated and current_user.is_admin == 0:
+        abort(403)
     form = QuizCreationForm()
     legend = "Creating Questions"
     if form.validate_on_submit():
@@ -61,6 +63,8 @@ def new_quiz():
 
 @quiz.route("/quiz/<int:quiz_id>/radio", methods=['GET', 'POST'])
 def quiz_radio(quiz_id):
+    if current_user.is_authenticated and current_user.is_admin == 0:
+        abort(403)
     form = QuestionRadioForm(quiz_id=quiz_id)
     quiz = Quiz.query.get_or_404(quiz_id)
     legend = "Creating Radio Button Question"
@@ -80,6 +84,8 @@ def quiz_radio(quiz_id):
 
 @quiz.route("/quiz/<int:quiz_id>/checklist", methods=['GET', 'POST'])
 def quiz_checklist(quiz_id):
+    if current_user.is_authenticated and current_user.is_admin == 0:
+        abort(403)
     form = QuestionChecklistForm(quiz_id=quiz_id)
     legend = "Creating Checklist Question"
     quiz = Quiz.query.get_or_404(quiz_id)
@@ -100,6 +106,8 @@ def quiz_checklist(quiz_id):
 
 @quiz.route("/quiz/<int:quiz_id>/short", methods=['GET', 'POST'])
 def quiz_short(quiz_id):
+    if current_user.is_authenticated and current_user.is_admin == 0:
+        abort(403)
     form = QuestionShortForm(quiz_id=quiz_id)
     legend = "Creating Short Answer Question"
     quiz = Quiz.query.get_or_404(quiz_id)
@@ -131,10 +139,8 @@ def quiz_radio_answer(quiz_id, id):
         nquiz = Create_quiz.query.filter(
             Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no + 1).first()
         print(nquiz)
-
     form = RadioForm()
     legend = "Answer the Radio Question"
-
     list = []
     list.append((1, quiz.answer01))
     list.append((2, quiz.answer02))
@@ -143,9 +149,6 @@ def quiz_radio_answer(quiz_id, id):
     print(type(list))
     form.correct_answer.choices = [
         (int(list[x][0]), str(list[x][1]))for x in range(4)]
-    # Quiz_answer.answer
-    # quiz_an = Quiz_answer.query.all()
-    # confirm_quiz_answers = Confirm_quiz_answers.query.all()
     radioandshort_answer(quiz_id, id, form)
     return render_template('quiz/radio.html', quiz=quiz, quizes=quizes, form=form, legend=legend, form1=form1, pquiz=pquiz, nquiz=nquiz)
 
@@ -177,8 +180,6 @@ def quiz_checklist_answer(quiz_id, id):
     print(type(queue))
     form.correct_answer.choices = [
         (int(queue[x][0]), str(queue[x][1]))for x in range(4)]
-
-    quiz_an = Quiz_answer.query.all()
     checklist_answer(quiz_id, id, form)
     return render_template('quiz/checklist.html', quiz=quiz, quizes=quizes, legend=legend, form=form, form1=form1, pquiz=pquiz, nquiz=nquiz)
 
@@ -201,8 +202,6 @@ def quiz_short_answer(quiz_id, id):
         nquiz = Create_quiz.query.filter(
             Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == quiz.index_no + 1).first()
         print(nquiz)
-
-    quiz_an = Quiz_answer.query.all()
     radioandshort_answer(quiz_id, id, form)
 
     return render_template('quiz/short.html', quiz=quiz, quizes=quizes, legend=legend, form=form, form1=form1, pquiz=pquiz, nquiz=nquiz)
@@ -217,9 +216,8 @@ def update_radio(quiz_id, id):
                                    for x in Quiz_answers_type.query.all()]
     create_quiz = Create_quiz.query.filter(
         Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == id).first()
-    if create_quiz.createquiz != current_user:
+    if create_quiz.createquiz != current_user and current_user.is_admin == 0:
         abort(403)
-
     if form.validate_on_submit():
         create_quiz.title = form.title.data
         create_quiz.question = form.question.data
@@ -251,7 +249,7 @@ def update_checklist(quiz_id, id):
         Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == id).first()
     form.correct_answer.choices = [(x.id, x.texts)
                                    for x in Quiz_answers_type.query.all()]
-    if create_quiz.createquiz != current_user:
+    if create_quiz.createquiz != current_user and current_user.is_admin == 0:
         abort(403)
 
     if form.validate_on_submit():
@@ -286,7 +284,7 @@ def update_short(quiz_id, id):
     quiz = Quiz.query.get_or_404(quiz_id)
     create_quiz = Create_quiz.query.filter(
         Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == id).first()
-    if create_quiz.createquiz != current_user:
+    if create_quiz.createquiz != current_user and current_user.is_admin == 0:
         abort(403)
     if create_quiz.toq != "short":
         abort(403)
@@ -308,7 +306,7 @@ def update_short(quiz_id, id):
 def delete_radio(quiz_id, id):
     quiz = Create_quiz.query.filter(
         Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == id).first()
-    if quiz.createquiz != current_user:
+    if quiz.user_id != current_user.id and current_user.is_admin == 0:
         abort(403)
     db.session.delete(quiz)
     db.session.commit()
@@ -320,7 +318,7 @@ def delete_radio(quiz_id, id):
 def delete_checklist(quiz_id, id):
     quiz = Create_quiz.query.filter(
         Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == id).first()
-    if quiz.createquiz != current_user:
+    if quiz.user_id != current_user.id and current_user.is_admin == 0:
         abort(403)
     db.session.delete(quiz)
     db.session.commit()
@@ -332,7 +330,7 @@ def delete_checklist(quiz_id, id):
 def delete_short(quiz_id, id):
     quiz = Create_quiz.query.filter(
         Create_quiz.quiz_id == quiz_id, Create_quiz.index_no == id).first()
-    if quiz.createquiz != current_user:
+    if quiz.user_id != current_user.id and current_user.is_admin == 0:
         abort(403)
     db.session.delete(quiz)
     db.session.commit()

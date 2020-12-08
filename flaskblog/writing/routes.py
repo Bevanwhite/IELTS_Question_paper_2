@@ -59,6 +59,8 @@ def cosine_sim(text1, text2):
 @writing.route("/writing/new", methods=['GET', 'POST'])
 @login_required
 def new_writingpaper():
+    if current_user.is_authenticated and current_user.is_admin == 0:
+        abort(403)
     form = WritingpaperForm()
     if form.validate_on_submit():
         if form.task01_img.data:
@@ -104,7 +106,7 @@ def show_writing(writing_id):
 @login_required
 def update_writing(writing_id):
     writing = Writingpaper.query.get_or_404(writing_id)
-    if writing.wcreator != current_user:
+    if writing.wcreator != current_user and current_user.is_admin == 0:
         abort(403)
     form = WritingUpdateForm()
     if form.validate_on_submit():
@@ -130,7 +132,7 @@ def update_writing(writing_id):
 @login_required
 def delete_writing(writing_id):
     writing = Writingpaper.query.get_or_404(writing_id)
-    if writing.wcreator != current_user:
+    if writing.wcreator != current_user and current_user.is_admin == 0:
         abort(403)
     db.session.delete(writing)
     db.session.commit()

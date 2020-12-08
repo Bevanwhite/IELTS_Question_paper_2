@@ -38,11 +38,13 @@
             >Speaking</a
           >
         </li>
+        {% if current_user.is_authenticated and current_user.is_admin == 1%}
         <li class="nav-item">
           <a class="nav-link text-light" href="{{ url_for('quiz.quiz_write') }}"
             >Quiz</a
           >
         </li>
+        {% endif %}
       </ul>
       <!-- Right Side Of Navbar -->
       <ul class="navbar-nav ml-auto">

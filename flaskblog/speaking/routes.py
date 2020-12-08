@@ -25,6 +25,8 @@ def speak():
 @speaking.route("/speaking/new", methods=['GET', 'POST'])
 @login_required
 def new_speaking():
+    if current_user.is_authenticated and current_user.is_admin == 0:
+        abort(403)
     form = SpeakForm()
     if form.validate_on_submit():
         que_01 = Someaudio(form.question_01.data)

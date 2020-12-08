@@ -13,6 +13,7 @@ from scipy.io import wavfile
 import pyaudio
 import speech_recognition as sr
 import wavio
+import pyttsx3
 
 # see this is the
 
@@ -22,8 +23,9 @@ def Someaudio(form_audio):
     language = 'en'
     os.chdir('/Users/Bevan/Desktop/New folder (3)/flask/flaskblog/static/audio')
     print(os.listdir())
-    myobj = gTTS(text=mytext, lang=language, slow=False)
-    myobj.save('welcome.mp3')
+    engine = pyttsx3.init()
+    engine.save_to_file(mytext, 'welcome.mp3')
+    engine.runAndWait()
 
     for f in os.listdir():
         file_name, file_ext = os.path.splitext(f)
