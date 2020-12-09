@@ -1,5 +1,6 @@
-from flask import render_template, request, Blueprint
+from flask import render_template, request, Blueprint, abort
 from flaskblog.models import Post
+from flaskblog import login_manger, app, db
 
 main = Blueprint('main', __name__)
 

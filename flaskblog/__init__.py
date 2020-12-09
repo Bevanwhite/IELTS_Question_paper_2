@@ -1,12 +1,13 @@
 import os
 import numpy as np
-from flask import Flask
+from flask import Flask, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from flaskblog.config import Config
 import pymysql
+
 
 app = Flask(__name__)
 app.config.from_object(Config)

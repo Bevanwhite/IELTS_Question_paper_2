@@ -9,3 +9,4 @@ class Config:
     MAIL_USERNAME = 'jeffery1996.jbw@gmail.com'
     MAIL_PASSWORD = 'ncxv yvzu xrds dmzk'
     MAIL_DEBUG = True
+    FLASK_ADMIN_SWATCH = 'cerulean'

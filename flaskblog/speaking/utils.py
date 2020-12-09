@@ -15,12 +15,12 @@ import speech_recognition as sr
 import wavio
 import pyttsx3
 
+
 # see this is the
 
 
 def Someaudio(form_audio):
     mytext = form_audio
-    language = 'en'
     os.chdir('/Users/Bevan/Desktop/New folder (3)/flask/flaskblog/static/audio')
     print(os.listdir())
     engine = pyttsx3.init()
