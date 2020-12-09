@@ -1,7 +1,7 @@
 absl-py==0.9.0
 alchemy==20.5
 altgraph==0.17
-annoy @ file:///C:/Users/Bevan/AppData/Local/Temp/pymagnitude-0.1.143-cp37-cp37m-win_amd64/pymagnitude/req_wheels/annoy-1.16.3-cp37-cp37m-win_amd64.whl
+annoy==1.16.3
 appdirs==1.4.4
 asgiref==3.2.7
 astroid==2.4.1
@@ -36,7 +36,7 @@ docopt==0.6.2
 docutils==0.16
 Eel==0.12.4
 email-validator==1.1.1
-fasteners @ file:///C:/Users/Bevan/AppData/Local/Temp/pymagnitude-0.1.143-cp37-cp37m-win_amd64/pymagnitude/req_wheels/fasteners-0.15-py2.py3-none-any.whl
+fasteners==0.15
 filelock==3.0.12
 flake8==3.8.3
 Flask==1.1.2
@@ -88,7 +88,7 @@ Keras-Preprocessing==1.1.2
 lazy-object-proxy==1.4.3
 libcst==0.3.15
 lockfile==0.12.2
-lz4 @ file:///C:/Users/Bevan/AppData/Local/Temp/pymagnitude-0.1.143-cp37-cp37m-win_amd64/pymagnitude/req_wheels/lz4-3.0.2-cp37-cp37m-win_amd64.whl
+lz4==3.0.2
 Markdown==3.2.2
 MarkupSafe==1.1.1
 mccabe==0.6.1
@@ -123,7 +123,7 @@ PuLP==2.0
 punctuator==0.9.6
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-PyAudio @ file:///C:/Users/Bevan/pipwin/PyAudio-0.2.11-cp37-cp37m-win_amd64.whl
+PyAudio==0.2.11
 pycodestyle==2.6.0
 pycparser==2.20
 pyflakes==2.2.0
@@ -179,7 +179,7 @@ Theano==1.0.5
 thinc==7.4.1
 threadpoolctl==2.1.0
 toml==0.10.1
-torch @ file:///C:/Users/Bevan/AppData/Local/Temp/pymagnitude-0.1.143-cp37-cp37m-win_amd64/pymagnitude/req_wheels/torch-0.4.1-cp37-cp37m-win_amd64.whl
+torch==0.4.1
 tqdm==4.47.0
 Tree==0.2.4
 typed-ast==1.4.1
@@ -196,7 +196,7 @@ whichcraft==0.6.1
 wrapt==1.12.1
 WTForms==2.3.1
 WTForms-SQLAlchemy==0.1
-xxhash @ file:///C:/Users/Bevan/AppData/Local/Temp/pymagnitude-0.1.143-cp37-cp37m-win_amd64/pymagnitude/req_wheels/xxhash-1.4.3-cp37-cp37m-win_amd64.whl
+xxhash==1.4.3
 zipp==3.1.0
 zope.event==4.5.0
 zope.interface==5.1.0
