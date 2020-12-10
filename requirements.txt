@@ -123,7 +123,6 @@ PuLP==2.0
 punctuator==0.9.6
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-PyAudio==0.2.11
 pycodestyle==2.6.0
 pycparser==2.20
 pyflakes==2.2.0
