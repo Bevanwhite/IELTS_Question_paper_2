@@ -5,8 +5,7 @@
     class="list-group-item list-group-item-action"
   >
     <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">{{ quiz_create.title }}</h5>
-      <h5 class="mb-1">{{quiz_create.qcreatequiz.userbased}}</h5>
+      <h5 class="mb-1">{{ quiz_create.qcreatequiz.name }}</h5>
       <small>
         {{ quiz_create.createquiz.username }} -
         {{quiz_create.date_posted.strftime('%Y-%m-%d') }}</small
@@ -21,8 +20,7 @@
     class="list-group-item list-group-item-action"
   >
     <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">{{ quiz_create.title }}</h5>
-      <h5 class="mb-1">{{quiz_create.qcreatequiz.userbased}}</h5>
+      <h5 class="mb-1">{{ quiz_create.qcreatequiz.name }}</h5>
       <small>
         {{ quiz_create.createquiz.username }} -
         {{quiz_create.date_posted.strftime('%Y-%m-%d') }}</small
@@ -36,9 +34,8 @@
     href="{{ url_for('quiz.quiz_radio_answer', quiz_id=quiz_create.quiz_id, id=1)}}"
     class="list-group-item list-group-item-action"
   >
-    <div class="d-flex w-100">
-      <h5 class="mb-1">{{ quiz_create.title }}</h5>
-      <h5 class="mb-1">{{quiz_create.qcreatequiz.userbased}}</h5>
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{ quiz_create.qcreatequiz.name }}</h5>
       <small>
         {{ quiz_create.createquiz.username }} -
         {{quiz_create.date_posted.strftime('%Y-%m-%d') }}</small

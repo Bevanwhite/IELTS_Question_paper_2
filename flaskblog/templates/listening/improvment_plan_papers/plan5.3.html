@@ -1,0 +1,110 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Listening</h5>
+        </div>
+    </div>
+    <div class="card mt-3 mb-3">
+        <div class="card-header">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <p>Learn how to tackle <em><strong>short-answer questions on IELTS Listening test</strong></em>.
+                        This type of questions is very common, so it's a good idea to practise them separately and
+                        develop your answering techniques. Listen to the recording and try to answer all the given
+                        questions: </p>
+                </h6>
+                <div class="audio_file">
+                    <audio controls>
+                        <source src="/static/listening_audio/plan5.3.mp3" type="audio/mpeg">
+                    </audio>
+                </div><br>
+                <h3>&#8220;London skyline&#8221;</h3>
+                <form>
+
+                    <p>Answer the questions below. </p>
+
+                    <p> Write <strong>ONLY ONE WORD OR A NUMBER </strong><strong> </strong>from the dialogue for each
+                        answer.</p>
+                    <br />
+                    <form>
+
+                        <ol>
+                            <li>Of which city with skyscrapers Neil didn't think?
+                                <input type="text" class="ex-input" style="width:110px" id="ex1" required> <span
+                                    id="s1"> </span>
+                                <br /> <br />
+                            <li> Which year did Neil choose?
+                                <input type="text" class="ex-input" style="width:110px" id="ex2" required>
+                                <span id="s2"> </span>
+                                <br /> <br />
+                            <li> For how many years the St Paul's Cathedral was the tallest building in the city?
+                                <input type="text" class="ex-input" style="width:110px" id="ex3" required>
+                                <span id="s3"> </span> <br /> <br />
+                            <li> What are the Gherkin, the Cheese Grater and the Walkie Talkie?
+                                <input type="text" class="ex-input" style="width:110px" id="ex4" required="required" />
+                                <span id="s4"> </span> <br /> <br />
+                            <li> When the building of St Paul's Cathedral was started?
+                                <input type="text" class="ex-input" style="width:110px" id="ex5" required>
+                                <span id="s5"> </span>
+                        </ol>
+                        <br />
+                        <button id="b2" type="button" class="btn btn-outline-info" onclick="toggle()">
+                            <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show
+                            answers</button>
+
+                        <div id="answers" style="display:none;" class="hint">
+                            <p><strong>ANSWERS</strong></p>
+                            <p>Each question correctly answered scores 1 mark. <strong>Correct</strong> spelling is
+                                needed in all answers.
+                            </p>
+                            <ol start="1">
+                                <li>London</li>
+                                <li>1708</li>
+                                <li>300</li>
+                                <li>Nicknames</li>
+                                <li>1675</li>
+                            </ol>
+
+                        </div>
+            </div> <br /> <br />
+            <div id="result" align="center"> </div>
+            <div align="center">
+                &emsp;
+
+                <button class="btn btn-primary btn-sm " type="button" onclick="check()">Check</button> &emsp;
+                <a href="/listening/progress1/3" class="btn btn-primary btn-sm ">Update progress</a>
+
+            </div>
+            </body>
+            <script>
+                function check() {
+				var ex1, ex, score, total;
+				score=0; total=0; ex=['london', '1708', '300', 'nicknames', '1675'];
+				
+				for (var i=1; i<6;i ++) {
+					total++;
+					ex1=document.getElementById("ex"+i).value;
+					if (ex1.trim().toLowerCase()!=ex[i-1])
+					document.getElementById("s"+i).innerHTML='<img height=20px src="/static/images/wrong.png" style="vertical-align:middle;" />';
+					else { score++; document.getElementById("s"+i).innerHTML='<img height=20px src="/static/images/correct.png" style="vertical-align:middle;" />';}
+				}
+				
+					score=score/total*100;
+					if (score!=100) document.getElementById("result").innerHTML="Your score is "+score+"%";
+					else document.getElementById("result").innerHTML=
+					'<span style="color:green; ">Excellent! </span>Your score is '+score+'%';
+				}
+                function toggle() {
+                    var e = document.getElementById("answers");
+                    if (e.style.display == 'block') {
+                        document.getElementById("b2").innerHTML = ' <img height="25px" src="/static/images/show.png" style="vertical-align: middle"  /> Show answers';
+                        e.style.display = 'none';
+                    }
+                    else {
+                        document.getElementById("b2").innerHTML = '<img height="25px" src="/static/images/hide.png" style="vertical-align: middle"  /> Hide answers';
+                        e.style.display = 'block';
+                    }
+                }
+            </script>
+            {% endblock content %}

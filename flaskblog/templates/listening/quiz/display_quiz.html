@@ -1,0 +1,244 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Listening</h5>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">
+            {% for c in res %}
+            <h5>{{c[1]}}</h5>
+
+        </div>
+    </div>
+    <div class="card mt-3 mb-3">
+        <div class="card-header">
+            <div class="audio_file">
+
+                <audio controls>
+                    <source src=/static/listening_audio/{{c[2]}} type="audio/mpeg"
+                        data="data:audio/ogg;base64,T2dnUwACAAAAAAAAAADSeWyXAU9nZ1MAAAAAAAAAAAAA0nl" ;>
+                    <input type="hidden" id="mp3" value="{{c[2]}}">
+                </audio>
+            </div><br>
+            <div class="card-body">
+                <h6 class="card-title">
+                    <p><strong>{{c[3]}}</strong> </p>
+                </h6>
+                {% endfor %}
+                <form id="quiz_form">
+                    <div id="mcq" style="display: none;">
+                        {% for row in mcq %}
+
+                        <p><strong>{{row[1]}}.</strong> {{row[2]}} <span id="s{{row[1]}}"></span>
+                        </p>
+                        <ol type="A">
+                            <li>
+                                <input type="radio" name="q{{row[1]}}" id="q{{row[1]}}" value="a"> {{row[3]}}
+                            </li>
+                            <li>
+                                <input type="radio" name="q{{row[1]}}" id="q{{row[1]}}" value="b"> {{row[4]}}
+                            </li>
+                            <li>
+                                <input type="radio" name="q{{row[1]}}" id="q{{row[1]}}" value="c"> {{row[5]}}
+                            </li>
+                            <li>
+                                <input type="radio" name="q{{row[1]}}" id="q{{row[1]}}" value="d"> {{row[6]}}
+                            </li>
+                        </ol>
+                        </p>
+                        <p>&nbsp;</p>
+
+                        {% endfor %}
+                    </div>
+                    
+                    <div id="ttype" style="display: none;">
+                        {% for y in ttype %}
+                        <p><strong>{{y[1]}}.</strong> {{y[2]}} 
+                            <input type="text" name="q{{y[1]}}" id="q{{y[1]}}"><span id="s{{y[1]}}"></span>
+                            {% endfor %}
+                    </div>
+                    <div id="matching" style="display: none;">
+                        <table>
+                            <tr>
+                                <th>Answers </th>
+                            </tr>
+                            <tr>
+
+                                {% for ans in matching %}
+                                <td style="border: 1px solid black; padding: 10px;">{{ans[3]}}</td>
+                                {% endfor %}</tr>
+                        </table><br>
+                        {% for z in matching %}
+                        <p><strong>{{z[1]}}.</strong> {{z[2]}} 
+                            <input type="text" name="q{{z[1]}}" id="q{{z[1]}}"> <span id="s{{z[1]}}"></span>
+                            {% endfor %}
+                    </div>
+                    <div id="multiple" style="display: none;">
+                        {% for row in multiple %}
+                        <p><strong>{{row[1]}}.</strong> {{row[2]}}
+                        </p>
+                        <ol type="A">
+                            <li>
+                                <input type="checkbox" name="q{{row[1]}}" id="qa{{row[1]}}" value="{{row[7]}}">
+                                {{row[3]}} <span id="sa{{row[1]}}"></span>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="q{{row[1]}}" id="qb{{row[1]}}" value="{{row[8]}}">
+                                {{row[4]}} <span id="sb{{row[1]}}"></span>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="q{{row[1]}}" id="qc{{row[1]}}" value="{{row[9]}}">
+                                {{row[5]}} <span id="sc{{row[1]}}"></span>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="q{{row[1]}}" id="qd{{row[1]}}" value="{{row[10]}}">
+                                {{row[6]}} <span id="sd{{row[1]}}"></span>
+                            </li>
+                        </ol>
+                        <p>&nbsp;</p>
+                        {% endfor %}
+                    </div>
+
+
+
+                    <div id="hdn" style="display: none;">
+                        {% for x in mcq %}
+                        <input type="hidden" name="qq{{x[1]}}" id="qq{{x[1]}}" value="{{x[7]}}">
+                        {% endfor %}
+                        {% for x in ttype %}
+                        <input type="hidden" name="qq{{x[1]}}" id="qq{{x[1]}}" value="{{x[3]}}">
+                        {% endfor %}
+                        {% for x in matching %}
+                        <input type="hidden" name="qq{{x[1]}}" id="qq{{x[1]}}" value="{{x[3]}}">
+                        {% endfor %}
+                    </div>
+
+                    <div id="result" align="center"> </div>
+                    <div class=" text-right">
+                        <button class="btn btn-primary btn-sm " type="button" onclick="check()">Check</button> &emsp;
+                        <a href="/listening/go_home" class="btn btn-primary btn-sm">Home</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </body>
+    <script>
+        load();
+        function load(){
+            var mcq = '{{mcq_ans}}';
+            var ttype = '{{ttype_ans}}';
+            var match = '{{match_ans}}';
+            var multiple = '{{multiple_ans}}';
+            
+
+            if (mcq != 0){
+                document.getElementById('mcq').style.removeProperty("display");
+            }
+            if(multiple != 0 ){
+                document.getElementById('multiple').style.removeProperty("display");
+            }
+            if(ttype != 0 ){
+                document.getElementById('ttype').style.removeProperty("display");
+            }
+            if(match != 0 ){
+                document.getElementById('matching').style.removeProperty("display");
+            }
+        }
+        function check() {
+            var i, range_mcq, range_ttype, range_match, range_multiple;
+            range_mcq = '{{mcq_ans}}';
+            var ttype = '{{ttype_ans}}';
+            var match = '{{match_ans}}';
+            var multiple = '{{multiple_ans}}';
+            var score = 0;
+
+            var form_elements = document.getElementById('quiz_form').elements;
+            if (range_mcq == 0) {
+                range_mcq = range_mcq + range_mcq;
+            } else {
+                for (i = 1; i <= range_mcq; i++) {
+                    var mcq = form_elements["q" + i].value;
+                    var ans = form_elements["qq" + i].value;
+                    if (mcq == ans) {
+                        document.getElementById("s" + i).innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png"  />';
+                        score++;
+                    }
+                    else {
+                        document.getElementById("s" + i).innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png"  />';
+                    }
+                }
+            }
+            
+            if (ttype == 0) {
+                range_ttype = parseInt(range_mcq) + parseInt(ttype);
+            } else {
+                range_ttype = parseInt(range_mcq) + parseInt(ttype);
+                for (i = parseInt(range_mcq) + 1; i <= range_ttype; i++) {
+
+                    var ttype = form_elements["q" + i].value;
+                    var ttype_ans = form_elements["qq" + i].value;
+                    if (ttype == ttype_ans) {
+                        document.getElementById("s" + i).innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png"  />';
+                        score++;
+
+                    }
+                    else {
+                        document.getElementById("s" + i).innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png"  />';
+                    }
+                }
+            }
+            
+            if (match == 0) {
+                range_match = parseInt(range_ttype) + parseInt(match);
+            } else {
+                range_match = parseInt(range_ttype) + parseInt(match);
+                for (i = parseInt(range_ttype) + 1; i <= range_match; i++) {
+                    var match = form_elements["q" + i].value;
+                    var match_ans = form_elements["qq" + i].value;
+                    if (match == match_ans) {
+                        document.getElementById("s" + i).innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png"  />';
+                        score++;
+                    }
+                    else {
+                        document.getElementById("s" + i).innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png"  />';
+                    }
+                }
+            }
+            if (multiple == 0){
+                range_multiple = parseInt(range_match) + parseInt(multiple);
+                
+            }else{
+                range_multiple = parseInt(range_match) + parseInt(multiple);
+                for (i = range_match + 1; i <= range_multiple; i++) {
+                    var x;
+                    var ids = ["a", "b", "c", "d", "a", "b", "c", "d", "a", "b"];
+                    for (x = 1; x <= 4; x++) {
+                        var mtp = document.getElementById("q" + ids[x - 1] + i).value;
+                        if (document.getElementById("q" + ids[x - 1] + i).checked == true) {
+                            if (mtp == 1) {
+                                document.getElementById("s" + ids[x - 1] + i).innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png"  />';
+                                score = parseFloat(score) +  parseFloat(0.25);
+                            } else {
+                                document.getElementById("s" + ids[x - 1] + i).innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png"  />';
+                                score = parseFloat(score) -  parseFloat(0.25);
+                            }
+                        
+                        }else{
+                            if (mtp != 1) {
+                                score = parseFloat(score) +  parseFloat(0.25);
+                            } else {
+                                score = parseFloat(score) -  parseFloat(0.25);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            document.getElementById("result").innerHTML = "<div class='result'>Your result for this quiz " + score + "/10 </div>";
+        }
+    </script>
+    {% endblock content %}

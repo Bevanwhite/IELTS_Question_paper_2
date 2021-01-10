@@ -1,0 +1,238 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Listening</h5>
+        </div>
+    </div>
+    <div class="card mt-3 mb-3">
+        <div class="card-header">
+            <div class="audio_file">
+                <audio controls>
+                    <source src="/static/listening_audio/plan1.4.mp3" type="audio/mpeg">
+                </audio>
+            </div><br>
+            <div class="card-body">
+                <h6 class="card-title">
+                    <p><strong>QUESTIONS 1-10</strong></p>
+                    <p>Choose the correct letter, <strong>A</strong>, <strong>B</strong>, <strong>С</strong> or
+                        <strong>D</strong>.</p></h6>
+                    <p><strong>1.</strong> What does the lecturer provide for those who are interested in doing extra
+                        reading? <span id="s1"></span>
+
+                    <ol type="A">
+                        <li><input type="radio" name="q1">Personal consultation sessions.</li>
+                        <li><input type="radio" name="q1" id="a1"> Extra materials, such as a booklist.</li>
+                        <li><input type="radio" name="q1"> Mid-term examination.</li>
+                        <li><input type="radio" name="q1"> Free glasses.</li>
+                    </ol>
+                    </p>
+
+                    <p>&nbsp;</p>
+                    <p><strong>2.</strong> In the past, time management meant you needed to <span id="s2"></span>
+
+                    <ol type="A">
+                        <li><input type="radio" name="q2"> reduce your stress.</li>
+                        <li><input type="radio" name="q2" id="a2"> plan for every hour of the week.</li>
+                        <li><input type="radio" name="q2"> own a good watch.</li>
+                        <li><input type="radio" name="q2"> set goals and try to achieve these goals.</li>
+                    </ol>
+                    </p>
+
+                    <p>&nbsp;</p>
+                    <p><strong>3.</strong> Today, wise time management means you need to <span id="s3"></span>
+
+                    <ol type="A">
+                        <li><input type="radio" name="q3" id="a3"> set goals and work in a systematic way.</li>
+                        <li><input type="radio" name="q3"> work faster.</li>
+                        <li><input type="radio" name="q3"> set an overview of your assignment.</li>
+                        <li><input type="radio" name="q3"> make a list, plan for everything and try to stick to this
+                            plan.</li>
+                    </ol>
+                    </p>
+
+                    <p>&nbsp;</p>
+                    <p><strong>4.</strong> In this college, students are assigned ____________ at the end of each
+                        semester. <span id="s4"></span>
+
+                    <ol type="A">
+                        <li><input type="radio" name="q4"> team projects.</li>
+                        <li><input type="radio" name="q4"> final term examinations.</li>
+                        <li><input type="radio" name="q4" id="a4"> essays.</li>
+                        <li><input type="radio" name="q4"> time management courses.</li>
+                    </ol>
+                    </p>
+
+                    <p>&nbsp;</p>
+                    <p><strong>5.</strong> One sign he lecturer mentions that students feel under pressure is <span
+                            id="s5"></span>
+
+                    <ol type="A">
+                        <li><input type="radio" name="q5"> library books go missing.</li>
+                        <li><input type="radio" name="q5"> students get angry for no reason.</li>
+                        <li><input type="radio" name="q5"> lower class attendance rates.</li>
+                        <li><input type="radio" name="q5" id="a5"> trouble at the library.</li>
+                    </ol>
+                    </p>
+
+                    <p>&nbsp;</p>
+                    <p><strong>6.</strong> What kind of suggestion does the lecturer give to the students? <span
+                            id="s6"></span>
+
+                    <ol type="A">
+                        <li><input type="radio" name="q6"> Making a very detailed plan of their daily activities.</li>
+                        <li><input type="radio" name="q6">
+                            Not being so stressed just because there is an assignment.</li>
+                        <li><input type="radio" name="q6" id="a6"> A regular one-hour session in their personal
+                            timetables.</li>
+                        <li><input type="radio" name="q6"> Wearing comfortable shoes.</li>
+                    </ol>
+                    </p>
+
+                    <p>&nbsp;</p>
+                    <p><strong>7.</strong> According to the lecturer, there are three kinds of planners. They are:
+                        <span id="s7"></span>
+
+                    <ol type="A">
+                        <li><input type="radio" name="q7"> one weekly planner, one daily planner and one hour planner.
+                        </li>
+                        <li><input type="radio" name="q7"> one yearly planner, one weekly planner and one daily planner.
+                        </li>
+                        <li><input type="radio" name="q7"> one term planner, one monthly planner and one weekly planner.
+                        </li>
+                        <li><input type="radio" name="q7" id="a7"> one term planner, one weekly and one daily planner.
+                        </li>
+                    </ol>
+                    </p>
+
+                    <p>&nbsp;</p>
+                    <p><strong>8.</strong> If you want to set an overview of your time, you should need at least <span
+                            id="s8"></span>
+
+                    <ol type="A">
+                        <li><input type="radio" name="q8" id="a8"> one week.</li>
+                        <li><input type="radio" name="q8"> half a week.</li>
+                        <li><input type="radio" name="q8"> one month.</li>
+                        <li><input type="radio" name="q8"> one term.</li>
+                    </ol>
+                    </p>
+
+                    <p>&nbsp;</p>
+                    <p><strong>9.</strong> The daily planner of time is mainly concerned with <span id="s9"></span>
+
+                    <ol type="A">
+                        <li><input type="radio" name="q9" id="a9"> the detailed planning.</li>
+                        <li><input type="radio" name="q9"> how to plan all available time.</li>
+                        <li><input type="radio" name="q9">
+                            TV schedules.</li>
+                        <li><input type="radio" name="q9"> an overview of everything you need to do for several days.
+                        </li>
+                    </ol>
+                    </p>
+
+                    <p>&nbsp;</p>
+                    <p><strong>10.</strong> According to the lecturer, wise time management may have the following
+                        benefit: <span id="s10"></span>
+
+                    <ol type="A">
+                        <li><input type="radio" name="q10" id="a10"> having more time to spend on relaxation and other
+                            activities.</li>
+                        <li><input type="radio" name="q10"> improving your performance in the final term assignment.
+                        </li>
+                        <li><input type="radio" name="q10"> helping you write better essays.</li>
+                        <li><input type="radio" name="q10"> improving your memory.</li>
+                    </ol>
+                    </p>
+
+
+
+
+                    <p><br />
+                    </p>
+
+                    <button id="b2" type="button" class="btn btn-outline-info" onclick="toggle() ">
+                        <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show
+                        answers</button>
+                    <div id="answers" style="display:none;" class="hint">
+                        <p><strong>ANSWERS</strong></p>
+                        <p>Each question correctly answered scores 1 mark. <strong>Correct</strong> spelling is needed
+                            in
+                            all answers.
+                        </p>
+                        <ol start="1">
+                            <li>B</li>
+                            <li>B</li>
+                            <li>A</li>
+                            <li>C</li>
+                            <li>D</li>
+                            <li>C</li>
+                            <li>D</li>
+                            <li>A</li>
+                            <li>A</li>
+                            <li>A</li>
+                        </ol>
+
+                    </div>
+            </div> <br /> <br />
+            <div id="result" align="center"> </div>
+            <button class="btn btn-primary btn-sm " type="button" onclick="check()">Check</button>
+            <a href="/listening/progress1/4" class="btn btn-primary btn-sm ">Update progress</a>
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</body>
+<script>
+    function check() {
+
+        var ex1, score, result;
+        score = 0;
+        for (var i = 1; i < 11; i++) {
+            text = "a" + i; text2 = "s" + i;
+            if (document.getElementById(text).checked == true) {
+                document.getElementById(text2).innerHTML = '<img height=20px src="/static/images/correct.png"  />';
+                score++;
+            }
+            else { result = false; document.getElementById(text2).innerHTML = '<img height=20px src="/static/images/wrong.png"  />'; }
+        }
+
+        setCookie("fourth", score, 3);
+
+        document.getElementById("result").innerHTML =
+            "<div class='result'>Your result for this quiz " + score + "/10 </div>";
+    }
+
+
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        }
+        return "";
+    }
+    function toggle() {
+        var e = document.getElementById("answers");
+        if (e.style.display == 'block') {
+            document.getElementById("b2").innerHTML = ' <img height="25px" src="/static/images/show.png" style="vertical-align: middle"  /> Show answers';
+            e.style.display = 'none';
+        }
+        else {
+            document.getElementById("b2").innerHTML = '<img height="25px" src="/static/images/hide.png" style="vertical-align: middle"  /> Hide answers';
+            e.style.display = 'block';
+        }
+    }
+</script>
+{% endblock content %}

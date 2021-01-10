@@ -1,0 +1,102 @@
+# in date time order
+ls -alt
+
+
+ps -fA | grep python
+kill 3339
+
+sudo nano flaskblog/speaking/utils.py
+
+scp -r ~/Desktop/'New folder (3)'/flask/flaskblog/quiz/routes.py bevcode@172.105.42.236:~/                                                                                
+
+sudo systemctl restart nginx
+systemctl status nginx.service
+sudo nano /etc/nginx/sites-enabled/flaskblog
+
+
+sudo nano /etc/config.json
+cd Flask
+source venv/bin/activate
+export FLASK_APP=run.py
+flask run --host=0.0.0.0
+cd Flask
+172.105.42.236:5000/
+ssh bevcode@172.105.42.236
+
+from sqlalchemy import create_engine
+create_engine('mysql+pymysql://username:PassworD!456@localhost/ielts', echo=True)
+from flaskblog import db
+db.create_all()
+
+import json
+
+with open('/etc/config.json') as config_file:
+    config = json.load(config_file)
+
+mysql = MySQL()
+# Enter your mysql username within ''
+app.config['MYSQL_DATABASE_USER'] = config.get('MYSQL_DATABASE_USER')
+# Enter your mysql password within ''
+app.config['MYSQL_DATABASE_PASSWORD'] = config.get('MYSQL_DATABASE_PASSWORD')
+app.config['MYSQL_DATABASE_DB'] =  config.get('MYSQL_DATABASE_DB')
+# Enter your database host within ''
+app.config['MYSQL_DATABASE_HOST'] = config.get('MYSQL_DATABASE_HOST')
+mysql.init_app(app)
+
+
+sudo mysql -u root
+beva@789
+use ielts;
+show tables;
+select * from user;
+update user set is_admin=1 where id=3;
+
+
+{
+        "SECRET_KEY":"bcec6cfc03974b3fdb9e87253e03d977",
+        "SQLALCHEMY_DATABASE_URI":"mysql+pymysql://username:PassworD!456@localhost/ielts",
+        "MAIL_USERNAME":"jeffery1996.jbw@gmail.com",
+        "MAIL_PASSWORD":"ncxv yvzu xrds dmzk",
+        "MYSQL_DATABASE_USER":"username",
+        "MYSQL_DATABASE_PASSWORD":"PassworD!456",
+        "MYSQL_DATABASE_DB":"ielts",
+        "MYSQL_DATABASE_HOST":"localhost"
+}
+use ielts;
+
+
+
+import json
+
+with open('/etc/config.json') as config_file:
+        config = json.load(config_file)
+
+import json
+
+with open('/etc/config.json') as config_file:
+        config = json.load(config_file)
+
+class Config:
+
+    SECRET_KEY = config.get('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = config.get('SQLALCHEMY_DATABASE_URI')
+    SQLALCHEMY_TRACK_MODIFICATIONS = 'True'
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = config.get('MAIL_USERNAME')
+    MAIL_PASSWORD = config.get('MAIL_PASSWORD')
+    MAIL_DEBUG = True
+    FLASK_ADMIN_SWATCH = 'cerulean'
+
+mysql = MySQL()
+app.config['MYSQL_DATABASE_USER'] = config.get('MYSQL_DATABASE_USER')
+app.config['MYSQL_DATABASE_PASSWORD'] = config.get('MYSQL_DATABASE_PASSWORD')
+app.config['MYSQL_DATABASE_DB'] =  config.get('MYSQL_DATABASE_DB')
+app.config['MYSQL_DATABASE_HOST'] = config.get('MYSQL_DATABASE_HOST')
+mysql.init_app(app)
+
+insert into quiz_answers_type(texts) values("Answer 01");
+insert into quiz_answers_type(texts) values("Answer 02");
+insert into quiz_answers_type(texts) values("Answer 03");
+insert into quiz_answers_type(texts) values("Answer 04");

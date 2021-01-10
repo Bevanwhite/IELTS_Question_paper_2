@@ -1,3 +1,4 @@
+#import libraries
 from flask import Flask, flash, Blueprint, render_template, request, url_for, redirect
 from flask import render_template, Blueprint, flash, redirect, url_for, request, jsonify
 from flask_login import login_required
@@ -8,16 +9,19 @@ import sqlite3
 from datetime import datetime, timedelta
 from flaskext.mysql import MySQL
 import joblib
-suggestion_model = joblib.load('Reading_activity_suggestion_up1.sav')
-
+suggestion_model = joblib.load(
+    'flaskblog/reading/Reading_activity_suggestion_up1.sav')  # suggestion model
 reading = Blueprint('reading', __name__)
 
-
+# database configuration
 app = Flask(__name__)
 mysql = MySQL()
+# Enter your mysql username within ''
 app.config['MYSQL_DATABASE_USER'] = 'root'
+# Enter your mysql password within ''
 app.config['MYSQL_DATABASE_PASSWORD'] = ''
-app.config['MYSQL_DATABASE_DB'] = 'ielts'
+app.config['MYSQL_DATABASE_DB'] = 'ielts'  # Enter your database name within ''
+# Enter your database host within ''
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
@@ -26,11 +30,16 @@ path = ""
 
 @reading.route("/reading")
 @login_required
+# define the function read()
+# Provide study plan, weak section and study plan number.
 def read():
-    uid = current_user.id
-    conn = mysql.connect()
+    uid = current_user.id  # current user ID assign to uid
+    conn = mysql.connect()  # database connection
     c = conn.cursor()
     uid = current_user.id
+
+    table = "CREATE TABLE IF NOT EXISTS reading_user (user_id int(5) UNSIGNED NOT NULL PRIMARY KEY, study_plan varchar(20) NOT NULL,study_plan_no float NOT NULL, weak_section varchar(50) NOT NULL)"
+    c.execute(table)
     q1 = "SELECT user_id FROM reading_user where user_id = %s"
     try:
         c.execute(q1, uid)
@@ -48,15 +57,18 @@ def read():
             c.close()
             data = {'study_plan':  study_plan,
                     'weak_section': weak_section, 'study_plan_no': study_plan_no}
-            return render_template('reading.html', data=data)
+            return render_template('/reading/reading.html', data=data)
         else:
-            return render_template("reading_section1.html")
-    except Exception as e:
-        return render_template("reading_section1.html")
+            return render_template("/reading/test_papers/reading_section1.html")
+    except Exception:
+        return render_template("/reading/test_papers/reading_section1.html")
 
 
 @reading.route("/reading_section1", methods=['POST'])
+# define the function section1()
+# Insert reading paper section 01 user answers to the database.
 def section1():
+    # send data
     if request.method == "POST":
         q01 = request.form['q1']
         q02 = request.form['q2']
@@ -72,23 +84,72 @@ def section1():
         q12 = request.form['q12']
         q13 = request.form['q13']
 
+        # database connection
         conn = mysql.connect()
         c = conn.cursor()
         drop = "DROP TABLE IF EXISTS user_answer_reading"
         c.execute(drop)
+        drop1 = "DROP TABLE IF EXISTS  reading_test_paper1"
+        c.execute(drop1)
+
         create_table = "CREATE TABLE user_answer_reading (id INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY,question VARCHAR(30) NOT NULL,answer VARCHAR(30) NOT NULL)"
         c.execute(create_table)
+        create_ans_table = "CREATE TABLE IF NOT EXISTS reading_test_paper1 (id int(2) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,question varchar(30) NOT NULL,answer varchar(30) NOT NULL)"
+        c.execute(create_ans_table)
+        # insert values to the table
+        query1 = "INSERT INTO reading_test_paper1(id,question,answer) VALUES (%s,%s,%s)"
+        val1 = [(37, '37', 'alternative path-way'), (36, '36', 'Hugh Everett'), (35, '35', 'inconsistencies'), (34, '34', 'past-actions'), (33, '33', 'FALSE'), (32, '32', 'TRUE'),
+                (31, '31', 'TRUE'),
+                (30, '30', 'NOT GIVEN'),
+                (29, '29', 'NOT GIVEN'),
+                (28, '28', 'FALSE'),
+                (26, '26', 'A'),
+                (25, '25', 'TRUE'),
+                (24, '24', 'TRUE'),
+                (23, '23', 'NOT GIVEN'),
+                (22, '22', 'TRUE'),
+                (21, '21', 'FALSE'),
+                (20, '20', 'NOT GIVEN'),
+                (19, '19', 'TRUE'),
+                (18, '18', 'B'),
+                (17, '17', 'D'),
+                (16, '16', 'I'),
+                (15, '15', '4'),
+                (14, '14', 'E'),
+                (13, '13', 'electric field'),
+                (12, '12', 'sinewy muscle'),
+                (11, '11', 'electric signals'),
+                (10, '10', 'olfactory organs'),
+                (9, '9', 'electric currents'),
+                (8, '8', 'Tail'),
+                (7, '7', 'Respiratory movements'),
+                (6, '6', 'D'),
+                (5, '5', 'H'),
+                (4, '4', 'A'),
+                (3, '3', 'B'),
+                (2, '2', 'G'),
+                (1, '1', 'C'),
+                (38, '38', 'Non-existence theory'),
+                (39, '39', 'historical identity'),
+                (40, '40', 'C'),
+                (27, '27', 'C')]
+        c.executemany(query1, val1)
+
+        # Insert data to the table
         query = "INSERT INTO user_answer_reading(question,answer) VALUES (%s,%s)"
         val = [("1", q01), ("2", q02), ("3", q03), ("4", q04), ("5", q05), ("6", q06), ("7",
                                                                                         q07), ("8", q08), ("9", q09), ("10", q10), ("11", q11), ("12", q12), ("13", q13)]
         c.executemany(query, val)
         conn.commit()
         c.close()
-        return render_template("reading_section2.html")
+        return render_template("/reading/test_papers/reading_section2.html")
 
 
 @reading.route("/reading_section2", methods=['POST'])
+# define function section2()
+# Insert reading paper section 02 user answers to the database.
 def section2():
+    # send data
     if request.method == "POST":
         q14 = request.form['q14']
         q15 = request.form['q15']
@@ -105,19 +166,22 @@ def section2():
         q26 = request.form['q26']
         q27 = request.form['q27']
 
+        # database connection
         conn = mysql.connect()
         c = conn.cursor()
+        # Insert data to the table
         query = "INSERT INTO user_answer_reading(question,answer) VALUES (%s,%s)"
         val = [("14", q14), ("15", q15), ("16", q16), ("17", q17), ("18", q18), ("19", q19),
                ("20", q20), ("21", q21), ("22", q22), ("23", q23), ("24", q24), ("25", q25), ("26", q26), ("27", q27)]
         c.executemany(query, val)
         conn.commit()
         c.close()
-        return render_template("reading_section3.html")
+        return render_template("/reading/test_papers/reading_section3.html")
 
 
 @reading.route("/reading_section3", methods=['POST'])
 def section3():
+    # send data
     if request.method == "POST":
         q28 = request.form['q28']
         q29 = request.form['q29']
@@ -131,10 +195,12 @@ def section3():
         q37 = request.form['q37']
         q38 = request.form['q38']
         q39 = request.form['q39']
-        q40 = request.form['q40']
+        q40 = request.form['q040']
 
+        # database connection
         conn = mysql.connect()
         c = conn.cursor()
+        # Insert data to the table
         query = "INSERT INTO user_answer_reading(question,answer) VALUES (%s,%s)"
         val = [("28", q28), ("29", q29), ("30", q30), ("31", q31), ("32", q32), ("33", q33),
                ("34", q34), ("35", q35), ("36", q36), ("37", q37), ("38", q38), ("39", q39), ("40", q40)]
@@ -144,14 +210,17 @@ def section3():
 
         conn = mysql.connect()
         c = conn.cursor()
+        # match reading paper section 1 answers with user answers
         query = "SELECT t.question,t.answer,u.answer FROM reading_test_paper1 t, user_answer_reading u WHERE t.id = u.id"
         c.execute(query)
         data = c.fetchall()
 
+        # match reading paper section 2 answers with user answers
         q1 = "SELECT t.answer FROM reading_test_paper1 t, user_answer_reading u WHERE t.id = u.id"
         c.execute(q1)
         testq1 = [item[0] for item in c.fetchall()]
 
+        # match reading paper section 3 answers with user answers
         q2 = "SELECT u.answer FROM reading_test_paper1 t, user_answer_reading u WHERE t.id = u.id"
         c.execute(q2)
         testq2 = [item[0] for item in c.fetchall()]
@@ -160,15 +229,20 @@ def section3():
         sec1 = section1ans()
         sec2 = section2ans()
         sec3 = section3ans()
+        # get the lower marks section where comprehension,reading for main idea or reading for detail using functions section1ans(),section2ans(),section3ans()
         lower_section = get_lower_section(sec1, sec2, sec3)
-        suggetion = get_suggestions(sec1, sec2, sec3)
+        suggetion = get_suggestions(sec1, sec2, sec3)  # get the suggestion
+        # return section 1,2,3 answers , suggestions and lower section.
         return submitted_Answer(testq1, testq2, data, suggetion, lower_section)
+
+# define function section1ans()
 
 
 def section1ans():
 
     conn = mysql.connect()
     c = conn.cursor()
+    # calculate marks for reading for main idea section.
     q1 = "SELECT t.answer FROM reading_test_paper1 t, user_answer_reading u WHERE t.id = u.id LIMIT 6"
     c.execute(q1)
     tq1 = [item[0] for item in c.fetchall()]
@@ -181,10 +255,12 @@ def section1ans():
 
 
 @app.route("/st2")
+# define function section2ans()
 def section2ans():
 
     conn = mysql.connect()
     c = conn.cursor()
+    # calculate marks for reading for detail section.
     q1_1 = "SELECT t.answer FROM reading_test_paper1 t, user_answer_reading u WHERE t.id = u.id LIMIT 12 OFFSET 6"
     c.execute(q1_1)
     tq1_1 = [item[0] for item in c.fetchall()]
@@ -205,10 +281,11 @@ def section2ans():
     return s2Marks
 
 
-def section3ans():
+def section3ans():  # define function section3ans()
 
     conn = mysql.connect()
     c = conn.cursor()
+    # calculate marks for reading for comprehension section.
     q1_1 = "SELECT t.answer FROM reading_test_paper1 t, user_answer_reading u WHERE t.id = u.id LIMIT 15 OFFSET 18"
     c.execute(q1_1)
     tq1_1 = [item[0] for item in c.fetchall()]
@@ -230,6 +307,8 @@ def section3ans():
 
 
 @reading.route('/section_score')
+# define function section_score()
+# calculate scores for sections.
 def section_score(answer1, answer2):
     ca = 0
     wrong = 0
@@ -245,21 +324,40 @@ def section_score(answer1, answer2):
 
 
 @reading.route('/get_lower_section')
+# define function get_lower_section()
+# identify the weak sections.
 def get_lower_section(sec1, sec2, sec3):
     sections = {sec1: "section 1", sec2: "section 2",
                 sec3: "section 3"}
-    if sec1 == sec2 and sec1 == sec3:
-        return "weak all sections"
+    score = [sec1, sec2, sec3]
+    minimum = score[0]
+    for number in score:
+        if minimum > number:
+            minimum = number
+
+    if minimum == sec1 and minimum == sec2 and minimum == sec3:
+        if sec1 < 6 and sec2 < 6 and sec3 < 6:
+            return "Weak all sections"
+        if sec1 > 6 and sec2 > 6 and sec3 > 6:
+            return " Avarage scores"
+    elif minimum == sec1 and minimum == sec2 and minimum == sec3:
+        return "section 1 , 2 and 3"
+    elif minimum == sec1 and minimum == sec2:
+        return "section 1 , 2"
+    elif minimum == sec1 and minimum == sec3:
+        return "section 1 , 3"
+    elif minimum == sec1 and minimum == sec3:
+        return "section 2 , 3 "
+    elif minimum == sec1 and minimum == sec2:
+        return "section 1 and 2"
+    elif minimum == sec1 and minimum == sec3:
+        return "section 1 and 3"
     else:
-        score = [sec1, sec2, sec3]
-        minimum = score[0]
-        for number in score:
-            if minimum > number:
-                minimum = number
-    return str(sections[minimum])
+        return str(sections[minimum])
 
 
 @reading.route("/submit")
+# define function submitted_Answer()
 def submitted_Answer(answer1, answer2, data, suggestion, weak_section):
     ca = 0
     wrong = 0
@@ -271,10 +369,11 @@ def submitted_Answer(answer1, answer2, data, suggestion, weak_section):
         else:
             wrong = wrong + 1
             count = count + 1
-    return render_template('reading_summary.html', output_data=data, score=ca, wrong_answers=wrong, suggestion=suggestion, weak_section=weak_section)
+    return render_template('/reading/reading_summary.html', output_data=data, score=ca, wrong_answers=wrong, suggestion=suggestion, weak_section=weak_section)
 
 
 @reading.route('/get_suggestions')
+# get_suggestions
 def get_suggestions(sec1, sec2, sec3):
     global path
     suggestions = {1: "You are lack with reading skills. You have to focus more and give a big effort. You have to improve reading and comprehension skills. While reading, focus on main idea of the paragraph. Then focus on details provided. Furthermore improve your skills on comprehension by understanding writer’s opinion for that you can use why? What? When? Kind of questions to analyse the details inside your mind. Try to improve your vocabulary as well as grammar skills. Keep on reading books, newspapers. Provided exercises will help you to improve your skills. Keep trying on such kind of questions more.",
@@ -336,19 +435,22 @@ def get_suggestions(sec1, sec2, sec3):
                    57: "Your’ reading skills are good. Reading for main idea and detail skills are above the average and comprehension skills are in an excellent level. Keep practicing will improve the rest. Provided exercises will help you to improve your skills. Keep practicing with such kind of questions.",
                    }
 
+    # assign values
     section1 = sec1
     section2 = sec2
     section3 = sec3
 
-    test_data = [section1, section2, section3]
-    suggestion = suggestion_model.predict([test_data])[0]
+    test_data = [section1, section2, section3]  # test data for the model
+    suggestion = suggestion_model.predict(
+        [test_data])[0]  # get suggestion from model
 
     path = "/public/Comprehension/"+str(suggestion)+".html"
 
-    return suggestions[suggestion]
+    return suggestions[suggestion]  # return suggestion
 
 
 @reading.route('/reading/summary')
+# define function summary()
 def summary():
     sec1 = section1ans()
     sec2 = section2ans()
@@ -358,20 +460,21 @@ def summary():
     lower_section = get_lower_section(sec1, sec2, sec3)
     pln_no = int(suggestion)
     ws = str(lower_section)
-    sp = "stage " + str(pln_no)
+    sp = "Stage " + str(pln_no)
 
     uid = int(current_user.id)
     conn = mysql.connect()
     c = conn.cursor()
+    # insert data
     query = "INSERT INTO reading_user(user_id,study_plan,study_plan_no,weak_section) VALUES (%s,%s,%s,%s)"
     val = (uid, sp, pln_no, ws)
     c.execute(query, val)
     conn.commit()
-    data = {'study_plan':  sp, 'weak_section': ws, 'study_plan_no': pln_no}
-    return render_template('reading.html', data=data)
+    return read()  # return summary details.(study plan,weak section,study plan number)
 
 
 @reading.route("/reading/evaluate")
+# define function evaluate()
 def evaluate():
     conn = mysql.connect()
     c = conn.cursor()
@@ -383,6 +486,7 @@ def evaluate():
 
 
 @app.route('/see_suggestions', methods=["GET", "POST"])
+# define see_suggestions function to display suggestions.
 def see_suggestions():
     global path
     return render_template(path)
@@ -390,79 +494,94 @@ def see_suggestions():
 
 @reading.route("/reading/go_home")
 def load_home():
-    return read()
+    return read()  # home page
 
 
 @reading.route("/reading/plan0")
 def plan0():
-    return render_template('0.html')
+    # study plan for 0 comprehension marks.
+    return render_template('/reading/improvment_plan_papers/0.html')
 
 
 @reading.route("/reading/plan25")
 def plan25():
-    return render_template('25.html')
+    # study plan for under 25 comprehension marks.
+    return render_template('/reading/improvment_plan_papers/25.html')
 
 
 @reading.route("/reading/plan50")
 def lesson3():
-    return render_template('50.html')
+    # study plan for under 50 comprehension marks.
+    return render_template('/reading/improvment_plan_papers/50.html')
 
 
 @reading.route("/reading/plan75")
 def plan50():
-    return render_template('75.html')
+    # study plan for under 75 comprehension marks.
+    return render_template('/reading/improvment_plan_papers/75.html')
 
 
 @reading.route("/reading/plan100")
 def plan100():
-    return render_template('100.html')
+    # study plan for above 75 comprehension marks.
+    return render_template('/reading/improvment_plan_papers/100.html')
 
 
 @reading.route("/reading/plan_detail0")
 def plan_detail0():
-    return render_template('detail0.html')
+    # study plan for 0 reading for detail marks.
+    return render_template('/reading/improvment_plan_papers/detail0.html')
 
 
 @reading.route("/reading/plan_detail25")
 def plan_detail25():
-    return render_template('detail25.html')
+    # study plan for under 25 reading for detail marks.
+    return render_template('/reading/improvment_plan_papers/detail25.html')
 
 
 @reading.route("/reading/plan_detail50")
 def plan_detail50():
-    return render_template('detail50.html')
+    # study plan for under 50 reading for detail marks.
+    return render_template('/reading/improvment_plan_papers/detail50.html')
 
 
 @reading.route("/reading/plan_detail75")
 def plan_detail75():
-    return render_template('detail75.html')
+    # study plan for under 75 reading for detail marks.
+    return render_template('/reading/improvment_plan_papers/detail75.html')
 
 
 @reading.route("/reading/plan_detail100")
 def plan_detail100():
-    return render_template('detail100.html')
+    # study plan for above 75 reading for detail marks.
+    return render_template('/reading/improvment_plan_papers/detail100.html')
 
 
 @reading.route("/reading/plan_main0")
 def plan_main0():
-    return render_template('main0.html')
+    # study plan for 0 reading for main idea marks.
+    return render_template('/reading/improvment_plan_papers/main0.html')
 
 
 @reading.route("/reading/plan_main25")
 def plan_main25():
-    return render_template('main25.html')
+    # study plan for under 25 reading for main idea marks.
+    return render_template('/reading/improvment_plan_papers/main25.html')
 
 
 @reading.route("/reading/plan_main50")
 def plan_main50():
-    return render_template('main50.html')
+    # study plan for under 50 reading for main idea marks.
+    return render_template('/reading/improvment_plan_papers/main50.html')
 
 
 @reading.route("/reading/plan_main75")
 def plan_main75():
-    return render_template('main75.html')
+    # study plan for under 75 reading for main idea marks.
+    return render_template('/reading/improvment_plan_papers/main75.html')
 
 
 @reading.route("/reading/plan_main100")
 def plan_main100():
-    return render_template('main100.html')
+    # study plan for above 75 reading for main idea marks.
+    return render_template('/reading/improvment_plan_papers/main100.html')

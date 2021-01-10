@@ -16,6 +16,207 @@
     {% include 'includes/_quiznavbar.html' %}
     <div class="card mb-3" style="background-color: #e3f2fd">
       <div class="card-header">
+        <h5>Reading Comprehension Papers</h5>
+      </div>
+      <div class="mt-1">
+        <div class="card-body">
+          <h6 class="card-text">Advanced Comprehension Papers</h6>
+        </div>
+        {% for quiz in quizs %} {% if quiz.gandco == "comprehension" and
+        quiz.userbased == 'advanced' %}
+        <div class="list-group">
+          <a
+            href="{{ url_for('quiz.show_quiz', quiz_id=quiz.id)}}"
+            class="list-group-item list-group-item-action"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ quiz.name }}</h5>
+              <small>
+                {{ quiz.quiz.username }} -
+                {{quiz.date_posted.strftime('%Y-%m-%d') }}</small
+              >
+            </div>
+          </a>
+        </div>
+        {% endif %} {% endfor %}
+        <div class="card-body">
+          <h6 class="card-text">Intermediate Comprehension Papers</h6>
+        </div>
+        {% for quiz in quizs %} {% if quiz.gandco == "comprehension" and
+        quiz.userbased == 'intermediate' %}
+        <div class="list-group">
+          <a
+            href="{{ url_for('quiz.show_quiz', quiz_id=quiz.id)}}"
+            class="list-group-item list-group-item-action"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ quiz.name }}</h5>
+              <small>
+                {{ quiz.quiz.username }} -
+                {{quiz.date_posted.strftime('%Y-%m-%d') }}</small
+              >
+            </div>
+          </a>
+        </div>
+        {% endif %} {% endfor %}
+        <div class="card-body">
+          <h6 class="card-text">Preliminary Comprehension Papers</h6>
+        </div>
+        {% for quiz in quizs %} {% if quiz.gandco == "comprehension" and
+        quiz.userbased == 'preliminary' %}
+        <div class="list-group">
+          <a
+            href="{{ url_for('quiz.show_quiz', quiz_id=quiz.id)}}"
+            class="list-group-item list-group-item-action"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ quiz.name }}</h5>
+              <small>
+                {{ quiz.quiz.username }} -
+                {{quiz.date_posted.strftime('%Y-%m-%d') }}</small
+              >
+            </div>
+          </a>
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+    </div>
+    <div class="card mb-3" style="background-color: #e3f2fd">
+      <div class="card-header">
+        <h5>Reading for main idea Papers</h5>
+      </div>
+      <div class="mt-1">
+        <div class="card-body">
+          <h6 class="card-text">Advanced Reading for main idea Papers</h6>
+        </div>
+        {% for quiz in quizs %} {% if quiz.gandco == "main idea" and
+        quiz.userbased == 'advanced' %}
+        <div class="list-group">
+          <a
+            href="{{ url_for('quiz.show_quiz', quiz_id=quiz.id)}}"
+            class="list-group-item list-group-item-action"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ quiz.name }}</h5>
+              <small>
+                {{ quiz.quiz.username }} -
+                {{quiz.date_posted.strftime('%Y-%m-%d') }}</small
+              >
+            </div>
+          </a>
+        </div>
+        {% endif %} {% endfor %}
+        <div class="card-body">
+          <h6 class="card-text">Intermediate Reading for main idea Papers</h6>
+        </div>
+        {% for quiz in quizs %} {% if quiz.gandco == "main idea" and
+        quiz.userbased == 'intermediate' %}
+        <div class="list-group">
+          <a
+            href="{{ url_for('quiz.show_quiz', quiz_id=quiz.id)}}"
+            class="list-group-item list-group-item-action"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ quiz.name }}</h5>
+              <small>
+                {{ quiz.quiz.username }} -
+                {{quiz.date_posted.strftime('%Y-%m-%d') }}</small
+              >
+            </div>
+          </a>
+        </div>
+        {% endif %} {% endfor %}
+        <div class="card-body">
+          <h6 class="card-text">Preliminary Reading for main idea Papers</h6>
+        </div>
+        {% for quiz in quizs %} {% if quiz.gandco == "main idea" and
+        quiz.userbased == 'preliminary' %}
+        <div class="list-group">
+          <a
+            href="{{ url_for('quiz.show_quiz', quiz_id=quiz.id)}}"
+            class="list-group-item list-group-item-action"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ quiz.name }}</h5>
+              <small>
+                {{ quiz.quiz.username }} -
+                {{quiz.date_posted.strftime('%Y-%m-%d') }}</small
+              >
+            </div>
+          </a>
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+    </div>
+    <div class="card mb-3" style="background-color: #e3f2fd">
+      <div class="card-header">
+        <h5>Reading for Detail Papers</h5>
+      </div>
+      <div class="mt-1">
+        <div class="card-body">
+          <h6 class="card-text">Advanced Reading for Detail Papers</h6>
+        </div>
+        {% for quiz in quizs %} {% if quiz.gandco == "detail" and quiz.userbased
+        == 'advanced' %}
+        <div class="list-group">
+          <a
+            href="{{ url_for('quiz.show_quiz', quiz_id=quiz.id)}}"
+            class="list-group-item list-group-item-action"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ quiz.name }}</h5>
+              <small>
+                {{ quiz.quiz.username }} -
+                {{quiz.date_posted.strftime('%Y-%m-%d') }}</small
+              >
+            </div>
+          </a>
+        </div>
+        {% endif %} {% endfor %}
+        <div class="card-body">
+          <h6 class="card-text">Intermediate Reading for Detail Papers</h6>
+        </div>
+        {% for quiz in quizs %} {% if quiz.gandco == "detail" and quiz.userbased
+        == 'intermediate' %}
+        <div class="list-group">
+          <a
+            href="{{ url_for('quiz.show_quiz', quiz_id=quiz.id)}}"
+            class="list-group-item list-group-item-action"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ quiz.name }}</h5>
+              <small>
+                {{ quiz.quiz.username }} -
+                {{quiz.date_posted.strftime('%Y-%m-%d') }}</small
+              >
+            </div>
+          </a>
+        </div>
+        {% endif %} {% endfor %}
+        <div class="card-body">
+          <h6 class="card-text">Preliminary Reading for Detail Papers</h6>
+        </div>
+        {% for quiz in quizs %} {% if quiz.gandco == "detail" and quiz.userbased
+        == 'preliminary' %}
+        <div class="list-group">
+          <a
+            href="{{ url_for('quiz.show_quiz', quiz_id=quiz.id)}}"
+            class="list-group-item list-group-item-action"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ quiz.name }}</h5>
+              <small>
+                {{ quiz.quiz.username }} -
+                {{quiz.date_posted.strftime('%Y-%m-%d') }}</small
+              >
+            </div>
+          </a>
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+    </div>
+    <div class="card mb-3" style="background-color: #e3f2fd">
+      <div class="card-header">
         <h5>Reading Grammar Papers</h5>
       </div>
       <div class="mt-1">

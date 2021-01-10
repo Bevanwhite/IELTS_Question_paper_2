@@ -1,0 +1,45 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Reading</h5>
+        </div>
+    </div>
+    <div class="container mt-3">
+        <div class="card mt-3 mb-3">
+            <div class="card-header">
+			 <!-- Display summary of exam-->
+                <h5 class="table2">Your test exam summary</h5><br>
+            </div>
+            <div class="card-body">
+                <h6 class="card-title">
+                    <table style="margin-left: auto; margin-right: auto;" border="1">
+                        <thead>
+                            <tr>
+                                <th>Question</th>
+                                <th>Correct Answer</th>
+                                <th>Submitted Answer</th>
+                            </tr>
+                        </thead>
+                </h6>
+                    {% for row in output_data %}
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                        <td>{{row[2]}}</td>
+                    </tr>
+                    {% endfor %}
+                </table><br>
+                <p>score : {{ score }}<br>
+                    wrong answers : {{ wrong_answers}} </p>
+                <p>lowest section score : {{lowest}}</p>
+                <p>{{suggestion}}</p>
+                <div class="card-footer text-muted text-right">
+                    <a href="/reading/summary" class="btn btn-primary btn-sm">Go to Study Plan!</a>
+                  </div>
+                  </form>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock content %}

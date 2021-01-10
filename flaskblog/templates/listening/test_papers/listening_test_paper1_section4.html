@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/css/style.css" rel="stylesheet">
+<link href="/static/css/test_paper.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+<body>
+    <div class="container mt-3">
+        <div class="card mb-3 sticky-top">
+            <div class="card-header">
+                <h5>Listening
+                    <p class="float-right" style="font-weight: bold" id="quiz-time-left"></p>
+                </h5>
+            </div>
+        </div>
+        <div class="card mt-3 mb-3">
+            <div class="card-header">
+                <h6>SECTION 4 &nbsp&nbsp&nbsp&nbsp<i>Question 31-40</i></h6>
+            </div><br><br>
+            <div class="audio_file">
+                <audio controls>
+                    <source src="/static/listening_audio/IELTS13_Test1_04.mp3" type="audio/mpeg">
+                </audio>
+            </div><br>
+            <div class="card-body">
+                <h6 class="card-title">
+                    <i>Complete the notes below</i><br>
+                    <i>Write <b> ONE WORD ONLY</b> for each answer</i></h6><br>
+                <form action="/listening/section4" method="post" id="section4_form">
+                    <table>
+                        <td>
+                            <h2>Effects of urban environments on animals</h2>
+                            <b>Introduction</b><br>
+                            <p>Recent urban developments represent massive environmental changes. it was previously
+                                thought
+                                that only a few animals were suitable for city life, e.g.
+                            <ul>
+                                <li>the <b>31</b><input type="text" name="q31" id="q31">&nbsp&nbsp - because of its
+                                    geneal adaptability
+                                </li>
+                                <li>the pegion - because walls of city buildings are similar to <b>32</b><input
+                                        type="text" name="q32" id="q32">&nbsp&nbsp in fact, many urban animals are
+                                    adapting with unusual
+                                    <b>33</b><input type="text" name="q33" id="q33">&nbsp&nbsp</li>
+                            </ul>
+                            </p>
+                            <b>Recent research</b><br>
+                            <p>
+                            <ul>
+                                <li>Emilie Snell-Rood studied small urbanised mammak specimens from museums in
+                                    Minnesota.<br>
+                                    -She found the size of their <b>34</b><input type="text" name="q34"
+                                        id="q34">&nbsp&nbsp had
+                                    increased.<br>
+                                    -She suggests this may be due to the need to locate new sources of <b>35</b><input
+                                        type="text" name="q35" id="q35">&nbsp&nbsp and to deal with new dangers.</li>
+
+                                <li>Catarina Miranda focused on the <b>36</b><input type="text" name="q36"
+                                        id="q36">&nbsp&nbsp of urban
+                                    and rural blackbirds.<br>
+                                    -She found urban birds were often braver, but were afraid of situations that were
+                                    <b>37</b><input type="text" name="q37" id="q37">&nbsp&nbsp.</li>
+
+                                <li>Jonathan Atwell studies how animals respond to urban environments.<br>
+                                    -He found that some animals respond to <b>38</b><input type="text" name="q38"
+                                        id="q38">&nbsp&nbsp
+                                    by producing lower levels of hormones.</li>
+
+                                <li>Sarah Partan's team found urban squirrels use their <b>39</b><input type="text"
+                                        name="q39" id="q39">&nbsp&nbsp to help them commiunicate.</li>
+                            </ul>
+                            </p><br>
+                            <b>Long-term possibilities</b><br>
+                            <p>Species of animals may develop which are unique to cities. However, some changes may not
+                                be
+                                <b>40</b><input type="text" name="q40" id="q40">&nbsp&nbsp</p>
+                        </td>
+                    </table><br>
+            </div>
+            <div class="card-footer text-muted text-right">
+                <input type="submit" value="Save Your answer" onclick="SubmitFunction()" id="section4" name="section4"
+                    class="btn btn-primary btn-sm" />
+            </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    var div = document.getElementById('quiz-time-left');
+
+    function CountDown(duration, display) {
+
+        var timer = duration, minutes, seconds;
+
+        var interVal = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            display.innerHTML = "<b>" + minutes + "m : " + seconds + "s" + "</b>";
+            if (timer > 0) {
+                --timer;
+            } else {
+                clearInterval(interVal)
+                SubmitFunction();
+            }
+
+        }, 1000);
+
+    }
+
+    function SubmitFunction() {
+        var i = 1;
+        for (i = 31; i < 41; i++) {
+            var ans = document.getElementById('q' + i).value;
+            if (ans == "") {
+                document.getElementById("q" + i).value = 'not answered';
+            }
+        }
+        document.getElementById('section4_form').submit();
+
+    }
+    CountDown(600, div);
+</script>
+
+</html>

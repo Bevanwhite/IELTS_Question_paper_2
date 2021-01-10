@@ -337,7 +337,6 @@ def delete_short(quiz_id, id):
     flash('Your Quiz Short has been deleted!!', 'success')
     return redirect(url_for('quiz.show_quiz', quiz_id=quiz_id))
 
-
 def radioandshort_answer(quiz_id, id, form):
     quiz_an = Quiz_answer.query.order_by(Quiz_answer.id).all()
     print(quiz_an)
@@ -354,7 +353,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer1: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -363,7 +362,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer1: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer1: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -378,7 +377,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer2: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -387,7 +386,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer2: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer2: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -402,7 +401,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer3: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -411,7 +410,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer3: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer3: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -426,7 +425,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer4: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -435,7 +434,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer4: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer4: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -450,7 +449,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer5: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -459,7 +458,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer5: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer5: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -474,7 +473,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer6: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -483,7 +482,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer6: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer6: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -498,7 +497,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer7: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -507,7 +506,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer7: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer7: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -522,7 +521,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer8: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -531,7 +530,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer8: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer8: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -546,7 +545,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer9: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -555,7 +554,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer9: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer9: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -570,7 +569,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer10: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -579,7 +578,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer10: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer10: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -594,7 +593,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer11: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -603,7 +602,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer11: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer11: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -618,7 +617,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer12: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -627,7 +626,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer12: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer12: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -642,7 +641,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer13: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -651,7 +650,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer13: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer13: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -666,7 +665,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer14: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -675,7 +674,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer14: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer14: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -690,7 +689,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer15: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -699,7 +698,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer15: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer15: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -714,7 +713,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer16: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -723,7 +722,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer16: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer16: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -738,7 +737,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer17: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -747,7 +746,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer17: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer17: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -762,7 +761,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer18: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -771,7 +770,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer18: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer18: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -786,7 +785,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer19: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -795,7 +794,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer19: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer19: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -810,7 +809,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer20: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -819,7 +818,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer20: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer20: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -834,7 +833,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer21: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -843,7 +842,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer21: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer21: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -858,7 +857,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer22: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -867,7 +866,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer22: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer22: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -882,7 +881,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer23: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -891,7 +890,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer23: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer23: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -906,7 +905,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer24: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -915,7 +914,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer24: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer24: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -930,7 +929,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer25: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -939,7 +938,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer25: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer25: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -954,7 +953,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer26: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -963,7 +962,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer26: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer26: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -978,7 +977,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer27: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -987,7 +986,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer27: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer27: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -1002,7 +1001,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer28: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1011,7 +1010,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer28: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer28: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -1026,7 +1025,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer29: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1035,7 +1034,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer29: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer29: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -1050,7 +1049,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer30: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1059,7 +1058,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer30: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer30: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -1074,7 +1073,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer31: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1083,7 +1082,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer31: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer31: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -1098,7 +1097,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer32: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1107,7 +1106,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer32: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer32: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -1122,7 +1121,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer33: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1131,7 +1130,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer33: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer33: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -1146,7 +1145,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer34: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1155,7 +1154,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer34: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer34: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -1170,7 +1169,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer35: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1179,7 +1178,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer35: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer35: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -1194,7 +1193,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer36: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1203,7 +1202,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer36: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer36: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -1218,7 +1217,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer37: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1227,7 +1226,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer37: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer37: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -1242,7 +1241,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer38: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1251,7 +1250,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer38: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer38: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -1266,7 +1265,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer39: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1275,7 +1274,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer39: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer39: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
@@ -1290,7 +1289,7 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer40: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1299,12 +1298,11 @@ def radioandshort_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer40: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer40: form.correct_answer.data, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-
 
 def checklist_answer(quiz_id, id, form):
     quiz_an = Quiz_answer.query.order_by(Quiz_answer.id).all()
@@ -1322,7 +1320,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer1: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1332,7 +1330,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer1: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1349,7 +1347,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer2: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1359,7 +1357,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer2: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1376,7 +1374,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer3: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1386,7 +1384,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer3: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1403,7 +1401,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer4: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1413,7 +1411,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer4: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1430,7 +1428,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer5: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1440,7 +1438,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer5: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1457,7 +1455,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer6: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1467,7 +1465,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer6: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1484,7 +1482,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer7: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1494,7 +1492,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer7: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1511,7 +1509,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer8: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1521,7 +1519,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer8: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1538,7 +1536,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer9: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1548,7 +1546,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer9: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1565,7 +1563,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer10: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1575,7 +1573,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer10: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1592,7 +1590,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer11: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1602,7 +1600,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer11: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1619,7 +1617,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer12: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1629,7 +1627,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer12: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1646,7 +1644,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer13: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1656,7 +1654,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer13: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1673,7 +1671,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer14: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1683,7 +1681,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer14: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1700,7 +1698,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer15: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1710,7 +1708,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer15: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1727,7 +1725,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer16: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1737,7 +1735,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer16: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1754,7 +1752,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer17: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1764,7 +1762,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer17: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1781,7 +1779,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer18: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1791,7 +1789,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer18: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1808,7 +1806,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer19: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1818,7 +1816,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer19: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1835,7 +1833,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer20: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1845,7 +1843,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer20: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1862,7 +1860,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer21: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1872,7 +1870,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer21: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1889,7 +1887,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer22: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1899,7 +1897,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer22: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1916,7 +1914,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer23: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1926,7 +1924,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer23: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1943,7 +1941,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer24: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1953,7 +1951,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer24: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1970,7 +1968,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer25: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -1980,7 +1978,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer25: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -1997,7 +1995,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer26: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2007,7 +2005,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer26: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2024,7 +2022,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer27: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2034,7 +2032,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer27: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2051,7 +2049,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer28: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2061,7 +2059,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer28: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2078,7 +2076,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer29: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2088,7 +2086,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer29: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2105,7 +2103,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer30: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2115,7 +2113,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer30: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2132,7 +2130,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer31: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2142,7 +2140,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer31: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2159,7 +2157,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer32: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2169,7 +2167,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer32: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2186,7 +2184,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer33: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2196,7 +2194,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer33: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2213,7 +2211,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer34: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2223,7 +2221,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer34: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2240,7 +2238,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer35: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2250,7 +2248,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer35: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2267,7 +2265,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer36: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2277,7 +2275,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer36: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2294,7 +2292,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer37: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2304,7 +2302,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer37: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2321,7 +2319,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer38: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2331,7 +2329,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer38: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2348,7 +2346,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer39: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2358,7 +2356,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer39: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
@@ -2375,7 +2373,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == 1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer40: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif (quiz_an[-1].user_id != current_user.id) or (datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900)) or (quiz_an[-1].user_id != current_user.id) or (quiz_an[-1].quiz_id != quiz_id):
+        elif len(quiz_) == 0 or datetime.now() - quiz_[-1].date_posted > timedelta(seconds=900) or quiz_[-1].user_id != current_user.id or quiz_[-1].quiz_id != quiz_id:
             quiz_answer = Quiz_answer(
                 id=quiz_an[-1].id+1, date_posted=datetime.now(), quiz_id=quiz_id, user_id=current_user.id)
             db.session.add(quiz_answer)
@@ -2385,7 +2383,7 @@ def checklist_answer(quiz_id, id, form):
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id+1, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(
                     {Quiz_answer.answer40: list, Quiz_answer.date_posted: datetime.now()}, synchronize_session=False)
                 db.session.commit()
-        elif(datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900)) and (quiz_[-1].user_id == current_user.id) and (quiz_[-1].quiz_id == quiz_id):
+        elif datetime.now() - quiz_[-1].date_posted <= timedelta(seconds=900) and quiz_[-1].user_id == current_user.id and quiz_[-1].quiz_id == quiz_id:
             if form.validate_on_submit():
                 list = ' '.join([str(i) for i in form.correct_answer.data])
                 db.session.query(Quiz_answer).filter(Quiz_answer.id == quiz_an[-1].id, Quiz_answer.quiz_id == quiz_id, Quiz_answer.user_id == current_user.id).update(

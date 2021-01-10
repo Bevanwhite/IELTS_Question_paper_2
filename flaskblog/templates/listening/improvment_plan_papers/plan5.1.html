@@ -1,0 +1,115 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Listening</h5>
+        </div>
+    </div>
+    <div class="card mt-3 mb-3">
+        <div class="card-header">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <p>This type of exercises aims at improving your <strong>listening skills for short-answer
+                            questions</strong>. It requires you to be patient and attentive in order to answer all the
+                        questions correctly. </p>
+                    <p>Note that:
+                    <ul>
+                        <li>On the real test, you will hear the recording only once.</li>
+                        <li>Short-answer questions are very common on IELTS Listening.</li>
+                    </ul>
+                    </p>
+                    <p>Listen to the recording and try to answer all the given questions:</p>
+                </h6>
+                <div class="audio_file">
+                    <audio controls>
+                        <source src="/static/listening_audio/plan5.1.mp3" type="audio/mpeg">
+                    </audio>
+                </div><br>
+                <h3>&#8220;Hair of the dog&#8221;</h3>
+                <form>
+
+                    <p>Answer the questions below. </p>
+
+                    <p> Write <strong>ONLY ONE WORD</strong><strong> </strong>from the dialogue for each answer.</p>
+                    <br />
+                    <form>
+
+                        <ol>
+                            <li> Who is Fido?
+                                <input type="text" class="ex-input" style="width:110px" id="ex1" required> <span
+                                    id="s1"> </span>
+                                <br /> <br />
+                            <li> A bottle of what did Finn buy?
+                                <input type="text" class="ex-input" style="width:110px" id="ex2" required>
+                                <span id="s2"> </span>
+                                <br /> <br />
+                            <li> What should the hair of the dog cure?
+                                <input type="text" class="ex-input" style="width:110px" id="ex3" required>
+                                <span id="s3"> </span> <br /> <br />
+                            <li> Hair of the dog was believed to be a remedy for what disease, according to the medieval
+                                belief?
+                                <input type="text" class="ex-input" style="width:110px" id="ex4" required="required" />
+                                <span id="s4"> </span> <br /> <br />
+                            <li> Who's going to drink just coffee today?
+                                <input type="text" class="ex-input" style="width:110px" id="ex5" required>
+                                <span id="s5"> </span>
+                        </ol>
+                        <button id="b2" type="button" class="btn btn-outline-info" onclick="toggle()">
+                            <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show
+                            answers</button>
+
+                        <div id="answers" style="display:none;" class="hint">
+                            <p><strong>ANSWERS</strong></p>
+                            <p>Each question correctly answered scores 1 mark. <strong>Correct</strong> spelling is
+                                needed in all answers.
+                            </p>
+                            <ol start="1">
+                                <li>dog</li>
+                                <li>whisky</li>
+                                <li>hangover</li>
+                                <li>rabies</li>
+                                <li>rob</li>
+                            </ol>
+
+                        </div>
+            </div> <br /> <br />
+            <div id="result" align="center"> </div>
+            <div align="center">
+                &emsp;
+
+                <button class="btn btn-primary btn-sm " type="button" onclick="check()">Check</button> &emsp;
+                <a href="/listening/progress1/1" class="btn btn-primary btn-sm ">Update progress</a>
+
+            </div>
+            </body>
+            <script>
+                function check() {
+                    var ex1, ex, score, total;
+                    score = 0; total = 0; ex = ['dog', 'whisky', 'hangover', 'rabies', 'rob'];
+
+                    for (var i = 1; i < 6; i++) {
+                        total++;
+                        ex1 = document.getElementById("ex" + i).value;
+                        if (ex1.trim().toLowerCase() != ex[i - 1])
+                            document.getElementById("s" + i).innerHTML = '<img height=20px src="/static/images/wrong.png" style="vertical-align:middle;" />';
+                        else { score++; document.getElementById("s" + i).innerHTML = '<img height=20px src="/static/images/correct.png" style="vertical-align:middle;" />'; }
+                    }
+
+                    score = score / total * 100;
+                    if (score != 100) document.getElementById("result").innerHTML = "Your score is " + score + "%";
+                    else document.getElementById("result").innerHTML =
+                        '<span style="color:green; ">Excellent! </span>Your score is ' + score + '%';
+                }
+                function toggle() {
+                    var e = document.getElementById("answers");
+                    if (e.style.display == 'block') {
+                        document.getElementById("b2").innerHTML = ' <img height="25px" src="/static/images/show.png" style="vertical-align: middle"  /> Show answers';
+                        e.style.display = 'none';
+                    }
+                    else {
+                        document.getElementById("b2").innerHTML = '<img height="25px" src="/static/images/hide.png" style="vertical-align: middle"  /> Hide answers';
+                        e.style.display = 'block';
+                    }
+                }
+            </script>
+            {% endblock content %}

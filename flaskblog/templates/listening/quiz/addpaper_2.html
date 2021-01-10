@@ -1,0 +1,38 @@
+{% extends 'layout.html' %} {% block content %}
+    <body>
+        <div class="container mt-3">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Listening</h5>
+                </div>
+            </div>
+            <h4>Instruction to add new paper</h4>
+            <ul>
+                <li>Maximum 10 questions for per quiz</li>
+                <li>If paper have more than one paper type Please add questions like below steps</li>
+                <li>Paper will show in this structure
+                    <ul>
+                        <li>MCQ questions <b>1st</b> </li>
+                        <li>Short answers questions <b>2nd</b> </li>
+                        <li>Questions with given answers <b>3rd</b></li>
+                        <li>MCQ with multiple answers questions <b>4th</b></li>
+                    </ul>
+                </li>
+                <li>After add all 10 question please press save paper button save paper</li>
+            </ul>
+            
+            
+        <div class="embed-responsive embed-responsive-16by9" style="height: 800px" id="iframe_div">
+            <iframe src="/listening/addpaper_2_1/0/Add Here!" class="card embed-responsive-item " id="qiuz" allowfullscreen ></iframe>
+            
+        </div>
+        <div>
+            <a href="/listening/save_paper" class="btn btn-success btn-lg float-right" on>Save paper</a>
+        </div><br><br>
+        
+        
+    </body>
+
+</html>
+
+{% endblock content %}

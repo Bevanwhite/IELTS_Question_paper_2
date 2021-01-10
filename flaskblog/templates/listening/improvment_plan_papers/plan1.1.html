@@ -1,0 +1,169 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Listening</h5>
+        </div>
+    </div>
+    <div class="card mt-3 mb-3">
+        <div class="card-header">
+            <div class="audio_file">
+                <audio controls>
+                    <source src="/static/listening_audio/plan1.1.mp3" type="audio/mpeg">
+                </audio>
+            </div><br>
+            <div class="card-body">
+                <h6 class="card-title">
+                    <p><strong>Questions 1-5</strong> </p>
+                    <p>Choose the correct letter, <strong>A</strong>, <strong>B</strong>, or <strong>С</strong>.
+                    </p>
+                </h6>
+                <p><strong>1.</strong> Initially, the Great Wall was built to <span id="s1"></span></p>
+                <ol type="A">
+                    <li> <input type="radio" name="q1" id="a1"> prevent invaders from entering China</li>
+                    <li> <input type="radio" name="q1"> function as a psychological barrier</li>
+                    <li> <input type="radio" name="q1"> show country’s enduring strength</li>
+                </ol><br />
+                <p><strong>2.</strong> The construction of the Great Wall started <span id="s2"></span></p>
+                <ol type="A">
+                    <li> <input type="radio" name="q2"> in third century B.C.</li>
+                    <li> <input type="radio" name="q2" id="a2"> in 220 B.C.</li>
+                    <li> <input type="radio" name="q2"> in 390 A.D.</li>
+                </ol><br />
+                <p><strong>3.</strong> The Chinese name of the monument is <span id="s3"></span></p>
+                <ol type="A">
+                    <li> <input type="radio" name="q3"> the Great Wall</li>
+                    <li> <input type="radio" name="q3"> the Big Wall</li>
+                    <li> <input type="radio" name="q3" id="a3"> the Long Wall</li>
+                </ol><br />
+                <p><strong>4.</strong> The wall as it exists today was constructed mainly by <span id="s4"></span>
+                </p>
+                <ol type="A">
+                    <li> <input type="radio" name="q4"> Qin dynasty</li>
+                    <li> <input type="radio" name="q4"> Northern Wei dynasty</li>
+                    <li> <input type="radio" name="q4" id="a4"> Ming dynasty</li>
+                </ol><br />
+                <p><strong>5.</strong> During the Ming dynasty, the wall’s main purpose was <span id="s5"></span>
+                </p>
+                <ol type="A">
+                    <li> <input type="radio" name="q5"> to be a military fortification</li>
+                    <li> <input type="radio" name="q5"> to protect caravans traveling along the trade routes
+                    </li>
+                    <li> <input type="radio" name="q5" id="a5"> to contribute to the defense of the country</li>
+                </ol><br />
+                <br /><br />
+                <p><strong>Questions 6-10</strong> </p>
+                <p>Complete the timeline with information about the history оf the tomato in the United States.
+                </p>
+                <p>Write <strong>NO MORE THAN THREE WORDS</strong> for each answer. </p><br />
+                <p><strong>6.</strong> Before the use of bricks, the Great Wall was mainly built from stones,
+                    wood and <input type="text" class="ex-input" style="width:220px" id="q6">. <span id="s6"></span>
+                </p>
+                <p><strong>7.</strong> Many western sections of the wall are constructed from mud and thus are
+                    more <input type="text" class="ex-input" style="width:220px" id="q7">. <span id="s7"></span>
+                </p>
+                <p><strong>8.</strong> A part of the wall in Gansu province may disappear in the next 20 years,
+                    due to <input type="text" class="ex-input" style="width:220px" id="q8">. <span id="s8"></span>
+                </p>
+                <p><strong>9.</strong> To see the wall from the Moon would require superhuman <input type="text"
+                        class="ex-input" style="width:220px" id="q9">. <span id="s9"></span></p>
+                <p><strong>10.</strong> The Great Wall is generally recognized as one of the most impressive
+                    <input type="text" class="ex-input" style="width:220px" id="q10"> in history. <span id="s10"></span>
+                </p>
+
+                <br /><br />
+                <button id="b2" type="button" class="btn btn-outline-info" onclick="toggle()">
+                    <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show answers</button>
+
+                <div id="answers" style="display:none;" class="hint">
+                    <p><strong>ANSWERS</strong></p>
+                    <p>Each question correctly answered scores 1 mark. <strong>Correct</strong> spelling is
+                        needed in all answers.
+                    </p>
+                    <ol start="1">
+                        <li>A</li>
+                        <li>B</li>
+                        <li>C</li>
+                        <li>C</li>
+                        <li>C</li>
+                        <li>rammed earth</li>
+                        <li>susceptible to erosion</li>
+                        <li>frequent sandstorms</li>
+                        <li>eyesight</li>
+                        <li>architectural feats</li>
+                    </ol>
+
+                </div>
+            </div> <br /> <br />
+            <div id="result" align="center"> </div>
+            <div align="center">
+                &emsp;
+
+                <button class="btn btn-primary btn-sm " type="button" onclick="check()">Check</button> &emsp;
+                <a href="/listening/progress1/1" class="btn btn-primary btn-sm ">Update progress</a>
+
+            </div>
+            </body>
+            <script>
+                function check() {
+
+                    var q1, text, text2, score; score = 0;
+
+                    for (var i = 1; i < 6; i++) {
+                        text = "a" + i; text2 = "s" + i;
+                        if (document.getElementById(text).checked == true) {
+                            document.getElementById(text2).innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png"  />';
+                            score++;
+                        }
+                        else { document.getElementById(text2).innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png"  />'; }
+                    }
+
+                    var q = ['rammed earth', 'susceptible to erosion', 'frequent sandstorms', 'eyesight', 'architectural feats'];
+                    for (var i = 6; i < 11; i++) {
+                        q1 = document.getElementById("q" + i).value;
+                        if (q1.trim().toLowerCase() != q[i - 6]) { document.getElementById("s" + i).innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+                        else { document.getElementById("s" + i).innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />'; score++; }
+                    }
+
+
+                    setCookie("fourth", score, 3);
+
+                    document.getElementById("result").innerHTML =
+                        "<div class='result'>Your result for this quiz " + score + "/10 </div>";
+                }
+
+
+
+                function setCookie(cname, cvalue, exdays) {
+                    var d = new Date();
+                    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                    var expires = "expires=" + d.toUTCString();
+                    document.cookie = cname + "=" + cvalue + "; " + expires;
+                }
+
+                function getCookie(cname) {
+                    var name = cname + "=";
+                    var ca = document.cookie.split(';');
+                    for (var i = 0; i < ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) == ' ') c = c.substring(1);
+                        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+                    }
+                    return "";
+                }
+
+
+
+                function toggle() {
+                    var e = document.getElementById("answers");
+                    if (e.style.display == 'block') {
+                        document.getElementById("b2").innerHTML = ' <img height="25px" src="/static/images/show.png" style="vertical-align: middle"  /> Show answers';
+                        e.style.display = 'none';
+                    }
+                    else {
+                        document.getElementById("b2").innerHTML = '<img height="25px" src="/static/images/hide.png" style="vertical-align: middle"  /> Hide answers';
+                        e.style.display = 'block';
+                    }
+                }
+            </script>
+            {% endblock content %}

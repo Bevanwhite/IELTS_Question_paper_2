@@ -1,0 +1,202 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Listening</h5>
+        </div>
+    </div>
+    <div class="card mt-3 mb-3">
+        <div class="card-header">
+            <div class="audio_file">
+                <audio controls>
+                    <source src="/static/listening_audio/plan3.4.mp3" type="audio/mpeg">
+                </audio>
+            </div><br>
+            <div class="card-body">
+                <h6 class="card-title">
+                    <p><strong>Questions 1-10</strong> </p>
+                    <p>Choose the correct letter, <strong>A</strong>, <strong>B</strong>, or <strong>С</strong>.</p>
+                </h6>
+                <p><strong>11.</strong> The lecture was organised by <span id="s1"></span>
+
+                <ol type="A">
+                    <li><input type="radio" name="q1"> City of Nottingham.</li>
+                    <li><input type="radio" name="q1" id="a1"> University of Nottingham Students' Union.</li>
+                    <li><input type="radio" name="q1"> Nottingham Police Department.</li>
+
+                </ol>
+                </p>
+
+                <p>&nbsp;</p>
+                <p><strong>12.</strong> The majority of crime on campus is <span id="s2"></span>
+
+                <ol type="A">
+                    <li><input type="radio" name="q2"> drugs and alcohol.</li>
+                    <li><input type="radio" name="q2"> violence.</li>
+                    <li><input type="radio" name="q2" id="a2"> theft.</li>
+
+                </ol>
+                </p>
+
+                <p>&nbsp;</p>
+                <p><strong>13.</strong> The campus crime rate has ____________ so far this year. <span id="s3"></span>
+                <ol type="A">
+                    <li><input type="radio" name="q3"> increased.</li>
+                    <li><input type="radio" name="q3" id="a3"> decreased.</li>
+                    <li><input type="radio" name="q3"> stayed the same.</li>
+
+                </ol>
+                </p>
+
+                <p>&nbsp;</p>
+                <p><strong>14.</strong> Why is there added concern about crime? <span id="s4"></span>
+
+                <ol type="A">
+                    <li><input type="radio" name="q4" id="a4"> Exaggeration in media.</li>
+                    <li><input type="radio" name="q4"> Crime TV shows.</li>
+                    <li><input type="radio" name="q4"> Factual news articles.</li>
+
+                </ol>
+                </p>
+
+                <p>&nbsp;</p>
+                <p><strong>15.</strong> Carlos says if you are the victim of crime, you should <span id="s5"></span>
+
+                <ol type="A">
+                    <li><input type="radio" name="q5"> run away.</li>
+                    <li><input type="radio" name="q5"> resist.</li>
+                    <li><input type="radio" name="q5" id="a5"> seek help.</li>
+
+                </ol>
+                </p>
+
+                <p>&nbsp;</p>
+                <p><strong>16.</strong> What is the primary method for increasing safety? <span id="s6"></span>
+
+                <ol type="A">
+                    <li><input type="radio" name="q6" id="a6"> Informing students and staff of safety precautions.</li>
+                    <li><input type="radio" name="q6"> Offering free self-defense courses to students.</li>
+                    <li><input type="radio" name="q6"> Reminding students to carry a mobile phone at all times.</li>
+
+                </ol>
+                </p>
+
+                <p>&nbsp;</p>
+                <p><strong>17.</strong> If a student must work late, it is most important to <span id="s7"></span>
+
+                <ol type="A">
+                    <li><input type="radio" name="q7"> not return home until the morning.</li>
+
+                    <li><input type="radio" name="q7" id="a7"> go back with a friend.</li>
+                    <li><input type="radio" name="q7"> bring a mobile phone.</li>
+                </ol>
+                </p>
+
+                <p>&nbsp;</p>
+                <p><strong>18.</strong> It is dangerous to <span id="s8"></span>
+
+                <ol type="A">
+                    <li><input type="radio" name="q8"> drive home late at night.</li>
+                    <li><input type="radio" name="q8" id="a8"> carry a knife.</li>
+                    <li><input type="radio" name="q8"> carry pepper spray.</li>
+
+                </ol>
+                </p>
+
+                <p>&nbsp;</p>
+                <p><strong>19.</strong> Students who complete self-defense course are <span id="s9"></span>
+
+                <ol type="A">
+                    <li><input type="radio" name="q9" id="a9"> more aware of dangers.</li>
+                    <li><input type="radio" name="q9"> mentally tougher.</li>
+                    <li><input type="radio" name="q9"> walking more confidently.</li>
+
+                </ol>
+                </p>
+
+                <p>&nbsp;</p>
+                <p><strong>20.</strong> A university is <span id="s10"></span>
+
+                <ol type="A">
+                    <li><input type="radio" name="q10" id="a10"> not surrounded by walls.</li>
+                    <li><input type="radio" name="q10"> patrolled by military.</li>
+                    <li><input type="radio" name="q10"> completely safe.</li>
+
+                </ol>
+                </p>
+                <p><br />
+                    <button id="b2" type="button" class="btn btn-outline-info" onclick="toggle()">
+                        <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show
+                        answers</button>
+
+                <div id="answers" style="display:none;" class="hint">
+                    <p><strong>ANSWERS</strong></p>
+                    <p>Each question correctly answered scores 1 mark. <strong>Correct</strong> spelling is
+                        needed in
+                        all answers.
+                    </p>
+                    <ol start="1">
+                        <li>B</li>
+                        <li>C</li>
+                        <li>B</li>
+                        <li>A</li>
+                        <li>C</li>
+                        <li>A</li>
+                        <li>B</li>
+                        <li>B</li>
+                        <li>A</li>
+                        <li>A</li>
+                    </ol>
+                </div> <br /> <br />
+                <div id="result" align="center"> </div>
+                <div align="center">
+                    &emsp;
+
+                    <button class="btn btn-primary btn-sm " type="button" onclick="check()">Check</button>
+                    <a href="/listening/progress1/5" class="btn btn-primary btn-sm ">Update progress</a>
+                    &emsp;
+
+                </div>
+                </body>
+                <script>
+                    function check() {
+                        var ex1, score, result;
+                        score = 0;
+
+                        for (var i = 1; i < 11; i++) {
+                            text = "a" + i; text2 = "s" + i;
+                            if (document.getElementById(text).checked == true) {
+                                document.getElementById(text2).innerHTML = '<img height=20px src="/static/images/ok.png"  />';
+                                score++;
+                            }
+                            else { result = false; document.getElementById(text2).innerHTML = '<img height=20px src="/static/images/cross.png"  />'; }
+                        }
+
+
+                        setCookie("second", score, 3);
+
+                        document.getElementById("result").innerHTML =
+                            "<div class='result'>Your result for Section 2 is " + score + "/10 </div>";
+                    }
+
+
+                    function setCookie(cname, cvalue, exdays) {
+                        var d = new Date();
+                        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                        var expires = "expires=" + d.toUTCString();
+                        document.cookie = cname + "=" + cvalue + "; " + expires;
+                    }
+
+                    function toggle() {
+                        var e = document.getElementById("answers");
+                        if (e.style.display == 'block') {
+                            document.getElementById("b2").innerHTML = ' <img height="25px" src="/static/images/show.png" style="vertical-align: middle"  /> Show answers';
+                            e.style.display = 'none';
+                        }
+                        else {
+                            document.getElementById("b2").innerHTML = '<img height="25px" src="/static/images/hide.png" style="vertical-align: middle"  /> Hide answers';
+                            e.style.display = 'block';
+                        }
+                    }
+                </script>
+                {% endblock content %}

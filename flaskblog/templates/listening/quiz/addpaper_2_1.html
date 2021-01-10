@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>MyFlaskApp</title>
+    <title>Flask Blog</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <p>select question type</p>
+    <select name="qtype" id="qtype" class="selectpicker form-control col-md-5" data-style="btn-info" onchange="set_quiz();">
+        <option value="" disabled selected>Choose your option</option>
+        <option value="o_mcq" selected="selected">MCQ</option>
+        <option value="o_text_type">Scenario/Short answer</option>
+        <option value="o_matching">Matching</option>
+        <option value="o_multiple">Multiple choice</option>
+    </select><br><br>
+    <div class="card border-2">
+        <div class="card-body">
+            <h1 class="h2 float-right">Questions: {{qid}}/10 </h1>
+            <p class="text-danger h4">{{warn}}</p>
+        </div>
+    </div>
+
+    <div id="selected"></div>
+    <div id="end_paper"></div>
+
+    <div id="mcq" style="display:none">
+        <div class="card border-1">
+            <div class="card-body">
+                <form action="/listening/add_paper_mcq" method="POST">
+                    <h5 class="card-title">Question number <input type="number" min="1" max="10" id="mqid"
+                            name="mqid" value="" /></h5>
+                    <p class="card-text">Input question :<input type="text" id="mques" name="mques"
+                            class="form-control col-md-5"></p>
+                    <p class="card-text">Answer A : <input type="text" id="mns1" name="mans1"
+                            class="form-control col-md-5"></p>
+                    <p class="card-text">Answer B : <input type="text" id="mans2" name="mans2"
+                            class="form-control col-md-5"></p>
+                    <p class="card-text">Answer C :<input type="text" id="mans3" name="mans3"
+                            class="form-control col-md-5"></p>
+                    <p class="card-text">Answer D :<input type="text" id="mans4" name="mans4"
+                            class="form-control col-md-5"></p>
+                    <p class="card-text">Correct answer :
+                        <select name="cans" id="cans" class="selectpicker form-control col-md-5" data-style="btn-info" onchange="set_ans();">
+                            <option value="a" selected="selected">A</option>
+                            <option value="b">B</option>
+                            <option value="c">C</option>
+                            <option value="d">D</option>
+                        </select><input type="hidden" id="mcorrect_answer" name="mcorrect_answer" value="a" class="form-control col-md-5"></p>
+                    <input type="submit" class="btn btn-primary btn-sm float-right " value="Input next question">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="multiple" style="display:none">
+        <div class="card border-1">
+            <div class="card-title">Select checkbox on correct answers</div>
+            <div class="card-body">
+                <form action="/listening/add_paper_multiple" method="POST">
+                    <h5 class="card-title">Question number <input type="number" min="1" max="10" id="qid"
+                            name="qid" /></h5>
+                    <p class="card-text">Input question :<input type="text" id="ques" name="ques"
+                            class="form-control col-md-5"></p>
+                    <p class="card-text">Answer A : <input type="checkbox" name="ans11" value="1" id="ans11"><input type="text" id="ans1" name="ans1"
+                            class="form-control col-md-5"></p>
+                    <p class="card-text">Answer B : 
+                        <input type="checkbox" name="ans22" value="1" id="ans22"><input type="text" id="ans2" name="ans2"
+                            class="form-control col-md-5">
+                        </p>
+                    <p class="card-text">Answer C :
+                        <input type="checkbox" name="ans33" value="1" id="ans33"><input type="text" id="ans3" name="ans3"
+                            class="form-control col-md-5">
+                        </p>
+                    <p class="card-text">Answer D :
+                        <input type="checkbox" name="ans44" value="1" id="ans44"><input type="text" id="ans4" name="ans4"
+                            class="form-control col-md-5">
+                        </p>
+                    
+                    <input type="submit" class="btn btn-primary btn-sm float-right " value="Input next question">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="text_type" style="display:none">
+        <div class="card border-1">
+            <div class="card-body">
+                <form action="/listening/add_paper_t_type" method="POST">
+                    <h5 class="card-title">Question number <input type="number" min="1" max="10" id="qid"
+                            name="qid" /></h5>
+                    <p class="card-text">Input question :<input type="text" id="ques" name="ques"
+                            class="form-control col-md-5"></p>
+                    <p class="card-text">Input answer :<input type="text" id="answer" name="answer"
+                            class="form-control col-md-5"></p>
+                    <input type="submit" class="btn btn-primary btn-sm float-right " value="Input next question"=>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="matching" style="display:none">
+        <div class="card border-1">
+            <div class="card-body">
+                <form action="/listening/add_paper_matching" method="POST">
+                    <h5 class="card-title">Question number <input type="number" min="1" max="10" id="qid"
+                            name="qid" /></h5>
+                    <p class="card-text">Input question :<input type="text" id="ques" name="ques"
+                            class="form-control col-md-5"></p>
+                    <p class="card-text">Input answer :<input type="text" id="answer" name="answer"
+                            class="form-control col-md-5"></p>
+                    <input type="submit" class="btn btn-primary btn-sm float-right " value="Input next question">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="save_paper" style="display:none">
+        <div class="card border-1">
+            <div class="card-body">
+                <form action="/listening/add_paper_matching" method="POST">
+                    <h5 class="card-title">Succesfully added all qustion pleae Save paper!</h5>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        var valx = "{{qid}}";
+        var val = parseInt(valx);
+        set_quiz();
+        function set_quiz() {
+            if(val == 10){
+                document.getElementById('selected').style = "display:none;"
+                document.getElementById('end_paper').innerHTML = document.getElementById('save_paper').innerHTML;
+            }
+            var selectedValue = document.getElementById("qtype").value;
+            if (selectedValue == 'o_mcq') {
+                document.getElementById('selected').innerHTML = document.getElementById('mcq').innerHTML;
+                document.getElementById('mqid').value = val + 1;
+            }
+            else if (selectedValue == 'o_text_type') {
+                document.getElementById('selected').innerHTML = document.getElementById('text_type').innerHTML;
+                document.getElementById('qid').value = val + 1;
+            }
+            else if (selectedValue == 'o_matching') {
+                document.getElementById('selected').innerHTML = document.getElementById('matching').innerHTML;
+                document.getElementById('qid').value = val + 1;
+            }
+            else if(selectedValue == 'o_multiple') {
+                document.getElementById('selected').innerHTML = document.getElementById('multiple').innerHTML;
+                document.getElementById('qid').value = val + 1;
+            }
+        }
+    </script>
+    <script>
+        function set_ans() {
+            var selectedValue = document.getElementById("cans").value;
+            if (selectedValue == 'a') {
+                document.getElementById("mcorrect_answer").value = 'a';
+            }
+            else if (selectedValue == 'b') {
+                document.getElementById("mcorrect_answer").value = 'b';
+            }
+            else if (selectedValue == 'c') {
+                document.getElementById("mcorrect_answer").value = 'c';
+            }
+            else if (selectedValue == 'd') {
+                document.getElementById("mcorrect_answer").value = 'd';
+            }
+        }
+    </script>

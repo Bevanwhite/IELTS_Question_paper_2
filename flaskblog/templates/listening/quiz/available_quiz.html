@@ -1,0 +1,29 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Listening</h5>
+        </div>
+    </div>
+    <div class="container mt-3">
+        <div class="card mt-3 mb-3">
+            <div class="card-header">
+                <h5 class="table2">Your test exam summary</h5><br>
+            </div>
+            <div class="card-body">
+                <h6 class="card-title">
+                    <p>hi</p>
+                </h6>
+                    {% for row in papers %}
+                        <a href="/listening/display_quiz/{{row[0]}}" class="list-group-item list-group-item-action">{{row[1]}}</a>
+                    {% endfor %}
+                
+                <div class="card-footer text-muted text-right">
+                    <a href="/listening/summary" class="btn btn-primary btn-sm">Go to Study Plan!</a>
+                  </div>
+                  </form>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock content %}

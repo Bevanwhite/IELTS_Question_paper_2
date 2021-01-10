@@ -1,0 +1,59 @@
+{% extends 'layout.html' %} {% block content %}
+
+<body>
+    <div class="container mt-3 ">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>Listening</h5>
+            </div>
+        </div>
+    <div class="card-body border">
+        <form action="/listening/add_paper" method="POST" enctype="multipart/form-data">
+            <p>Input paper name :
+                <input type="text" id="paper_name" name="paper_name"></p>
+            <br>
+            <p>Input media file :
+                <input type="file" accept="audio/mpeg" id="media_file" name="media_file"></p>
+            <br>
+            <p>Input paper instructions :
+                <input type="text" id="instruct" name="instruct"></p>
+            <br>
+            <p>Select question category</p>
+            <select name="level" id="level" class="selectpicker form-control col-md-5" data-style="btn-info" onchange="set_ans();">
+            <option value="l1" selected="selected">Easy (For Band score less than 5)</option>
+            <option value="l2">Medium (For Band score less than 6.5)</option>
+            <option value="l3">Hard (For Band score less than 8)</option>
+            <option value="l5">Expert (For Band score more than 8 )</option>
+            </select>
+            <input type="hidden" id="l_val" name="l_val" value = "1"  class="form-control col-md-5">
+            <br><br>
+            
+            <a href="/listening/go_home" class="btn btn-primary btn-sm">Home</a>
+            <input type="submit" class="btn btn-primary btn-sm float-right " value="Save paper">
+        </form>
+            <br>
+    </div>
+        
+    </div>
+    
+</body>
+<script>
+    function set_ans() {
+        var selectedValue = document.getElementById("level").value;
+        if (selectedValue == 'l1') {
+            document.getElementById("l_val").value = 1;
+        }
+        else if (selectedValue == 'l2') {
+            document.getElementById("l_val").value = 2;
+        }
+        else if (selectedValue == 'l3') {
+            document.getElementById("l_val").value = 3;
+        }
+        else if (selectedValue == 'l4') {
+            document.getElementById("l_val").value = 4;
+        }
+    }
+</script>
+
+</html>
+{% endblock content %}

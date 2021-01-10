@@ -1,8 +1,11 @@
-from flask import Flask, flash, Blueprint, render_template, request, Blueprint
+from flask import Flask, flash, Blueprint, render_template, request, Blueprint, jsonify
 from flask_login import login_required
 from flask_login import current_user
 from flaskext.mysql import MySQL
 import joblib
+import sys
+import os
+from werkzeug.utils import secure_filename
 # Import trained model
 suggestion_model = joblib.load(
     'flaskblog/listening/Listening_activity_suggestion_up1.sav')
@@ -18,6 +21,11 @@ app.config['MYSQL_DATABASE_DB'] = 'ielts'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
+UPLOAD_FOLDER = 'flaskblog/static/listening_audio'
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 # Main page
 
 
@@ -28,6 +36,58 @@ def listen():
     conn = mysql.connect()
     c = conn.cursor()
     uid = current_user.id
+
+    try:
+        q = "SELECT paper_id  FROM listening_add_paper WHERE paper_id = 1"
+        c.execute(q)
+        paper_id = c.fetchone()[0]
+        if paper_id:
+            papers = available_quiz()
+            papers1 = papers[0]
+            papers2 = papers[1]
+            papers3 = papers[2]
+            papers4 = papers[3]
+    except Exception:
+        papers = {0,"no papers available"}
+        create_table1= "CREATE TABLE IF NOT EXISTS listening_add_paper (paper_id INT(20) UNSIGNED AUTO_INCREMENT PRIMARY KEY , paper_name VARCHAR(150) , media_file VARCHAR(150) , instruct VARCHAR(150), level INT(2))"
+        c.execute(create_table1)
+        query = "INSERT INTO listening_add_paper(paper_name,media_file,instruct,level) VALUES (%s,%s,%s,%s)"
+        val = ['sample paper' ,'no_file', 'instruct',1]
+        c.execute(query, val)
+        conn.commit()
+
+        create_table2= "CREATE TABLE IF NOT EXISTS listening_add_paper_mcq(id INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY, qid int(2), question VARCHAR(150) NOT NULL, a  VARCHAR(150), b  VARCHAR(150), c  VARCHAR(150),d  VARCHAR(150), corret_answer VARCHAR(150) , paper_id INT(20))"
+        c.execute(create_table2)
+        query = "INSERT INTO listening_add_paper_mcq(qid,question,a,b,c,d, corret_answer , paper_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+        val = [1, 'ques','ans1','ans2','ans3','ans4','a',1]
+        c.execute(query, val)
+        conn.commit()
+
+        create_table3 = "CREATE TABLE IF NOT EXISTS listening_add_paper_ttype(id INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY , qid int(2) , question VARCHAR(150) NOT NULL , answer VARCHAR(150), paper_id INT(20))"
+        c.execute(create_table3)
+        query = "INSERT INTO listening_add_paper_ttype(qid,question,answer, paper_id) VALUES (%s,%s,%s,%s)"
+        val = [2, 'ques','answer',1]
+        c.execute(query, val)
+        conn.commit()
+
+        create_table4 = "CREATE TABLE IF NOT EXISTS listening_add_paper_matching (id INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY , qid int(2) , question VARCHAR(150) NOT NULL , answer VARCHAR(150), paper_id INT(20))"
+        c.execute(create_table4)
+        query = "INSERT INTO listening_add_paper_matching(qid,question,answer,paper_id) VALUES (%s,%s,%s,%s)"
+        val = [3, 'ques','answer',1]
+        c.execute(query, val)
+        conn.commit()
+
+        create_table5= "CREATE TABLE IF NOT EXISTS listening_add_paper_multiple(id INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY, qid int(2), question VARCHAR(150) NOT NULL, a  VARCHAR(150), b  VARCHAR(150), c  VARCHAR(150), d  VARCHAR(150), ans_a  int(2), ans_b int(2), ans_c  int(2),ans_d  int(2), paper_id INT(20))"
+        c.execute(create_table5)
+        query = "INSERT INTO listening_add_paper_multiple(qid,question,a,b,c,d,ans_a,ans_b,ans_c,ans_d, paper_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        val = [4, 'ques','ans1','ans2','ans3','ans4',0,0,0,0,1]
+        c.execute(query, val)
+        conn.commit()
+
+    
+
+    table = "CREATE TABLE IF NOT EXISTS listening_user (user_id int(5) UNSIGNED NOT NULL PRIMARY KEY, study_plan varchar(20) NOT NULL,study_plan_no float NOT NULL,progress int(5) DEFAULT NULL,pid int(5) NOT NULL,weak_section varchar(50) NOT NULL)"
+    c.execute(table)
     q1 = "SELECT user_id FROM listening_user where user_id = %s"
     try:
         c.execute(q1, uid)
@@ -52,19 +112,20 @@ def listen():
             c.execute(q5, uid)
             pid = c.fetchone()[0]
             c.close()
+            
             data = {'study_plan':  study_plan, 'progress': progress,
-                    'weak_section': weak_section, 'study_plan_no': study_plan_no, 'pid': pid}
-            return render_template('listening.html', data=data)
+                    'weak_section': weak_section, 'study_plan_no': study_plan_no, 'pid': pid , 'papers1': papers1 , 'papers2': papers2 , 'papers3': papers3 , 'papers4': papers4}
+            return render_template('/listening/listening_home.html', data=data)
         # if current user not in database load test paper
         else:
-            return render_template("listening_test_paper1.html")
-    except Exception as e:
-        return render_template("listening_test_paper1.html")
+            return render_template("/listening/test_papers/listening_test_paper1_section1.html")
+    except Exception:
+        return render_template("/listening/test_papers/listening_test_paper1_section1.html")
 
 # teset paper section1 tempory answers save to database
 
 
-@listening.route("/section1", methods=['POST'])
+@listening.route("/listening/section1", methods=['POST'])
 def section1():
     if request.method == "POST":
         q01 = request.form['q1']
@@ -85,8 +146,8 @@ def section1():
         c.execute(drop)
         drop1 = "DROP TABLE IF EXISTS  test_paper1"
         c.execute(drop1)
-        create_table = "CREATE TABLE user_answer (id INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY,question VARCHAR(30) NOT NULL,answer VARCHAR(30))"
-        create_ans_table = "CREATE TABLE IF NOT EXISTS test_paper1 (id int(2) UNSIGNED NOT NULL AUTO_INCREMENT,question varchar(30) NOT NULL,answer varchar(30) NOT NULL,alter_answer varchar(50) NOT NULL,PRIMARY KEY (id))"
+        create_table = "CREATE TABLE IF NOT EXISTS user_answer (id INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY,question VARCHAR(150) NOT NULL,answer VARCHAR(150))"
+        create_ans_table = "CREATE TABLE IF NOT EXISTS test_paper1 (id int(2) UNSIGNED NOT NULL AUTO_INCREMENT,question VARCHAR(150) NOT NULL,answer VARCHAR(150) NOT NULL,alter_answer varchar(50) NOT NULL,PRIMARY KEY (id))"
         c.execute(create_table)
         c.execute(create_ans_table)
         query = "INSERT INTO test_paper1(id,question,answer,alter_answer) VALUES (%s,%s,%s,%s)"
@@ -106,12 +167,12 @@ def section1():
         c.executemany(query1, val1)
         conn.commit()
         c.close()
-        return render_template("section2.html")
+        return render_template("/listening/test_papers/listening_test_paper1_section2.html")
 
 # teset paper section2 tempory answers save to database
 
 
-@listening.route("/section2", methods=['POST'])
+@listening.route("/listening/section2", methods=['POST'])
 def section2():
     if request.method == "POST":
         q11 = request.form['q011']
@@ -132,12 +193,12 @@ def section2():
         c.executemany(query, val)
         conn.commit()
         c.close()
-        return render_template("section3.html")
+        return render_template("/listening/test_papers/listening_test_paper1_section3.html")
 
 # teset paper section3 tempory answers save to database
 
 
-@listening.route("/section3", methods=['POST'])
+@listening.route("/listening/section3", methods=['POST'])
 def section3():
     if request.method == "POST":
         q21 = request.form['q021']
@@ -159,12 +220,12 @@ def section3():
         c.executemany(query, val)
         conn.commit()
         c.close()
-        return render_template("section4.html")
+        return render_template("/listening/test_papers/listening_test_paper1_section4.html")
 
 # teset paper section4 tempory answers save to database
 
 
-@listening.route("/section4", methods=['POST'])
+@listening.route("/listening/section4", methods=['POST'])
 def section4():
     if request.method == "POST":
         q31 = request.form['q31']
@@ -305,7 +366,7 @@ def section4ans():
 # find lowest section score
 
 
-@listening.route('/get_lower_section')
+@listening.route('/listening/get_lower_section')
 def get_lower_section(sec1, sec2, sec3, sec4):
 
     sections = {sec1: "section 1", sec2: "section 2",
@@ -363,12 +424,12 @@ def submitted_Answer(answer1, answer2, altanswer, data, suggetion, lower_section
             wrong = wrong + 1
             count = count + 1
     # feedback and summarized report
-    return render_template('correct.html', output_data=data, score=ca, wrong_answers=wrong, suggestion=suggetion, lowest=lower_section)
+    return render_template('/listening/listening_summary.html', output_data=data, score=ca, wrong_answers=wrong, suggestion=suggetion, lowest=lower_section)
 
 # checking separate section  answers with real answers
 
 
-@listening.route('/section_score')
+@listening.route('/listening/section_score')
 def section_score(answer1, answer2, altanswer):
     ca = 0
     wrong = 0
@@ -388,7 +449,7 @@ def section_score(answer1, answer2, altanswer):
 # generate studyplan
 
 
-@listening.route('/get_suggestions')
+@listening.route('/listening/get_suggestions')
 def get_suggestions(sec1, sec2, sec3, sec4):
     # feedbacks
     suggestions = {1: "You are at stage 1 : Great! You got a higher score. You have to focus on key ideas. We will guide you to improve your listening skill",
@@ -409,11 +470,11 @@ def get_suggestions(sec1, sec2, sec3, sec4):
 
 @listening.route('/listening/summary')
 def summary():
-    stud = {1: "stage 1",
-            2: "stage 2",
-            3: "stage 3",
-            4: "stage 4",
-            5: "stage 5"
+    stud = {1: "Stage 1",
+            2: "Stage 2",
+            3: "Stage 3",
+            4: "Stage 4",
+            5: "Stage 5"
             }
     sec1 = section1ans()
     sec2 = section2ans()
@@ -435,9 +496,7 @@ def summary():
     val = (uid, sp, pln_no, 0, 0, ws)
     c.execute(query, val)
     conn.commit()
-    data = {'study_plan':  sp, 'progress': 0,
-            'weak_section': ws, 'study_plan_no': pln_no, 'pid': 0}
-    return render_template('listening.html', data=data)
+    return listen()
 
 # after complete plan user can reset his current study plan and get new one
 
@@ -484,201 +543,532 @@ def update_plans(pid):
     conn.commit()
     c.close()
     return listen()
-# home link
+
+@listening.route("/listening/add_paper", methods=['POST'])
+def add_paper():
+    if request.method == "POST":
+        paper_name = request.form['paper_name']
+        media_file = request.files['media_file']
+        instruct = request.form['instruct']
+        level = request.form['l_val']
+
+        filename = secure_filename(media_file.filename)
+        media_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        #adding sample data to quiz database tables
+        conn = mysql.connect()
+        c = conn.cursor()
+        query = "INSERT INTO listening_add_paper(paper_name,media_file,instruct,level) VALUES (%s,%s,%s,%s)"
+        val = [paper_name ,filename,instruct,level]
+        c.execute(query, val)
+        conn.commit()
+        c.close()
+
+        return addpaper_2()
+            
+@listening.route("/listening/add_paper_mcq", methods=['POST'])
+def add_paper_mcq():
+
+    if request.method == "POST":
+        qid = request.form['mqid']
+        ques = request.form['mques']
+        ans1 = request.form['mans1']
+        ans2 = request.form['mans2']
+        ans3 = request.form['mans3']
+        ans4 = request.form['mans4']
+        correct_answer = request.form['mcorrect_answer']
+
+        conn = mysql.connect()
+        c = conn.cursor()
+        q = "SELECT MAX(paper_id)  FROM listening_add_paper"
+        c.execute(q)
+        paper_id = c.fetchone()[0]
+
+        query1 = "SELECT qid FROM listening_add_paper_mcq WHERE paper_id = %s"
+        c.execute(query1,paper_id)
+        chk1 = c.fetchall()
+
+        query2 = "SELECT qid FROM listening_add_paper_ttype WHERE paper_id = %s"
+        c.execute(query2,paper_id)
+        chk2 = c.fetchall()
+
+        query3 = "SELECT qid FROM listening_add_paper_matching WHERE paper_id = %s"
+        c.execute(query3,paper_id)
+        chk3 = c.fetchall()
+
+        maxid = [chk1,chk2,chk3]
+        if str(qid) in str(maxid):
+            warn = "This Question number: "+ str(qid) +" already taken! change Question number"
+            previd = max(max(maxid))[0]
+            return s_quiz(previd , warn)
+            
+        else:
+            query = "INSERT INTO listening_add_paper_mcq(qid,question,a,b,c,d, corret_answer) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+            val = [qid, ques,ans1,ans2,ans3,ans4,correct_answer]
+            c.execute(query, val)
+            conn.commit()
+        
+            q1 = "ALTER TABLE listening_add_paper_mcq  ADD CONSTRAINT FK_paper_mcq FOREIGN KEY (paper_id) REFERENCES listening_add_paper(paper_id)"
+            c.execute(q1)
+
+            q2 = "SELECT MAX(id) from listening_add_paper_mcq"
+            c.execute(q2)
+            mcqqid = c.fetchone()[0]
+
+            q3 = "UPDATE listening_add_paper_mcq SET paper_id = %s WHERE id = " + str(mcqqid) +";"
+            c.execute(q3,paper_id)
+
+            conn.commit()
+            c.close()
+            warn = ""
+            return s_quiz(qid , warn)
+
+@listening.route("/listening/add_paper_multiple", methods=['POST' , 'GET'])
+def add_paper_multiple():
+
+    if request.method == "POST":
+        qid = request.form['qid']
+        ques = request.form['ques']
+        ans1 = request.form['ans1']
+        ans2 = request.form['ans2']
+        ans3 = request.form['ans3']
+        ans4 = request.form['ans4']
+        ans11 = request.form.get('ans11')
+        ans22 = request.form.get('ans22')
+        ans33 = request.form.get('ans33')
+        ans44 = request.form.get('ans44')
+
+        conn = mysql.connect()
+        c = conn.cursor()
+        q = "SELECT MAX(paper_id)  FROM listening_add_paper"
+        c.execute(q)
+        paper_id = c.fetchone()[0]
+
+        
+        query1 = "SELECT qid FROM listening_add_paper_mcq WHERE paper_id = %s"
+        c.execute(query1,paper_id)
+        chk1 = c.fetchall()
+
+        query2 = "SELECT qid FROM listening_add_paper_ttype WHERE paper_id = %s"
+        c.execute(query2,paper_id)
+        chk2 = c.fetchall()
+
+        query3 = "SELECT qid FROM listening_add_paper_matching WHERE paper_id = %s"
+        c.execute(query3,paper_id)
+        chk3 = c.fetchall()
+
+        query4 = "SELECT qid FROM listening_add_paper_multiple WHERE paper_id = %s"
+        c.execute(query4,paper_id)
+        chk4 = c.fetchall()
+        
+
+        maxid = [chk1,chk2,chk3,chk4]
+        if str(qid) in str(maxid):
+            warn = "This Question number: "+ str(qid) +" already taken! change Question number"
+            previd = max(max(maxid))[0]
+            return s_quiz(previd , warn)
+            
+        else:
+            query = "INSERT INTO listening_add_paper_multiple(qid,question,a,b,c,d,ans_a,ans_b,ans_c,ans_d) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            val = [qid, ques,ans1,ans2,ans3,ans4,ans11,ans22,ans33,ans44]
+            c.execute(query, val)
+            conn.commit()
+        
+            q1 = "ALTER TABLE listening_add_paper_multiple  ADD CONSTRAINT FK_paper_multiple FOREIGN KEY (paper_id) REFERENCES listening_add_paper(paper_id)"
+            c.execute(q1)
+
+            q2 = "SELECT MAX(id) from listening_add_paper_multiple"
+            c.execute(q2)
+            multipleqid = c.fetchone()[0]
+
+            q3 = "UPDATE listening_add_paper_multiple SET paper_id = %s WHERE id = " + str(multipleqid) +";"
+            c.execute(q3,paper_id)
+
+            conn.commit()
+            c.close()
+            warn = ""
+            return s_quiz(qid , warn)
+
+@listening.route("/listening/add_paper_t_type", methods=['POST'])
+def add_paper_t_type():
+    if request.method == "POST": 
+        qid = request.form['qid']
+        ques = request.form['ques']
+        answer = request.form['answer']
+
+        conn = mysql.connect()
+        c = conn.cursor()
+
+        q = "SELECT MAX(paper_id)  FROM listening_add_paper"
+        c.execute(q)
+        paper_id = c.fetchone()[0]
+
+        query1 = "SELECT qid FROM listening_add_paper_mcq WHERE paper_id = %s"
+        c.execute(query1,paper_id)
+        chk1 = c.fetchall()
+
+        query2 = "SELECT qid FROM listening_add_paper_ttype WHERE paper_id = %s"
+        c.execute(query2,paper_id)
+        chk2 = c.fetchall()
+
+        query3 = "SELECT qid FROM listening_add_paper_matching WHERE paper_id = %s"
+        c.execute(query3,paper_id)
+        chk3 = c.fetchall()
+
+        maxid = [chk1,chk2,chk3]
+        if str(qid) in str(maxid):
+            warn = "This Question number: "+ str(qid) +" already taken! change Question number"
+            previd = max(max(maxid))[0]
+            return s_quiz(previd , warn)
+        else:
+            query = "INSERT INTO listening_add_paper_ttype(qid,question,answer) VALUES (%s,%s,%s)"
+            val = [qid, ques,answer]
+            c.execute(query, val)
+            conn.commit()
+
+            q = "ALTER TABLE listening_add_paper_ttype  ADD CONSTRAINT FK_paper_ttype FOREIGN KEY (paper_id) REFERENCES listening_add_paper(paper_id)"
+            c.execute(q)
+        
+            q1 = "SELECT MAX(paper_id)  FROM listening_add_paper"
+            c.execute(q1)
+            paper_id = c.fetchone()[0]
+
+            q2 = "SELECT MAX(id) from listening_add_paper_ttype"
+            c.execute(q2)
+            ttypeqid = c.fetchone()[0]
+
+            q3 = "UPDATE listening_add_paper_ttype SET paper_id = %s WHERE id = " + str(ttypeqid) +";"
+            c.execute(q3,paper_id)
+            conn.commit()
+            c.close()
+            warn = ""
+            return s_quiz(qid , warn)
+
+@listening.route("/listening/add_paper_matching", methods=['POST'])
+def add_paper_matching():
+    if request.method == "POST":
+        qid = request.form['qid']
+        ques = request.form['ques']
+        answer = request.form['answer']
+
+        conn = mysql.connect()
+        c = conn.cursor()
+        query = "INSERT INTO listening_add_paper_matching(qid,question,answer) VALUES (%s,%s,%s)"
+        val = [qid, ques,answer]
+        c.execute(query, val)
+        conn.commit()
+        
+        q = "SELECT MAX(paper_id)  FROM listening_add_paper"
+        c.execute(q)
+        paper_id = c.fetchone()[0]
+
+        query1 = "SELECT qid FROM listening_add_paper_mcq WHERE paper_id = %s"
+        c.execute(query1,paper_id)
+        chk1 = c.fetchall()
+
+        query2 = "SELECT qid FROM listening_add_paper_ttype WHERE paper_id = %s"
+        c.execute(query2,paper_id)
+        chk2 = c.fetchall()
+
+        query3 = "SELECT qid FROM listening_add_paper_matching WHERE paper_id = %s"
+        c.execute(query3,paper_id)
+        chk3 = c.fetchall()
+
+        maxid = [chk1,chk2,chk3]
+        if str(qid) in str(maxid):
+            warn = "This Question number: "+ str(qid) +" already taken! change Question number"
+            previd = max(max(maxid))[0]
+            return s_quiz(previd , warn)
+        else:
+            q = "ALTER TABLE listening_add_paper_matching ADD CONSTRAINT FK_paper_matching FOREIGN KEY (paper_id) REFERENCES listening_add_paper(paper_id)"
+            c.execute(q)
+        
+            q1 = "SELECT MAX(paper_id)  FROM listening_add_paper"
+            c.execute(q1)
+            paper_id = c.fetchone()[0]
+
+            q2 = "SELECT MAX(id) from listening_add_paper_matching"
+            c.execute(q2)
+            matchqid = c.fetchone()[0]
+
+            q3 = "UPDATE listening_add_paper_matching SET paper_id = %s WHERE id = " + str(matchqid) +";"
+            c.execute(q3,paper_id)
+            conn.commit()
+            c.close()
+            warn = ""
+            return s_quiz(qid , warn)
 
 
+@listening.route("/listening/display_quiz/<int:paper_id>", methods=['GET', 'POST'])
+def display_quiz(paper_id):
+    sid = str(paper_id)
+    conn = mysql.connect()
+    c = conn.cursor()
+    query1 = "SELECT * FROM listening_add_paper_mcq  WHERE paper_id = %s"
+    c.execute(query1,sid)
+    mcq = c.fetchall()
+    mcq_ans = len(mcq)
+
+    query2 = "SELECT * FROM listening_add_paper_ttype  WHERE paper_id = %s"
+    c.execute(query2,sid)
+    ttype = c.fetchall()
+    ttype_ans = len(ttype)
+
+    query3 = "SELECT * FROM listening_add_paper_matching WHERE paper_id = %s"
+    c.execute(query3,sid)
+    matching = c.fetchall()
+    match_ans = len(matching)
+
+    query4 = "SELECT * FROM listening_add_paper_multiple  WHERE paper_id = %s"
+    c.execute(query4,sid)
+    multiple = c.fetchall()
+    multiple_ans = len(multiple)
+
+    query5 = "SELECT * FROM listening_add_paper WHERE paper_id = %s"
+    c.execute(query5,sid)
+    res = c.fetchall()
+    return render_template('/listening/quiz/display_quiz.html',multiple = multiple, multiple_ans = multiple_ans ,ttype_ans = ttype_ans ,match_ans=match_ans,mcq_ans = mcq_ans ,mcq = mcq ,matching = matching , ttype = ttype , res = res)
+
+@listening.route("/listening/available_quiz")
+def available_quiz():
+    conn = mysql.connect()
+    c = conn.cursor()
+    query1 = "SELECT * FROM listening_add_paper WHERE level = 1"
+    c.execute(query1)
+    papers1 =  c.fetchall()
+    query2 = "SELECT * FROM listening_add_paper WHERE level = 2"
+    c.execute(query2)
+    papers2 =  c.fetchall()
+    query3 = "SELECT * FROM listening_add_paper WHERE level = 3"
+    c.execute(query3)
+    papers3 =  c.fetchall()
+    query4 = "SELECT * FROM listening_add_paper WHERE level = 4"
+    c.execute(query4)
+    papers4 =  c.fetchall()
+    papers = [papers1,papers2,papers3,papers4]
+    return papers
+
+#@listening.route("/listening/show_users")
+#def show_users():
+
+@listening.route("/listening/save_paper")
+def save_paper():
+    flash('successfully added')
+    return addpaper_1()
+
+# home link    
 @listening.route("/listening/go_home")
 def load_home():
     return listen()
 
+
 # Practise papers,test papers,lessons routes
 
+@listening.route("/listening/addpaper_2_1/<int:qid>/<string:warn>")
+def s_quiz(qid,warn):
+    return render_template('/listening/quiz/addpaper_2_1.html' , qid = qid , warn = warn)
+
+@listening.route("/listening/addpaper_1")
+def addpaper_1():
+    return render_template('/listening/quiz/addpaper_1.html')
+
+def addpaper_2():
+    return render_template('/listening/quiz/addpaper_2.html')
 
 @listening.route("/listening/lesson1")
 def lesson1():
-    return render_template('lesson1.html')
+    return render_template('/listening/improvment_plan_papers/lesson1.html')
 
 
 @listening.route("/listening/lesson2")
 def lesson2():
-    return render_template('lesson2.html')
+    return render_template('/listening/improvment_plan_papers/lesson2.html')
 
 
 @listening.route("/listening/lesson3")
 def lesson3():
-    return render_template('lesson3.html')
+    return render_template('/listening/improvment_plan_papers/lesson3.html')
 
 
 @listening.route("/listening/plan1_1")
 def plan1_1():
-    return render_template('plan1.1.html')
+    return render_template('/listening/improvment_plan_papers/plan1.1.html')
 
 
 @listening.route("/listening/plan1_2")
 def plan1_2():
-    return render_template('plan1.2.html')
+    return render_template('/listening/improvment_plan_papers/plan1.2.html')
 
 
 @listening.route("/listening/plan1_3")
 def plan1_3():
-    return render_template('plan1.3.html')
+    return render_template('/listening/improvment_plan_papers/plan1.3.html')
 
 
 @listening.route("/listening/plan1_4")
 def plan1_4():
-    return render_template('plan1.4.html')
+    return render_template('/listening/improvment_plan_papers/plan1.4.html')
 
 
 @listening.route("/listening/plan1_5")
 def plan1_5():
-    return render_template('plan1.5.html')
+    return render_template('/listening/improvment_plan_papers/plan1.5.html')
 
 
 @listening.route("/listening/plan2_1")
 def plan2_1():
-    return render_template('plan2.1.html')
+    return render_template('/listening/improvment_plan_papers/plan2.1.html')
 
 
 @listening.route("/listening/plan2_2")
 def plan2_2():
-    return render_template('plan2.2.html')
+    return render_template('/listening/improvment_plan_papers/plan2.2.html')
 
 
 @listening.route("/listening/plan2_3")
 def plan2_3():
-    return render_template('plan2.3.html')
+    return render_template('/listening/improvment_plan_papers/plan2.3.html')
 
 
 @listening.route("/listening/plan2_4")
 def plan2_4():
-    return render_template('plan2.4.html')
+    return render_template('/listening/improvment_plan_papers/plan2.4.html')
 
 
 @listening.route("/listening/plan2_5")
 def plan2_5():
-    return render_template('plan2.5.html')
+    return render_template('/listening/improvment_plan_papers/plan2.5.html')
 
 
 @listening.route("/listening/plan3_1")
 def plan3_1():
-    return render_template('plan3.1.html')
+    return render_template('/listening/improvment_plan_papers/plan3.1.html')
 
 
 @listening.route("/listening/plan3_2")
 def plan3_2():
-    return render_template('plan3.2.html')
+    return render_template('/listening/improvment_plan_papers/plan3.2.html')
 
 
 @listening.route("/listening/plan3_3")
 def plan3_3():
-    return render_template('plan3.3.html')
+    return render_template('/listening/improvment_plan_papers/plan3.3.html')
 
 
 @listening.route("/listening/plan3_4")
 def plan3_4():
-    return render_template('plan3.4.html')
+    return render_template('/listening/improvment_plan_papers/plan3.4.html')
 
 
 @listening.route("/listening/plan3_5")
 def plan3_5():
-    return render_template('plan3.5.html')
+    return render_template('/listening/improvment_plan_papers/plan3.5.html')
 
 
 @listening.route("/listening/plan4_1")
 def plan4_1():
-    return render_template('plan4.1.html')
+    return render_template('/listening/improvment_plan_papers/plan4.1.html')
 
 
 @listening.route("/listening/plan4_2")
 def plan4_2():
-    return render_template('plan4.2.html')
+    return render_template('/listening/improvment_plan_papers/plan4.2.html')
 
 
 @listening.route("/listening/plan4_3")
 def plan4_3():
-    return render_template('plan4.3.html')
+    return render_template('/listening/improvment_plan_papers/plan4.3.html')
 
 
 @listening.route("/listening/plan4_4")
 def plan4_4():
-    return render_template('plan4.4.html')
+    return render_template('/listening/improvment_plan_papers/plan4.4.html')
 
 
 @listening.route("/listening/plan4_5")
 def plan4_5():
-    return render_template('plan4.5.html')
+    return render_template('/listening/improvment_plan_papers/plan4.5.html')
 
 
 @listening.route("/listening/plan5_1")
 def plan5_1():
-    return render_template('plan5.1.html')
+    return render_template('/listening/improvment_plan_papers/plan5.1.html')
 
 
 @listening.route("/listening/plan5_2")
 def plan5_2():
-    return render_template('plan5.2.html')
+    return render_template('/listening/improvment_plan_papers/plan5.2.html')
 
 
 @listening.route("/listening/plan5_3")
 def plan5_3():
-    return render_template('plan5.3.html')
+    return render_template('/listening/improvment_plan_papers/plan5.3.html')
 
 
 @listening.route("/listening/section1_1")
 def section1_1():
-    return render_template('section1.1.html')
+    return render_template('/listening/improvment_plan_papers/section1.1.html')
 
 
 @listening.route("/listening/section1_2")
 def section1_2():
-    return render_template('section1.2.html')
+    return render_template('/listening/improvment_plan_papers/section1.2.html')
 
 
 @listening.route("/listening/section1_3")
 def section1_3():
-    return render_template('section1.3.html')
+    return render_template('/listening/improvment_plan_papers/section1.3.html')
 
 
 @listening.route("/listening/section2_1")
 def section2_1():
-    return render_template('section2.1.html')
+    return render_template('/listening/improvment_plan_papers/section2.1.html')
 
 
 @listening.route("/listening/section2_2")
 def section2_2():
-    return render_template('section2.2.html')
+    return render_template('/listening/improvment_plan_papers/section2.2.html')
 
 
 @listening.route("/listening/section2_3")
 def section2_3():
-    return render_template('section2.3.html')
+    return render_template('/listening/improvment_plan_papers/section2.3.html')
 
 
 @listening.route("/listening/section3_1")
 def section3_1():
-    return render_template('section3.1.html')
+    return render_template('/listening/improvment_plan_papers/section3.1.html')
 
 
 @listening.route("/listening/section3_2")
 def section3_2():
-    return render_template('section3.2.html')
+    return render_template('/listening/improvment_plan_papers/section3.2.html')
 
 
 @listening.route("/listening/section3_3")
 def section3_3():
-    return render_template('section4.3.html')
+    return render_template('/listening/improvment_plan_papers/section4.3.html')
 
 
 @listening.route("/listening/section4_1")
 def section4_1():
-    return render_template('section4.1.html')
+    return render_template('/listening/improvment_plan_papers/section4.1.html')
 
 
 @listening.route("/listening/section4_2")
 def section4_2():
-    return render_template('section4.2.html')
+    return render_template('/listening/improvment_plan_papers/section4.2.html')
 
 
 @listening.route("/listening/section4_3")
 def section4_3():
-    return render_template('section4.3.html')
+    return render_template('/listening/improvment_plan_papers/section4.3.html')
+
+@listening.route("/listening/gg")
+def gg():
+    conn = mysql.connect()
+    c = conn.cursor()
+    query3 = "SELECT * FROM listening_add_paper"
+    c.execute(query3)
+    papers =  c.fetchall()
+    return str(papers)

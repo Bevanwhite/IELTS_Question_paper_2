@@ -1,0 +1,183 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Listening</h5>
+        </div>
+    </div>
+        <div class="card mt-3 mb-3">
+            <div class="card-header">
+                <div class="audio_file">
+                    <audio controls>
+                        <source src="/static/listening_audio/plan2.2.mp3" type="audio/mpeg">
+                    </audio>
+                </div><br>
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <p><strong>Questions 1-5</strong></p>
+                        <p>Answer the questions below. Choose the correct letter, <strong>A</strong>,
+                            <strong>B</strong>, or
+                            <strong>C</strong>.</p>
+                    </h6><br />
+                    <p><strong>1</strong>. Why do people experience pain? <span id="s1"></span></p>
+                    <ol type="A">
+                        <li><input type="radio" name="q1"> It preserves good health condition</li>
+                        <li><input type="radio" name="q1" id="a1"> It prevents us from damaging ourselves</li>
+                        <li><input type="radio" name="q1"> Continuous pain is useful for humans</li>
+                    </ol><br />
+                    <p><strong>2</strong>. What parts of our body are responsible for feeling pain? <span
+                            id="s2"></span></p>
+                    <ol type="A">
+                        <li><input type="radio" name="q2"> Receptors and nerves</li>
+                        <li><input type="radio" name="q2"> Some part of our brain</li>
+                        <li><input type="radio" name="q2" id="a2"> Pain is a complex process, which involves various
+                            parts of our body
+                        </li>
+                    </ol><br />
+                    <p><strong>3</strong>. How many people in the UK suffer from pain? <span id="s3"></span></p>
+                    <ol type="A">
+                        <li><input type="radio" name="q3"> 31%</li>
+                        <li><input type="radio" name="q3"> 37%</li>
+                        <li><input type="radio" name="q3" id="a3"> 40 million</li>
+                    </ol><br />
+                    <p><strong>4</strong>. Is chronic pain different from pain we feel when we knock our knee? <span
+                            id="s4"></span>
+                    </p>
+                    <ol type="A">
+                        <li><input type="radio" name="q4"> No, all kinds of pain have evolved as survival mechanisms
+                        </li>
+                        <li><input type="radio" name="q4" id="a4"> Yes, there is an enormous difference</li>
+                        <li><input type="radio" name="q4"> We don&rsquo;t have much insight into that</li>
+                    </ol><br />
+                    <p><strong>5</strong>. Professor John Wood compares pain perception to <span id="s5"></span></p>
+                    <ol type="A">
+                        <li><input type="radio" name="q5" id="a5"> Beauty</li>
+                        <li><input type="radio" name="q5"> Continuousness</li>
+                        <li><input type="radio" name="q5"> Anesthesia</li>
+                    </ol><br />
+                    <p><strong>Questions 6-8</strong></p>
+                    <p>Choose the correct letters,&nbsp;<strong>A</strong>,&nbsp;<strong>B</strong>,
+                        or&nbsp;<strong>C</strong>.</p>
+                    <br />
+                    <p><strong>6</strong>. How do scientists block pain nowadays? <span id="s6"></span></p>
+                    <ol type="A">
+                        <li><input type="radio" name="q6" id="a6"> By blocking activity of nerves that send
+                            electrical signals</li>
+                        <li><input type="radio" name="q6"> By understanding mechanisms of pain perception and
+                            altering them</li>
+                        <li><input type="radio" name="q6"> By threating the central nervous system</li>
+                    </ol><br />
+                    <p><strong>7</strong>. When do patients experience &ldquo;phantom limb&rdquo; pain? <span
+                            id="s7"></span></p>
+                    <ol type="A">
+                        <li><input type="radio" name="q7"> After the operation</li>
+                        <li><input type="radio" name="q7"> While their wounds heal</li>
+                        <li><input type="radio" name="q7" id="a7"> After the amputation</li>
+                    </ol><br />
+                    <p><strong>8</strong>. Are peripheral nerves involved in process of feeling pain? <span
+                            id="s8"></span></p>
+                    <ol type="A">
+                        <li><input type="radio" name="q8"> No, pain has nothing to do with peripheral nerves</li>
+                        <li><input type="radio" name="q8" id="a8"> Yes, peripheral nerves are required to feel pain
+                        </li>
+                        <li><input type="radio" name="q8"> Scientists don&rsquo;t know much about pain perception
+                            nowadays</li>
+                    </ol><br />
+                    <p><strong>Questions 9 and 10</strong></p>
+                    <p>Complete the information below. Write&nbsp;<strong>NO MORE THAN TWO WORDS</strong>&nbsp;for
+                        each answer.</p>
+                    <div style="border:1px solid black; padding:20px;">
+                        <p align="center"> What&rsquo;s happening in a case of phantom limb?</p>
+                        Pain can create a <strong>(9)</strong> <input type="text" class="ex-input" style="width:120px"
+                            id="q9"> <span id="s9"></span> of itself. The same way listening to
+                        music can take you to a certain point in time, some
+                        sort of stimulation can cause a <strong>(10)</strong> <input type="text" class="ex-input"
+                            style="width:130px" id="q10"> <span id="s10"></span> to be re-experienced.</p>
+                    </div>
+                    <br />
+                    <br />
+                    <button id="b2" type="button" class="btn btn-outline-info" onclick="toggle()">
+                        <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show answers</button>
+
+                    <div id="answers" style="display:none;" class="hint">
+                        <p><strong>ANSWERS</strong></p>
+                        <p>Each question correctly answered scores 1 mark. <strong>Correct</strong> spelling is
+                            needed in all answers.
+                        </p>
+                        <p><strong>Section 3</strong></p>
+                        <ol start="11">
+                            <li>B</li>
+                            <li>C</li>
+                            <li>C</li>
+                            <li>B</li>
+                            <li>A</li>
+                            <li>A</li>
+                            <li>C</li>
+                            <li>B</li>
+                            <li>memory</li>
+                            <li>learnt sensation</li>
+                        </ol>
+                    </div> <br /> <br />
+                    <div id="result" align="center"> </div>
+                    <div align="center">
+                        &emsp;
+
+                        <button class="btn btn-primary btn-sm " type="button" onclick="check()">Check</button>
+                        <a href="/listening/progress1/2" class="btn btn-primary btn-sm ">Update progress</a>
+                    </div>
+</body>
+<script>
+    function check() {
+
+        var text, text2, ex0, score = 0;
+
+        for (var i = 1; i < 9; i++) {
+
+            text = "a" + i; text2 = "s" + i;
+            if (document.getElementById(text).checked == true) {
+                document.getElementById(text2).innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png"  />';
+                score++;
+            }
+            else { document.getElementById(text2).innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png"  />'; }
+        }
+
+
+
+
+        ex0 = document.getElementById("q9").value;
+        if (ex0.trim().toLowerCase() != "memory") { document.getElementById("s9").innerHTML = '<img height=20px src="/static/images/wrong.png" />'; }
+        else { document.getElementById("s9").innerHTML = '<img height=20px src="/static/images/correct.png" />'; score++; }
+
+        ex0 = document.getElementById("q10").value;
+        if (ex0.trim().toLowerCase() != "learnt sensation") { document.getElementById("s10").innerHTML = '<img height=20px src="/static/images/wrong.png" />'; }
+        else { document.getElementById("s10").innerHTML = '<img height=20px src="/static/images/correct.png" />'; score++; }
+
+
+
+        setCookie("third", score, 3);
+
+        document.getElementById("result").innerHTML =
+            "<div class='result'>Your result for this quiz " + score + "/10 </div>";
+    }
+
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+
+    function toggle() {
+        var e = document.getElementById("answers");
+        if (e.style.display == 'block') {
+            document.getElementById("b2").innerHTML = ' <img height="25px" src="/static/images/show.png" style="vertical-align: middle"  /> Show answers';
+            e.style.display = 'none';
+        }
+        else {
+            document.getElementById("b2").innerHTML = '<img height="25px" src="/static/images/hide.png" style="vertical-align: middle"  /> Hide answers';
+            e.style.display = 'block';
+        }
+    }
+</script>
+{% endblock content %}

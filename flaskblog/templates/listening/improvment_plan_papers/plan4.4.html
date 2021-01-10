@@ -1,0 +1,225 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Listening</h5>
+        </div>
+    </div>
+    <div class="card mt-3 mb-3">
+        <div class="card-header">
+            <div class="audio_file">
+                <audio controls>
+                    <source src="/static/listening_audio/plan4.4.mp3" type="audio/mpeg">
+                </audio>
+            </div><br>
+            <div class="card-body">
+                <h6 class="card-title">
+                    <p><strong>Questions 1-10</strong> </p>
+                    <p>Choose the correct letter, <strong>A</strong>, <strong>B</strong>, or <strong>С</strong>.
+                    </p>
+                </h6>
+                <table border="1" width="70%" cellspacing="0" cellpadding="3" align="center">
+                    <tr>
+                        <td style="padding-left:7px;" valign="top">
+                            <p>Example: Name</p>
+                        </td>
+                        <td style="padding-left:7px;" valign="top" width="45%">
+                            <p><u>Robert Goddard</u></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:7px;" valign="top">
+                            <p>Destination:</p>
+                        </td>
+                        <td style="padding-left:7px;" valign="top">
+                            <p>Melbourne</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:7px;" valign="top">
+                            <p>Total number of visits:</p>
+                        </td>
+                        <td style="padding-left:7px;" valign="top">
+                            <p><strong>(1)</strong>
+                                <input type="text" class="ex-input" style="width:170px" id="ex1"> <span id="s1"></span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:7px;" valign="top">
+                            <p>Best thing about the city:</p>
+                        </td>
+                        <td style="padding-left:7px;" valign="top">
+                            <p><strong>(2)</strong>
+                                <input type="text" class="ex-input" style="width:170px" id="ex2">
+                                <span id="s2"></span></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:7px;" valign="top">
+                            <p>Favourite attraction:</p>
+                        </td>
+                        <td style="padding-left:7px;" valign="top">
+                            <p> <strong> (3)</strong>
+                                <input type="text" class="ex-input" style="width:170px" id="ex3"> <span id="s3"></span>
+                                <br />
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:7px;" valign="top">
+                            <p>Best thing about the destination's dining options:</p>
+                        </td>
+                        <td style="padding-left:7px;" valign="top">
+                            <p><strong> (4)</strong>
+                                <input type="text" class="ex-input" style="width:170px" id="ex4" />
+                                <span id="s4"></span></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:7px;" valign="top">
+                            <p>Method of transport to destination:</p>
+                        </td>
+                        <td style="padding-left:7px;" valign="top">
+                            <p>by <strong> (5)</strong>
+                                <input type="text" class="ex-input" style="width:170px" id="ex5" /> <span
+                                    id="s5"></span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:7px;" valign="top">
+                            <p>Age group:</p>
+                        </td>
+                        <td style="padding-left:7px;" valign="top">
+                            <p><strong> (6)</strong>
+                                <input type="text" class="ex-input" style="width:170px" id="ex6" />
+                                <span id="s6"></span></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:7px;" valign="top">
+                            <p>Income level:</p>
+                        </td>
+                        <td style="padding-left:7px;" valign="top">
+                            <p><strong> (7) </strong>
+                                <input type="text" class="ex-input" style="width:170px" id="ex7" />
+                                <span id="s7"></span></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:7px;" valign="top">Purpouse of visit:</td>
+                        <td style="padding-left:7px;" valign="top">
+                            <p>- on business</p>
+                            <p><strong>- (8)</strong>
+                                <input type="text" class="ex-input" style="width:170px" id="ex8" />
+                                <span id="s8"></span></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:7px;" valign="top">Occupation:</td>
+                        <td style="padding-left:7px;" valign="top">
+                            <p>- <strong> (9)</strong>
+                                <input type="text" class="ex-input" style="width:170px" id="ex9" />
+                                <span id="s9"></span> </p>
+                            <p>- writer for a travel magazine</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:7px;" valign="top">Opinion of cost of accommodation:</td>
+                        <td style="padding-left:7px;" valign="top">- <strong> (10)</strong>
+                            <input type="text" class="ex-input" style="width:170px" id="ex10" /> <span id="s10"></span>
+                        </td>
+                    </tr>
+                </table>
+                <br /><br />
+
+
+
+                <button id="b2" type="button" class="btn btn-outline-info" onclick="toggle()">
+                    <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show answers</button>
+
+                <div id="answers" style="display:none;" class="hint">
+                    <p><strong>ANSWERS</strong></p>
+                    <p>Each question correctly answered scores 1 mark. <strong>Correct</strong> spelling is needed
+                        in all answers. </p>
+                    <ol>
+                        <li>Three times / three</li>
+                        <li>Amazing weather</li>
+                        <li>Town Hall</li>
+                        <li>Variety</li>
+                        <li>Plane</li>
+                        <li>Over forty</li>
+                        <li>Mid-range</li>
+                        <li>Tourism</li>
+                        <li>Computer programmer</li>
+                        <li>Good value</li>
+
+                    </ol>
+                </div> <br /> <br />
+
+                <div id="result" align="center"> </div>
+                <div align="center">
+                    &emsp;
+
+                    <button class="btn btn-primary btn-sm " type="button" onclick="check()">Check</button>
+                    <a href="/listening/progress1/4" class="btn btn-primary btn-sm ">Update progress</a>
+
+                </div>
+                </body>
+                <script>
+                    function check() {
+
+                        var ex1, score, result;
+                        score = 0;
+
+                        var ex = ["three times", "amazing weather", "town hall", "variety", "plane", "over 40", "mid-range", "tourism", "computer programmer", "good value"];
+
+                        for (var i = 1; i < 11; i++) {
+                            text = "ex" + i;
+                            text2 = "s" + i;
+                            ex1 = document.getElementById(text).value;
+                            if (ex1.trim().toLowerCase() != ex[i - 1]) { document.getElementById(text2).innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+                            else {
+                                document.getElementById(text2).innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />';
+                                score++;
+                            }
+                        }
+
+
+
+                        removeCookie("first");
+                        removeCookie("second");
+                        removeCookie("third");
+                        removeCookie("fourth");
+                        setCookie("first", score, 3);
+
+
+                        document.getElementById("result").innerHTML =
+                            "<div class='result'>Your result for this quiz " + score + "/10 </div>";
+                    }
+
+                    function setCookie(cname, cvalue, exdays) {
+                        var d = new Date();
+                        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                        var expires = "expires=" + d.toUTCString();
+                        document.cookie = cname + "=" + cvalue + "; " + expires;
+                    }
+
+                    function removeCookie(szName) {
+                        document.cookie = szName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+                    }
+
+                    function toggle() {
+                        var e = document.getElementById("answers");
+                        if (e.style.display == 'block') {
+                            document.getElementById("b2").innerHTML = ' <img height="25px" src="/static/images/show.png" style="vertical-align: middle"  /> Show answers';
+                            e.style.display = 'none';
+                        }
+                        else {
+                            document.getElementById("b2").innerHTML = '<img height="25px" src="/static/images/hide.png" style="vertical-align: middle"  /> Hide answers';
+                            e.style.display = 'block';
+                        }
+                    }
+                </script>
+                {% endblock content %}

@@ -1,0 +1,194 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Listening</h5>
+        </div>
+    </div>
+    <div class="card mt-3 mb-3">
+        <div class="card-header">
+            <div class="audio_file">
+                <audio controls>
+                    <source src="/static/listening_audio/plan2.5.mp3" type="audio/mpeg">
+                </audio>
+            </div><br>
+            <div class="card-body">
+                <h6 class="card-title">
+                    <p><strong>Questions 1-3</strong> </p>
+                    <p>
+                        Choose the correct letter, <strong>A</strong>, <strong>B</strong> or <strong>C</strong>.</p>
+                    <p>Choose the correct letter, <strong>A</strong>, <strong>B</strong> or <strong>C</strong>.</p>
+                </h6>
+                <p><strong>1.</strong> The proposal will <span id="s1"></p>
+                <ol type="A">
+                    <li>
+                        <input type="radio" name="q1" />
+                        be reviewed by two examiners.</li>
+                    <li>
+                        <input type="radio" name="q1" />
+                        be added to the final grade.</li>
+                    <li>
+                        <input type="radio" name="q1" id="a1" />
+                        be returned with feedback.</li>
+                </ol>
+
+                <p>&nbsp;</p>
+                <p><strong>2.</strong> The proposal will consist mostly of <span id="s2"></p>
+                <ol type="A">
+                    <li>
+                        <input type="radio" name="q2" />
+                        topics.</li>
+                    <li>
+                        <input type="radio" name="q2" id="a2" />
+                        methods.</li>
+                    <li>
+                        <input type="radio" name="q2" />
+                        results.</li>
+                </ol>
+
+                <p>&nbsp;</p>
+                <p><strong>3.</strong> For the practice paper, the tutor has directed the students to make sure to
+                    <span id="s3"></p>
+                <ol type="A">
+                    <li>
+                        <input type="radio" name="q3" id="a3" />
+                        pay attention to time limits.</li>
+                    <li>
+                        <input type="radio" name="q3" />
+                        write at least 6,000 words.</li>
+                    <li>
+                        <input type="radio" name="q3" />
+                        keep on topic.</li>
+                </ol>
+                <p>&nbsp;</p>
+                <p><strong>Questions 4-10</strong></p>
+                <p>Complete the sentences below.</p>
+                <p>
+                    Write<strong> ONE WORD AND/OR A NUMBER </strong>for each answer.</p>
+                <p></p>
+                <strong>4. </strong>There is no need to
+                <input type="text" class="ex-input" style="width:130px" id="ex4" required="required" />
+
+                lots of people. <span id="s4"></span>
+                <p></p>
+                <strong>5.</strong> Pay attention to the
+                <input type="text" class="ex-input" style="width:130px" id="ex5" required="required" /> of the final
+                report. <span id="s5"></span>
+                <p></p>
+                <strong>6.</strong> Prepare
+                <input type="text" class="ex-input" style="width:130px" id="ex6" required="required" />, one for the
+                teaches, another for the students themselves. <span id="s6"></span>
+                <p></p>
+                <strong>7. </strong>The deadline of the final paper is
+                <input type="text" class="ex-input" style="width:130px" id="ex7" required="required" />. <span
+                    id="s7"></span>
+                <p></p>
+                <strong>8.</strong> The students can
+                <input type="text" class="ex-input" style="width:130px" id="ex8" required="required" /> their topics
+                before the beginning of April. <span id="s8"></span>
+                <p></p>
+                <strong>9.</strong> Students deciding to change topics must deliver a
+                <input type="text" class="ex-input" style="width:130px" id="ex9" required="required" /> to the research
+                in advance. <span id="s9"></span>
+                <p></p>
+                <strong>10.</strong> At the beginning ot the report, the hypothesis and an outline of the
+                <input type="text" class="ex-input" style="width:120px" id="ex10" required="required" /> are needed.
+                <span id="s10"></span></p>
+                <p><br />
+                </p>
+                <button id="b2" type="button" class="btn btn-outline-info" onclick="toggle()">
+                    <img height="25px" src="/static/images/show.png" style="vertical-align: middle" />Show
+                    answers</button>
+
+                <div id="answers" style="display:none;" class="hint">
+                    <p><strong>ANSWERS</strong></p>
+                    <p>Each question correctly answered scores 1 mark. <strong>Correct</strong> spelling is
+                        needed in
+                        all answers.
+                    </p>
+                    <ol start="1">
+                        <li>C</li>
+                        <li>B</li>
+                        <li>A</li>
+                        <li>Interview</li>
+                        <li>Format</li>
+                        <li>2 copies</li>
+                        <li>May 11</li>
+                        <li>Change</li>
+                        <li>Note</li>
+                        <li>Procedure</li>
+                    </ol>
+                </div> <br /> <br />
+                <div id="result" align="center"> </div>
+                <div align="center">
+                    &emsp;
+
+                    <button class="btn btn-primary btn-sm " type="button" onclick="check()">Check</button>
+                    <a href="/listening/progress1/5" class="btn btn-primary btn-sm ">Update progress</a>
+
+                </div>
+                </body>
+                <script>
+                    function check() {
+
+                        var ex1, score, result;
+                        score = 0;
+
+                        for (var i = 1; i < 4; i++) {
+                            text = "a" + i; text2 = "s" + i;
+                            if (document.getElementById(text).checked == true) {
+                                document.getElementById(text2).innerHTML = '<img height=20px src="/static/images/correct.png"  />';
+                                score++;
+                            }
+                            else { result = false; document.getElementById(text2).innerHTML = '<img height=20px src="/static/images/wrong.png"  />'; }
+                        }
+
+                        var ex = ["interview", "format", "2 copies", "may 11", "change", "note", "procedure"];
+
+                        for (var i = 4; i < 11; i++) {
+                            text = "ex" + i;
+                            text2 = "s" + i;
+                            ex1 = document.getElementById(text).value;
+                            if (ex1.trim().toLowerCase() != ex[i - 4]) { document.getElementById(text2).innerHTML = '<img align="absmiddle" height=20px src="/static/images/wrong.png" />'; }
+                            else {
+                                document.getElementById(text2).innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />';
+                                score++;
+                            }
+                        }
+
+                        ex1 = document.getElementById("ex7").value;
+                        if (ex1.trim().toLowerCase() == "11 may") {
+                            document.getElementById("s7").innerHTML = '<img align="absmiddle" height=20px src="/static/images/correct.png" />';
+                            score++;
+                        }
+
+
+
+
+                        setCookie("third", score, 3);
+
+                        document.getElementById("result").innerHTML =
+                            "<div class='result'>Your result for Section 3 is " + score + "/10 </div>";
+                    }
+
+
+                    function setCookie(cname, cvalue, exdays) {
+                        var d = new Date();
+                        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                        var expires = "expires=" + d.toUTCString();
+                        document.cookie = cname + "=" + cvalue + "; " + expires;
+                    }
+
+                    function toggle() {
+                        var e = document.getElementById("answers");
+                        if (e.style.display == 'block') {
+                            document.getElementById("b2").innerHTML = ' <img height="25px" src="/static/images/show.png" style="vertical-align: middle"  /> Show answers';
+                            e.style.display = 'none';
+                        }
+                        else {
+                            document.getElementById("b2").innerHTML = '<img height="25px" src="/static/images/hide.png" style="vertical-align: middle"  /> Hide answers';
+                            e.style.display = 'block';
+                        }
+                    }
+                </script>
+                {% endblock content %}

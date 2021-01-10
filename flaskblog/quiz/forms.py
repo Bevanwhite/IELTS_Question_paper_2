@@ -12,7 +12,7 @@ class QuizCreationForm(FlaskForm):
     toq = SelectField(u'Type of Question', choices=[
                       ('writing', 'Writing'), ('reading', 'Reading'), ('listening', 'Listening'), ('speaking', 'Speaking')])
     gandco = SelectField(u'Type of the Paper', choices=[
-                         ('none', 'None'), ('grammar', 'Grammar'), ('cohesion', 'Cohesion')])
+                        ('none', 'None'), ('grammar', 'Grammar'), ('cohesion', 'Cohesion'), ('comprehension', 'Comprehension'), ('main idea', 'Reading for main idea'), ('detail', 'Reading for detail')])
     userbased = SelectField(u'Type of User Group', choices=[
         ('preliminary', 'Preliminary'), ('intermediate', 'Intermediate'), ('advanced', 'Advanced')])
     submit = SubmitField('Submit the Quiz')

@@ -6,6 +6,11 @@
         <h5>IELTS Speaking Question Paper</h5>
       </div>
       <div class="card-body">
+        <h5 style="color: red">
+          *** Please go to the account tab see all the Results of your speaking
+          exams ***
+        </h5>
+        <br />
         <form method="post" action="" enctype="multipart/form-data">
           <h6>Question 01</h6>
           <audio controls controlslist="nodownload">
@@ -14,7 +19,9 @@
               type="audio/mpeg"
             />
           </audio>
-          {{form.record1(class="btn btn-primary btn-sm")}}
+          {{form.record1(class="btn btn-primary btn-sm")}} <br />
+          <h6>Answer for Question 01</h6>
+          {{answer_speak[-1].answer01}} <br /><br /><br />
           <h6>Question 02</h6>
           <audio controls controlslist="nodownload">
             <source
@@ -23,6 +30,8 @@
             />
           </audio>
           {{ form.record2(class="btn btn-primary btn-sm")}}
+          <h6>Answer for Question 02</h6>
+          {{answer_speak[-1].answer02}}<br /><br /><br />
           <h6>Question 03</h6>
           <audio controls controlslist="nodownload">
             <source
@@ -31,6 +40,8 @@
             />
           </audio>
           {{ form.record3(class="btn btn-primary btn-sm")}}
+          <h6>Answer for Question 03</h6>
+          {{answer_speak[-1].answer03}}<br /><br /><br />
           <h6>Question 04</h6>
           <audio controls controlslist="nodownload">
             <source
@@ -39,6 +50,8 @@
             />
           </audio>
           {{ form.record4(class="btn btn-primary btn-sm")}}
+          <h6>Answer for Question 04</h6>
+          {{answer_speak[-1].answer04}}<br /><br /><br />
           <h6>Question 05</h6>
           <audio controls controlslist="nodownload">
             <source
@@ -47,6 +60,8 @@
             />
           </audio>
           {{ form.record5(class="btn btn-primary btn-sm")}}
+          <h6>Answer for Question 05</h6>
+          {{answer_speak[-1].answer05}}<br /><br /><br />
           <br />
           {{ form.submit(class="btn btn-primary btn-sm")}}
         </form>

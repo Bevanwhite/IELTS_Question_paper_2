@@ -25,7 +25,6 @@ def Someaudio(form_audio):
     engine = pyttsx3.init()
     engine.save_to_file(mytext, 'welcome.mp3')
     engine.runAndWait()
-
     for f in os.listdir():
         file_name, file_ext = os.path.splitext(f)
         random_hex = secrets.token_hex(8)
@@ -49,6 +48,8 @@ def record(seconds):
     os.chdir('/Users/Bevan/Desktop/New folder (3)/flask/flaskblog/static/')
     file = sr.AudioFile('data/' + random_file_name + '.wav')
 
+    # with sr.Microphone() as source:
+    #    audio = r.listen(source, timeout=3, phrase_time_limit=seconds)
     with file as source:
         audio = r.record(source)
     try:
