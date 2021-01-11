@@ -77,8 +77,13 @@
           <div class="card md-2 mb-1">
             <div class="card-header">Grammar and Cohesion Result</div>
             <div class="card-body">
-              <p class="card-text">Grammar: <br />{{ grammar }}</p>
-              <p class="card-text">Cohesion: <br />{{ cohesion }}</p>
+              <p><b style="color: red">(Out of 25)</b></p>
+              <p class="card-text">
+                Grammar: <b style="color: red">{{ grammar }}</b>
+              </p>
+              <p class="card-text">
+                Cohesion: <b style="color: red">{{ cohesion }}</b>
+              </p>
               <p class="card-text">
                 <a
                   href="{{ url_for('speaking.summary', speaking_aid= speaking_a.id, speaking_qid =speaking_a.speaker.id)}}"

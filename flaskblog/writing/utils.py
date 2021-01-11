@@ -188,7 +188,7 @@ def grammar():
 
 
 def get_grammar_result(test_answer):
-
+    os.chdir('/Users/Bevan/Desktop/New folder (3)/flask/flaskblog/static/')
     # Call the essay_to_wordlist
     test_answer = essay_to_wordlist(test_answer, remove_stopwords=True)
     print(os.getcwd())
