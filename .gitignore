@@ -7,16 +7,6 @@ try_outs
 New folder
 myflaskapp.zip
 GoogleNews-vectors-negative300.magnitude
-Cohesion LSTM V2.h5
-LSTM-score.h5
-Listening_activity_suggestion_up1.sav
-Reading_activity_suggestion_up1.sav
-word2vecmodel.bin
-flaskblog/static/word2vecmodel.bin
-flaskblog/static/Cohesion LSTM V2.h5
-flaskblog/static/LSTM-score.h5
-flaskblog/static/Listening_activity_suggestion_up1.sav
-flaskblog/static/Reading_activity_suggestion_up1.sav
 flaskblog/static/audio
 flaskblog/static/data
 flaskblog/static/
